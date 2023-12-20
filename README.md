@@ -2,6 +2,9 @@
 
 Yet Another Misskey Library For C#
 
+This library of Models and Controlers
+are made from [MisskeyAPIGenCode](https://github.com/GrapeApple0/MisskeyAPIGenCode)
+
 ## Dependedencies Library
 
 * System.Text.Json
