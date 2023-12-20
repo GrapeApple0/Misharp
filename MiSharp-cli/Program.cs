@@ -6,8 +6,8 @@ namespace Misharp.cli
     {
         public static async Task Main(string[] args)
         {
-            var app = new App("misskey.04.si", "");
-            var post = await app.NotesApi.Create(text: "Hello world", visibility: NotesApi.VisibilityEnum.Followers, localOnly: false);
+            var app = new App("misskey.04.si", token: "");
+            var post = await app.NotesApi.Create(text: "Hello world");
             Console.WriteLine(post.ToString());
         }
     }
