@@ -4,6 +4,14 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Misharp</Title>
+		<Authors>Porlam Nicla</Authors>
+		<Company />
+		<Description>Yet Another Misskey Library</Description>
+		<RepositoryUrl>https://github.com/GrapeApple0/Misharp</RepositoryUrl>
+		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 </Project>
