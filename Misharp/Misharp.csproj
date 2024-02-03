@@ -10,7 +10,7 @@
 		<Company />
 		<Description>Yet Another Misskey Library</Description>
 		<RepositoryUrl>https://github.com/GrapeApple0/Misharp</RepositoryUrl>
-		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
