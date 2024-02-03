@@ -1,4 +1,5 @@
 ﻿using Misharp.Controls;
+using Misharp.Models;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -13,7 +14,7 @@ public class App
     public string Token { get; set; }
     private bool UseHttps { get; }
 
-    public AdminApi AdminApi { get; }
+    //public AdminApi AdminApi { get; }
     public AnnouncementsApi AnnouncementsApi { get; }
     public AntennasApi AntennasApi { get; }
     public ApApi ApApi { get; }
@@ -42,7 +43,7 @@ public class App
     public MyApi MyApi { get; }
     public NotesApi NotesApi { get; }
     public NotificationsApi NotificationsApi { get; }
-    public PagesApi PagesApi { get; }
+    //public PagesApi PagesApi { get; }
     public FlashApi FlashApi { get; }
     public PingApi PingApi { get; }
     public PinnedUsersApi PinnedUsersApi { get; }
@@ -54,7 +55,6 @@ public class App
     public ServerInfoApi ServerInfoApi { get; }
     public StatsApi StatsApi { get; }
     public SwApi SwApi { get; }
-    public TestApi TestApi { get; }
     public UsernameApi UsernameApi { get; }
     public UsersApi UsersApi { get; }
     public FetchRssApi FetchRssApi { get; }
@@ -67,7 +67,7 @@ public class App
         this.Host = host;
         this.Token = token;
         this.UseHttps = useHttps;
-        this.AdminApi = new AdminApi(this);
+        //this.AdminApi = new AdminApi(this);
         this.AnnouncementsApi = new AnnouncementsApi(this);
         this.AntennasApi = new AntennasApi(this);
         this.ApApi = new ApApi(this);
@@ -96,7 +96,7 @@ public class App
         this.MyApi = new MyApi(this);
         this.NotesApi = new NotesApi(this);
         this.NotificationsApi = new NotificationsApi(this);
-        this.PagesApi = new PagesApi(this);
+        //this.PagesApi = new PagesApi(this);
         this.FlashApi = new FlashApi(this);
         this.PingApi = new PingApi(this);
         this.PinnedUsersApi = new PinnedUsersApi(this);
@@ -108,7 +108,6 @@ public class App
         this.ServerInfoApi = new ServerInfoApi(this);
         this.StatsApi = new StatsApi(this);
         this.SwApi = new SwApi(this);
-        this.TestApi = new TestApi(this);
         this.UsernameApi = new UsernameApi(this);
         this.UsersApi = new UsersApi(this);
         this.FetchRssApi = new FetchRssApi(this);
@@ -117,7 +116,7 @@ public class App
         this.Streaming = new Streaming(this);
     }
 
-    public async Task<T> Request<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK)
+    public async Task Request(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.NoContent)
     {
         using var client = new HttpClient();
         var param = (from kv in ps
@@ -156,13 +155,59 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
-            var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return result;
+            return;
         }
         throw new Exception(resultContent);
     }
 
-    public async Task<T> Request<T>(string endpoint, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK)
+    public async Task<Response<T>> Request<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    {
+        using var client = new HttpClient();
+        var param = (from kv in ps
+                     where kv.Value != null
+                     select kv).ToDictionary(kv => kv.Key, kv => kv.Value);
+
+        foreach (var p in param)
+            if (p.Value is Enum e)
+                param[p.Key] = e.GetStringValue() ?? p.Value;
+
+        if (useToken)
+        {
+            var i = new Dictionary<string, object>
+            {
+                { "i", this.Token }
+            };
+            param = param
+                .Concat(i.Where(pair =>
+                    !param.ContainsKey(pair.Key))
+                ).ToDictionary(
+                    pair => pair.Key,
+                    pair => pair.Value
+                );
+        }
+
+        var data = JsonSerializer.Serialize(param);
+        var content = new StringContent(data, Encoding.UTF8, "application/json");
+        var response = await client.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
+        var resultContent = await response.Content.ReadAsStringAsync();
+
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+        };
+        if (response.StatusCode == successStatusCode)
+        {
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
+            Console.WriteLine(resultContent);
+            var result = JsonSerializer.Deserialize<T>(resultContent, options);
+            if (result != null) return new Response<T>(response.StatusCode, result);
+        }
+        throw new Exception(resultContent);
+    }
+
+    public async Task<Response<T>> Request<T>(string endpoint, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
         using var client = new HttpClient();
         var param = new Dictionary<string, object>();
@@ -195,8 +240,9 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
             var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return result;
+            if (result != null) return new Response<T>(response.StatusCode, result);
         }
         throw new Exception(resultContent);
     }
@@ -213,7 +259,7 @@ public class App
         return ms.ToArray();
     }
 
-    public async Task<T> RequestFormData<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK)
+    public async Task<Response<T>> RequestFormData<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
         using var client = new HttpClient();
         MultipartFormDataContent content = new MultipartFormDataContent();
@@ -265,8 +311,9 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
             var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return result;
+            if (result != null) return new Response<T>(response.StatusCode, result);
         }
         throw new Exception(resultContent);
     }
