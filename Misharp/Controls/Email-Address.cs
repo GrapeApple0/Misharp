@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class EmailAddressApi {
 		private Misharp.App _app;
 		public EmailAddressApi(Misharp.App app)
@@ -21,13 +21,13 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<EmailaddressAvailableResponse>> Available(string emailAddress)
+		public async Task<Response<EmailaddressAvailableResponse>> Available(string emailAddress)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "emailAddress", emailAddress },
 			};
-			var result = await _app.Request<EmailaddressAvailableResponse>("email-address/available", param, useToken: false);
+			Response<EmailaddressAvailableResponse> result = await _app.Request<EmailaddressAvailableResponse>("email-address/available", param, useToken: false);
 			return result;
 		}
 	}

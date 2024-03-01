@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class EmojisApi {
 		private Misharp.App _app;
 		public EmojisApi(Misharp.App app)
@@ -9,7 +9,7 @@ namespace Misharp.Controls {
 			_app = app;
 		}
 		public class EmojisResponse {
-			public List<EmojiSimple> Emojis { get; set; }
+			public List<Model.EmojiSimple> Emojis { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
@@ -33,9 +33,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<EmojisResponse>> Emojis()
+		public async Task<Response<EmojisResponse>> Emojis()
 		{
-			var result = await _app.Request<EmojisResponse>("emojis", useToken: false);
+			Response<EmojisResponse> result = await _app.Request<EmojisResponse>("emojis", useToken: false);
 			return result;
 		}
 	}

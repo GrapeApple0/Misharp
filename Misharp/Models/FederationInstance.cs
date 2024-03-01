@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class FederationInstance {
@@ -25,6 +27,7 @@ namespace Misharp.Model {
 		public string ThemeColor { get; set; }
 		public DateTime InfoUpdatedAt { get; set; }
 		public DateTime LatestRequestReceivedAt { get; set; }
+		public string ModerationNote { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -52,6 +55,7 @@ namespace Misharp.Model {
 			sb.Append($"  themeColor: {this.ThemeColor}\n");
 			sb.Append($"  infoUpdatedAt: {this.InfoUpdatedAt}\n");
 			sb.Append($"  latestRequestReceivedAt: {this.LatestRequestReceivedAt}\n");
+			sb.Append($"  moderationNote: {this.ModerationNote}\n");
 			sb.Append("}");
 			return sb.ToString();
 		}

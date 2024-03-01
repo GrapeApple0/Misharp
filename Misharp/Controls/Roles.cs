@@ -1,28 +1,28 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class RolesApi {
 		private Misharp.App _app;
 		public RolesApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<Role>>> List()
+		public async Task<Response<List<Model.Role>>> List()
 		{
-			var result = await _app.Request<List<Role>>("roles/list", useToken: true);
+			Response<List<Model.Role>> result = await _app.Request<List<Model.Role>>("roles/list", useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Role>> Show(string roleId)
+		public async Task<Response<Model.Role>> Show(string roleId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "roleId", roleId },
 			};
-			var result = await _app.Request<Role>("roles/show", param, useToken: false);
+			Response<Model.Role> result = await _app.Request<Model.Role>("roles/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<List<object>>> Users(string roleId,string sinceId,string untilId,int limit = 10)
+		public async Task<Response<List<JsonNode>>> Users(string roleId,string sinceId,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -31,10 +31,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			var result = await _app.Request<List<object>>("roles/users", param, useToken: false);
+			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("roles/users", param, useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<List<Note>>> Notes(string roleId,string sinceId,string untilId,int sinceDate,int untilDate,int limit = 10)
+		public async Task<Response<List<Model.Note>>> Notes(string roleId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -45,7 +45,7 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			var result = await _app.Request<List<Note>>("roles/notes", param, useToken: true);
+			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("roles/notes", param, useToken: true);
 			return result;
 		}
 	}

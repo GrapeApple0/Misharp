@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class EndpointApi {
 		private Misharp.App _app;
 		public EndpointApi(Misharp.App app)
@@ -21,13 +21,13 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<EndpointResponse>> Endpoint(string endpoint)
+		public async Task<Response<EndpointResponse>> Endpoint(string endpoint)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 			};
-			var result = await _app.Request<EndpointResponse>("endpoint", param, useToken: false);
+			Response<EndpointResponse> result = await _app.Request<EndpointResponse>("endpoint", param, useToken: false);
 			return result;
 		}
 	}

@@ -1,14 +1,14 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class AnnouncementsApi {
 		private Misharp.App _app;
 		public AnnouncementsApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<Announcement>>> Announcements(string sinceId,string untilId,int limit = 10,bool isActive = true)
+		public async Task<Response<List<Model.Announcement>>> Announcements(string sinceId,int limit = 10,string? untilId = null,bool isActive = true)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -17,7 +17,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "isActive", isActive },
 			};
-			var result = await _app.Request<List<Announcement>>("announcements", param, useToken: false);
+			Response<List<Model.Announcement>> result = await _app.Request<List<Model.Announcement>>("announcements", param, useToken: false);
 			return result;
 		}
 	}

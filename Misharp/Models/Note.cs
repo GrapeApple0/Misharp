@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Note {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public DateTime UpdatedAt { get; set; }
 		public DateTime DeletedAt { get; set; }
 		public string Text { get; set; }
 		public string Cw { get; set; }
@@ -12,8 +13,8 @@ namespace Misharp.Model {
 		public UserLite User { get; set; }
 		public string ReplyId { get; set; }
 		public string RenoteId { get; set; }
-		public object Reply { get; set; }
-		public object Renote { get; set; }
+		public JsonNode Reply { get; set; }
+		public JsonNode Renote { get; set; }
 		public bool IsHidden { get; set; }
 		public string Visibility { get; set; }
 		public List<string> Mentions { get; set; }
@@ -21,26 +22,27 @@ namespace Misharp.Model {
 		public List<string> FileIds { get; set; }
 		public List<DriveFile> Files { get; set; }
 		public List<string> Tags { get; set; }
-		public object Poll { get; set; }
+		public JsonNode Poll { get; set; }
+		public JsonNode Emojis { get; set; }
 		public string ChannelId { get; set; }
-		public object Channel { get; set; }
+		public JsonNode Channel { get; set; }
 		public bool LocalOnly { get; set; }
 		public string ReactionAcceptance { get; set; }
-		public object Reactions { get; set; }
+		public JsonNode ReactionEmojis { get; set; }
+		public JsonNode Reactions { get; set; }
 		public decimal RenoteCount { get; set; }
 		public decimal RepliesCount { get; set; }
 		public string Uri { get; set; }
 		public string Url { get; set; }
 		public List<string> ReactionAndUserPairCache { get; set; }
 		public decimal ClippedCount { get; set; }
-		public object MyReaction { get; set; }
+		public string MyReaction { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
 			sb.Append("class Note: {\n");
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
-			sb.Append($"  updatedAt: {this.UpdatedAt}\n");
 			sb.Append($"  deletedAt: {this.DeletedAt}\n");
 			sb.Append($"  text: {this.Text}\n");
 			sb.Append($"  cw: {this.Cw}\n");
@@ -89,10 +91,12 @@ namespace Misharp.Model {
 			if (this.Tags != null && this.Tags.Count > 0) this.Tags.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 			sb.Append("  }\n");
 			sb.Append($"  poll: {this.Poll}\n");
+			sb.Append($"  emojis: {this.Emojis}\n");
 			sb.Append($"  channelId: {this.ChannelId}\n");
 			sb.Append($"  channel: {this.Channel}\n");
 			sb.Append($"  localOnly: {this.LocalOnly}\n");
 			sb.Append($"  reactionAcceptance: {this.ReactionAcceptance}\n");
+			sb.Append($"  reactionEmojis: {this.ReactionEmojis}\n");
 			sb.Append($"  reactions: {this.Reactions}\n");
 			sb.Append($"  renoteCount: {this.RenoteCount}\n");
 			sb.Append($"  repliesCount: {this.RepliesCount}\n");

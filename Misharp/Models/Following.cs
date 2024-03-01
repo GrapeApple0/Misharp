@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Following {
@@ -6,8 +8,8 @@ namespace Misharp.Model {
 		public DateTime CreatedAt { get; set; }
 		public string FolloweeId { get; set; }
 		public string FollowerId { get; set; }
-		public object Followee { get; set; }
-		public object Follower { get; set; }
+		public JsonNode Followee { get; set; }
+		public JsonNode Follower { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

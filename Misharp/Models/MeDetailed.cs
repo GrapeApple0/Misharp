@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class MeDetailed {
@@ -8,19 +10,13 @@ namespace Misharp.Model {
 		public string Host { get; set; }
 		public string AvatarUrl { get; set; }
 		public string AvatarBlurhash { get; set; }
-		public class AvatarDecorationsItemType {
-			public object AvatarDecorations { get; set; }
-		}
-		public List<AvatarDecorationsItemType> AvatarDecorations { get; set; }
+		public List<object> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
 		public bool IsCat { get; set; }
-		public object Instance { get; set; }
-		public object Emojis { get; set; }
+		public JsonNode Instance { get; set; }
+		public JsonNode Emojis { get; set; }
 		public string OnlineStatus { get; set; }
-		public class BadgeRolesItemType {
-			public object BadgeRoles { get; set; }
-		}
-		public List<BadgeRolesItemType> BadgeRoles { get; set; }
+		public List<object> BadgeRoles { get; set; }
 		public string Url { get; set; }
 		public string Uri { get; set; }
 		public string MovedTo { get; set; }
@@ -37,10 +33,7 @@ namespace Misharp.Model {
 		public string Location { get; set; }
 		public string Birthday { get; set; }
 		public string Lang { get; set; }
-		public class FieldsItemType {
-			public object Fields { get; set; }
-		}
-		public List<FieldsItemType> Fields { get; set; }
+		public List<object> Fields { get; set; }
 		public List<string> VerifiedLinks { get; set; }
 		public decimal FollowersCount { get; set; }
 		public decimal FollowingCount { get; set; }
@@ -48,7 +41,7 @@ namespace Misharp.Model {
 		public List<string> PinnedNoteIds { get; set; }
 		public List<Note> PinnedNotes { get; set; }
 		public string PinnedPageId { get; set; }
-		public object PinnedPage { get; set; }
+		public JsonNode PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
 		public string FollowingVisibility { get; set; }
 		public string FollowersVisibility { get; set; }
@@ -93,29 +86,17 @@ namespace Misharp.Model {
 		public bool HasUnreadNotification { get; set; }
 		public bool HasPendingReceivedFollowRequest { get; set; }
 		public decimal UnreadNotificationsCount { get; set; }
-		public class MutedWordsItemsItemType {
-			public string MutedWords { get; set; }
-		}
-		public List<List<MutedWordsItemsItemType>> MutedWords { get; set; }
-		public class HardMutedWordsItemsItemType {
-			public string HardMutedWords { get; set; }
-		}
-		public List<List<HardMutedWordsItemsItemType>> HardMutedWords { get; set; }
+		public List<List<string>> MutedWords { get; set; }
+		public List<List<string>> HardMutedWords { get; set; }
 		public List<string> MutedInstances { get; set; }
-		public object NotificationRecieveConfig { get; set; }
+		public JsonNode NotificationRecieveConfig { get; set; }
 		public List<string> EmailNotificationTypes { get; set; }
-		public class AchievementsItemType {
-			public object Achievements { get; set; }
-		}
-		public List<AchievementsItemType> Achievements { get; set; }
+		public List<object> Achievements { get; set; }
 		public decimal LoggedInDays { get; set; }
-		public object Policies { get; set; }
+		public RolePolicies Policies { get; set; }
 		public string Email { get; set; }
 		public bool EmailVerified { get; set; }
-		public class SecurityKeysListItemType {
-			public object SecurityKeysList { get; set; }
-		}
-		public List<SecurityKeysListItemType> SecurityKeysList { get; set; }
+		public List<object> SecurityKeysList { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -273,7 +254,16 @@ namespace Misharp.Model {
 			if (this.Achievements != null && this.Achievements.Count > 0) this.Achievements.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 			sb.Append("  }\n");
 			sb.Append($"  loggedInDays: {this.LoggedInDays}\n");
-			sb.Append($"  policies: {this.Policies}\n");
+			var sbpolicies = new StringBuilder();
+			sbpolicies.Append("  policies: {\n");
+			if (this.Policies != null)
+			{
+				sbpolicies.Append(this.Policies);
+				sbpolicies.Replace("\n", "\n    ");
+				sbpolicies.Append("\n");
+			}
+			sbpolicies.Append("  }\n");
+			sb.Append(sbpolicies);
 			sb.Append($"  email: {this.Email}\n");
 			sb.Append($"  emailVerified: {this.EmailVerified}\n");
 			sb.Append("  securityKeysList: {\n");

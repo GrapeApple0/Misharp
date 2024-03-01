@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Muting {
@@ -6,7 +8,7 @@ namespace Misharp.Model {
 		public DateTime CreatedAt { get; set; }
 		public DateTime ExpiresAt { get; set; }
 		public string MuteeId { get; set; }
-		public UserDetailed Mutee { get; set; }
+		public UserDetailedNotMe Mutee { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

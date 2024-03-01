@@ -1,35 +1,34 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
+using System.Text.Json.Nodes;
 namespace Misharp.Controls
 {
     public class IApi
     {
         private Misharp.App _app;
-        public I._2faApi _2faApi;
         public I.GalleryApi GalleryApi;
         public I.RegistryApi RegistryApi;
         public I.WebhooksApi WebhooksApi;
         public IApi(Misharp.App app)
         {
             _app = app;
-            _2faApi = new I._2faApi(_app);
             GalleryApi = new I.GalleryApi(_app);
             RegistryApi = new I.RegistryApi(_app);
             WebhooksApi = new I.WebhooksApi(_app);
         }
-        public async Task<Models.Response<MeDetailed>> I()
+        public async Task<Response<Model.MeDetailed>> I()
         {
-            var result = await _app.Request<MeDetailed>("i", useToken: true);
+            Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i", useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<object>>> Apps(AppsSortEnum sort)
+        public async Task<Response<List<JsonNode>>> Apps(AppsSortEnum sort)
         {
             var param = new Dictionary<string, object?>
             {
                 { "sort", sort },
             };
-            var result = await _app.Request<List<object>>("i/apps", param, useToken: true);
+            Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/apps", param, useToken: true);
             return result;
         }
         public enum AppsSortEnum
@@ -43,7 +42,7 @@ namespace Misharp.Controls
             [StringValue("-lastUsedAt")]
             MinuslastUsedAt,
         }
-        public async Task<Models.Response<List<object>>> Authorizedapps(int limit = 10, int offset = 0, AuthorizedappsSortEnum sort = AuthorizedappsSortEnum.Desc)
+        public async Task<Response<List<JsonNode>>> Authorizedapps(int limit = 10, int offset = 0, AuthorizedappsSortEnum sort = AuthorizedappsSortEnum.Desc)
         {
             var param = new Dictionary<string, object?>
             {
@@ -51,7 +50,7 @@ namespace Misharp.Controls
                 { "offset", offset },
                 { "sort", sort },
             };
-            var result = await _app.Request<List<object>>("i/authorized-apps", param, useToken: true);
+            Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/authorized-apps", param, useToken: true);
             return result;
         }
         public enum AuthorizedappsSortEnum
@@ -61,13 +60,13 @@ namespace Misharp.Controls
             [StringValue("asc")]
             Asc,
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Claimachievement(ClaimachievementNameEnum name)
+        public async Task<Response<Model.EmptyResponse>> Claimachievement(ClaimachievementNameEnum name)
         {
             var param = new Dictionary<string, object?>
             {
                 { "name", name },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/claim-achievement", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/claim-achievement", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
         public enum ClaimachievementNameEnum
@@ -224,8 +223,12 @@ namespace Misharp.Controls
             SmashTestNotificationButton,
             [StringValue("tutorialCompleted")]
             TutorialCompleted,
+            [StringValue("bubbleGameExplodingHead")]
+            BubbleGameExplodingHead,
+            [StringValue("bubbleGameDoubleExplodingHead")]
+            BubbleGameDoubleExplodingHead,
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Changepassword(string currentPassword, string newPassword, string? token = null)
+        public async Task<Response<Model.EmptyResponse>> Changepassword(string currentPassword, string newPassword, string? token = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -233,65 +236,65 @@ namespace Misharp.Controls
                 { "newPassword", newPassword },
                 { "token", token },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/change-password", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/change-password", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Deleteaccount(string password, string? token = null)
+        public async Task<Response<Model.EmptyResponse>> Deleteaccount(string password, string? token = null)
         {
             var param = new Dictionary<string, object?>
             {
                 { "password", password },
                 { "token", token },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/delete-account", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/delete-account", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportblocking()
+        public async Task<Response<Model.EmptyResponse>> Exportblocking()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-blocking", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-blocking", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportfollowing(bool excludeMuting = false, bool excludeInactive = false)
+        public async Task<Response<Model.EmptyResponse>> Exportfollowing(bool excludeMuting = false, bool excludeInactive = false)
         {
             var param = new Dictionary<string, object?>
             {
                 { "excludeMuting", excludeMuting },
                 { "excludeInactive", excludeInactive },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/export-following", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-following", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportmute()
+        public async Task<Response<Model.EmptyResponse>> Exportmute()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-mute", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-mute", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportnotes()
+        public async Task<Response<Model.EmptyResponse>> Exportnotes()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-notes", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-notes", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportclips()
+        public async Task<Response<Model.EmptyResponse>> Exportclips()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-clips", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-clips", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportfavorites()
+        public async Task<Response<Model.EmptyResponse>> Exportfavorites()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-favorites", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-favorites", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportuserlists()
+        public async Task<Response<Model.EmptyResponse>> Exportuserlists()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-user-lists", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-user-lists", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Exportantennas()
+        public async Task<Response<Model.EmptyResponse>> Exportantennas()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/export-antennas", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/export-antennas", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<NoteFavorite>>> Favorites(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<Model.NoteFavorite>>> Favorites(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -299,56 +302,56 @@ namespace Misharp.Controls
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<NoteFavorite>>("i/favorites", param, useToken: true);
+            Response<List<Model.NoteFavorite>> result = await _app.Request<List<Model.NoteFavorite>>("i/favorites", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Importblocking(string fileId)
+        public async Task<Response<Model.EmptyResponse>> Importblocking(string fileId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "fileId", fileId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/import-blocking", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/import-blocking", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Importfollowing(string fileId, bool withReplies)
+        public async Task<Response<Model.EmptyResponse>> Importfollowing(string fileId, bool withReplies)
         {
             var param = new Dictionary<string, object?>
             {
                 { "fileId", fileId },
                 { "withReplies", withReplies },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/import-following", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/import-following", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Importmuting(string fileId)
+        public async Task<Response<Model.EmptyResponse>> Importmuting(string fileId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "fileId", fileId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/import-muting", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/import-muting", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Importuserlists(string fileId)
+        public async Task<Response<Model.EmptyResponse>> Importuserlists(string fileId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "fileId", fileId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/import-user-lists", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/import-user-lists", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Importantennas(string fileId)
+        public async Task<Response<Model.EmptyResponse>> Importantennas(string fileId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "fileId", fileId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/import-antennas", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/import-antennas", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<Notification>>> Notifications(string sinceId, string untilId, int limit = 10, bool markAsRead = true, List<string>? includeTypes = null, List<string>? excludeTypes = null)
+        public async Task<Response<List<Model.Notification>>> Notifications(string sinceId, List<string> includeTypes, List<string> excludeTypes, int limit = 10, string? untilId = null, bool markAsRead = true)
         {
             var param = new Dictionary<string, object?>
             {
@@ -359,10 +362,10 @@ namespace Misharp.Controls
                 { "includeTypes", includeTypes },
                 { "excludeTypes", excludeTypes },
             };
-            var result = await _app.Request<List<Notification>>("i/notifications", param, useToken: true);
+            Response<List<Model.Notification>> result = await _app.Request<List<Model.Notification>>("i/notifications", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<Notification>>> Notificationsgrouped(string sinceId, string untilId, int limit = 10, bool markAsRead = true, List<string>? includeTypes = null, List<string>? excludeTypes = null)
+        public async Task<Response<List<Model.Notification>>> Notificationsgrouped(string sinceId, List<string> includeTypes, List<string> excludeTypes, int limit = 10, string? untilId = null, bool markAsRead = true)
         {
             var param = new Dictionary<string, object?>
             {
@@ -373,10 +376,10 @@ namespace Misharp.Controls
                 { "includeTypes", includeTypes },
                 { "excludeTypes", excludeTypes },
             };
-            var result = await _app.Request<List<Notification>>("i/notifications-grouped", param, useToken: true);
+            Response<List<Model.Notification>> result = await _app.Request<List<Model.Notification>>("i/notifications-grouped", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<object>>> Pagelikes(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<JsonNode>>> Pagelikes(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -384,10 +387,10 @@ namespace Misharp.Controls
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<object>>("i/page-likes", param, useToken: true);
+            Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/page-likes", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<Page>>> Pages(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<Model.Page>>> Pages(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -395,52 +398,52 @@ namespace Misharp.Controls
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<Page>>("i/pages", param, useToken: true);
+            Response<List<Model.Page>> result = await _app.Request<List<Model.Page>>("i/pages", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<MeDetailed>> Pin(string noteId)
+        public async Task<Response<Model.MeDetailed>> Pin(string noteId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "noteId", noteId },
             };
-            var result = await _app.Request<MeDetailed>("i/pin", param, useToken: true);
+            Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i/pin", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Readallunreadnotes()
+        public async Task<Response<Model.EmptyResponse>> Readallunreadnotes()
         {
-            var result = await _app.Request<Models.EmptyResponse>("i/read-all-unread-notes", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/read-all-unread-notes", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Readannouncement(string announcementId)
+        public async Task<Response<Model.EmptyResponse>> Readannouncement(string announcementId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "announcementId", announcementId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/read-announcement", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/read-announcement", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Regeneratetoken(string password)
+        public async Task<Response<Model.EmptyResponse>> Regeneratetoken(string password)
         {
             var param = new Dictionary<string, object?>
             {
                 { "password", password },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/regenerate-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/regenerate-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Revoketoken(string tokenId, string? token = null)
+        public async Task<Response<Model.EmptyResponse>> Revoketoken(string tokenId, string? token = null)
         {
             var param = new Dictionary<string, object?>
             {
                 { "tokenId", tokenId },
                 { "token", token },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/revoke-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/revoke-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<Signin>>> Signinhistory(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<Model.Signin>>> Signinhistory(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -448,19 +451,19 @@ namespace Misharp.Controls
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<Signin>>("i/signin-history", param, useToken: true);
+            Response<List<Model.Signin>> result = await _app.Request<List<Model.Signin>>("i/signin-history", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<MeDetailed>> Unpin(string noteId)
+        public async Task<Response<Model.MeDetailed>> Unpin(string noteId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "noteId", noteId },
             };
-            var result = await _app.Request<MeDetailed>("i/unpin", param, useToken: true);
+            Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i/unpin", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<UserDetailed>> Updateemail(string password, string? email = null, string? token = null)
+        public async Task<Response<Model.MeDetailed>> Updateemail(string password, string? email = null, string? token = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -468,10 +471,10 @@ namespace Misharp.Controls
                 { "email", email },
                 { "token", token },
             };
-            var result = await _app.Request<UserDetailed>("i/update-email", param, useToken: true);
+            Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i/update-email", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<MeDetailed>> Update(bool isLocked, bool isExplorable, bool hideOnlineStatus, bool publicReactions, bool carefulBot, bool autoAcceptFollowed, bool noCrawle, bool preventAiLearning, bool isBot, bool isCat, bool injectFeaturedNote, bool receiveAnnouncementEmail, bool alwaysMarkNsfw, bool autoSensitive, UpdateFollowingVisibilityEnum followingVisibility, UpdateFollowersVisibilityEnum followersVisibility, object notificationRecieveConfig, string? name = null, string? description = null, string? location = null, string? birthday = null, UpdateLangEnum? lang = null, string? avatarId = null, List<object>? avatarDecorations = null, string? bannerId = null, List<object>? fields = null, string? pinnedPageId = null, object? mutedWords = null, object? hardMutedWords = null, List<string>? mutedInstances = null, List<string>? emailNotificationTypes = null, List<string>? alsoKnownAs = null)
+        public async Task<Response<Model.MeDetailed>> Update(List<object> avatarDecorations, List<object> fields, bool isLocked, bool isExplorable, bool hideOnlineStatus, bool publicReactions, bool carefulBot, bool autoAcceptFollowed, bool noCrawle, bool preventAiLearning, bool isBot, bool isCat, bool injectFeaturedNote, bool receiveAnnouncementEmail, bool alwaysMarkNsfw, bool autoSensitive, UpdateFollowingVisibilityEnum followingVisibility, UpdateFollowersVisibilityEnum followersVisibility, List<JsonNode> mutedWords, List<JsonNode> hardMutedWords, List<string> mutedInstances, JsonNode notificationRecieveConfig, List<string> emailNotificationTypes, List<string> alsoKnownAs, string? name = null, string? description = null, string? location = null, string? birthday = null, UpdateLangEnum? lang = null, string? avatarId = null, string? bannerId = null, string? pinnedPageId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -508,7 +511,7 @@ namespace Misharp.Controls
                 { "emailNotificationTypes", emailNotificationTypes },
                 { "alsoKnownAs", alsoKnownAs },
             };
-            var result = await _app.Request<MeDetailed>("i/update", param, useToken: true);
+            Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i/update", param, useToken: true);
             return result;
         }
         public enum UpdateFollowingVisibilityEnum
@@ -978,161 +981,6 @@ namespace Misharp.Controls
 }
 namespace Misharp.Controls.I
 {
-    public class _2faApi
-    {
-        private Misharp.App _app;
-        public _2faApi(Misharp.App app)
-        {
-            _app = app;
-        }
-        public async Task<Models.Response<Models.EmptyResponse>> Done(string token)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "token", token },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/_2fa/done", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
-        }
-        public class I_2faKeydoneResponse
-        {
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public override string ToString()
-            {
-                var sb = new StringBuilder();
-                sb.Append("{\n");
-                sb.Append($"  id: {this.Id}\n");
-                sb.Append($"  name: {this.Name}\n");
-                sb.Append("}");
-                return sb.ToString();
-            }
-        }
-        public async Task<Models.Response<I_2faKeydoneResponse>> Keydone(string password, string name, object credential, string? token = null)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "password", password },
-                { "token", token },
-                { "name", name },
-                { "credential", credential },
-            };
-            var result = await _app.Request<I_2faKeydoneResponse>("i/_2fa/key-done", param, useToken: true);
-            return result;
-        }
-        public async Task<Models.Response<Models.EmptyResponse>> Passwordless(bool value)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "value", value },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/_2fa/password-less", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
-        }
-        public class I_2faRegisterkeyResponse
-        {
-            public object Rp { get; set; }
-            public object User { get; set; }
-            public string Challenge { get; set; }
-            public List<object> PubKeyCredParams { get; set; }
-            public decimal? Timeout { get; set; }
-            public List<object>? ExcludeCredentials { get; set; }
-            public object? AuthenticatorSelection { get; set; }
-            public string? Attestation { get; set; }
-            public object? Extensions { get; set; }
-            public override string ToString()
-            {
-                var sb = new StringBuilder();
-                sb.Append("{\n");
-                sb.Append($"  rp: {this.Rp}\n");
-                sb.Append($"  user: {this.User}\n");
-                sb.Append($"  challenge: {this.Challenge}\n");
-                sb.Append("  pubKeyCredParams: {\n");
-                if (this.PubKeyCredParams != null && this.PubKeyCredParams.Count > 0) this.PubKeyCredParams.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-                sb.Append("  }\n");
-                sb.Append($"  timeout: {this.Timeout}\n");
-                sb.Append("  excludeCredentials: {\n");
-                if (this.ExcludeCredentials != null && this.ExcludeCredentials.Count > 0) this.ExcludeCredentials.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-                sb.Append("  }\n");
-                sb.Append($"  authenticatorSelection: {this.AuthenticatorSelection}\n");
-                sb.Append($"  attestation: {this.Attestation}\n");
-                sb.Append($"  extensions: {this.Extensions}\n");
-                sb.Append("}");
-                return sb.ToString();
-            }
-        }
-        public async Task<Models.Response<I_2faRegisterkeyResponse>> Registerkey(string password, string? token = null)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "password", password },
-                { "token", token },
-            };
-            var result = await _app.Request<I_2faRegisterkeyResponse>("i/_2fa/register-key", param, useToken: true);
-            return result;
-        }
-        public class I_2faRegisterResponse
-        {
-            public string Qr { get; set; }
-            public string Url { get; set; }
-            public string Secret { get; set; }
-            public string Label { get; set; }
-            public string Issuer { get; set; }
-            public override string ToString()
-            {
-                var sb = new StringBuilder();
-                sb.Append("{\n");
-                sb.Append($"  qr: {this.Qr}\n");
-                sb.Append($"  url: {this.Url}\n");
-                sb.Append($"  secret: {this.Secret}\n");
-                sb.Append($"  label: {this.Label}\n");
-                sb.Append($"  issuer: {this.Issuer}\n");
-                sb.Append("}");
-                return sb.ToString();
-            }
-        }
-        public async Task<Models.Response<I_2faRegisterResponse>> Register(string password, string? token = null)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "password", password },
-                { "token", token },
-            };
-            var result = await _app.Request<I_2faRegisterResponse>("i/_2fa/register", param, useToken: true);
-            return result;
-        }
-        public async Task<Models.Response<Models.EmptyResponse>> Updatekey(string name, string credentialId)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "name", name },
-                { "credentialId", credentialId },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/_2fa/update-key", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
-        }
-        public async Task<Models.Response<Models.EmptyResponse>> Removekey(string password, string credentialId, string? token = null)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "password", password },
-                { "token", token },
-                { "credentialId", credentialId },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/_2fa/remove-key", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
-        }
-        public async Task<Models.Response<Models.EmptyResponse>> Unregister(string password, string? token = null)
-        {
-            var param = new Dictionary<string, object?>
-            {
-                { "password", password },
-                { "token", token },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/_2fa/unregister", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
-        }
-    }
     public class GalleryApi
     {
         private Misharp.App _app;
@@ -1140,7 +988,7 @@ namespace Misharp.Controls.I
         {
             _app = app;
         }
-        public async Task<Models.Response<List<object>>> Likes(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<JsonNode>>> Likes(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1148,10 +996,10 @@ namespace Misharp.Controls.I
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<object>>("i/gallery/likes", param, useToken: true);
+            var result = await _app.Request<List<JsonNode>>("i/gallery/likes", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<GalleryPost>>> Posts(string sinceId, string untilId, int limit = 10)
+        public async Task<Response<List<Model.GalleryPost>>> Posts(string sinceId, int limit = 10, string? untilId = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1159,7 +1007,7 @@ namespace Misharp.Controls.I
                 { "sinceId", sinceId },
                 { "untilId", untilId },
             };
-            var result = await _app.Request<List<GalleryPost>>("i/gallery/posts", param, useToken: true);
+            var result = await _app.Request<List<Model.GalleryPost>>("i/gallery/posts", param, useToken: true);
             return result;
         }
     }
@@ -1170,17 +1018,21 @@ namespace Misharp.Controls.I
         {
             _app = app;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Keys(List<string>? scope = null, string? domain = null)
+        public class IRegistryGetdetailResponse
         {
-            var param = new Dictionary<string, object?>
+            public string UpdatedAt { get; set; }
+            public JsonNode Value { get; set; }
+            public override string ToString()
             {
-                { "scope", scope },
-                { "domain", domain },
-            };
-            var result = await _app.Request<Models.EmptyResponse>("i/registry/keys", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-            return result;
+                var sb = new StringBuilder();
+                sb.Append("{\n");
+                sb.Append($"  updatedAt: {this.UpdatedAt}\n");
+                sb.Append($"  value: {this.Value}\n");
+                sb.Append("}");
+                return sb.ToString();
+            }
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Remove(string key, List<string>? scope = null, string? domain = null)
+        public async Task<Response<IRegistryGetdetailResponse>> Getdetail(string key, List<string>? scope = null, string? domain = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1188,15 +1040,36 @@ namespace Misharp.Controls.I
                 { "scope", scope },
                 { "domain", domain },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/registry/remove", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<IRegistryGetdetailResponse>("i/registry/get-detail", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<object>>> Scopeswithdomain()
+        public async Task<Response<List<string>>> Keys(List<string>? scope = null, string? domain = null)
         {
-            var result = await _app.Request<List<object>>("i/registry/scopes-with-domain", useToken: true);
+            var param = new Dictionary<string, object?>
+            {
+                { "scope", scope },
+                { "domain", domain },
+            };
+            var result = await _app.Request<List<string>>("i/registry/keys", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Set(string key, object value, List<string>? scope = null, string? domain = null)
+        public async Task<Response<Model.EmptyResponse>> Remove(string key, List<string>? scope = null, string? domain = null)
+        {
+            var param = new Dictionary<string, object?>
+            {
+                { "key", key },
+                { "scope", scope },
+                { "domain", domain },
+            };
+            var result = await _app.Request<Model.EmptyResponse>("i/registry/remove", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            return result;
+        }
+        public async Task<Response<List<JsonNode>>> Scopeswithdomain()
+        {
+            var result = await _app.Request<List<JsonNode>>("i/registry/scopes-with-domain", useToken: true);
+            return result;
+        }
+        public async Task<Response<Model.EmptyResponse>> Set(string key, JsonNode value, List<string>? scope = null, string? domain = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1205,7 +1078,7 @@ namespace Misharp.Controls.I
                 { "scope", scope },
                 { "domain", domain },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/registry/set", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/registry/set", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
     }
@@ -1246,7 +1119,7 @@ namespace Misharp.Controls.I
                 return sb.ToString();
             }
         }
-        public async Task<Models.Response<IWebhooksCreateResponse>> Create(string name, string url, string? secret = null, List<string>? on = null)
+        public async Task<Response<IWebhooksCreateResponse>> Create(string name, string url, List<string> on, string? secret = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1258,9 +1131,9 @@ namespace Misharp.Controls.I
             var result = await _app.Request<IWebhooksCreateResponse>("i/webhooks/create", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<List<object>>> List()
+        public async Task<Response<List<JsonNode>>> List()
         {
-            var result = await _app.Request<List<object>>("i/webhooks/list", useToken: true);
+            var result = await _app.Request<List<JsonNode>>("i/webhooks/list", useToken: true);
             return result;
         }
         public class IWebhooksShowResponse
@@ -1293,7 +1166,7 @@ namespace Misharp.Controls.I
                 return sb.ToString();
             }
         }
-        public async Task<Models.Response<IWebhooksShowResponse>> Show(string webhookId)
+        public async Task<Response<IWebhooksShowResponse>> Show(string webhookId)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1302,7 +1175,7 @@ namespace Misharp.Controls.I
             var result = await _app.Request<IWebhooksShowResponse>("i/webhooks/show", param, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Update(string webhookId, string name, string url, bool active, string? secret = null, List<string>? on = null)
+        public async Task<Response<Model.EmptyResponse>> Update(string webhookId, string name, string url, List<string> on, bool active, string? secret = null)
         {
             var param = new Dictionary<string, object?>
             {
@@ -1313,16 +1186,16 @@ namespace Misharp.Controls.I
                 { "on", on },
                 { "active", active },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/webhooks/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/webhooks/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
-        public async Task<Models.Response<Models.EmptyResponse>> Delete(string webhookId)
+        public async Task<Response<Model.EmptyResponse>> Delete(string webhookId)
         {
             var param = new Dictionary<string, object?>
             {
                 { "webhookId", webhookId },
             };
-            var result = await _app.Request<Models.EmptyResponse>("i/webhooks/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+            var result = await _app.Request<Model.EmptyResponse>("i/webhooks/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
             return result;
         }
     }

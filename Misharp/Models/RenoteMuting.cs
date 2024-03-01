@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class RenoteMuting {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string MuteeId { get; set; }
-		public UserDetailed Mutee { get; set; }
+		public UserDetailedNotMe Mutee { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

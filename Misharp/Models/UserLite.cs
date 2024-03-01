@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class UserLite {
@@ -8,19 +10,13 @@ namespace Misharp.Model {
 		public string Host { get; set; }
 		public string AvatarUrl { get; set; }
 		public string AvatarBlurhash { get; set; }
-		public class AvatarDecorationsItemType {
-			public object AvatarDecorations { get; set; }
-		}
-		public List<AvatarDecorationsItemType> AvatarDecorations { get; set; }
+		public List<object> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
 		public bool IsCat { get; set; }
-		public object Instance { get; set; }
-		public object Emojis { get; set; }
+		public JsonNode Instance { get; set; }
+		public JsonNode Emojis { get; set; }
 		public string OnlineStatus { get; set; }
-		public class BadgeRolesItemType {
-			public object BadgeRoles { get; set; }
-		}
-		public List<BadgeRolesItemType> BadgeRoles { get; set; }
+		public List<object> BadgeRoles { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

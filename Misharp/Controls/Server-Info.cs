@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class ServerInfoApi {
 		private Misharp.App _app;
 		public ServerInfoApi(Misharp.App app)
@@ -10,9 +10,9 @@ namespace Misharp.Controls {
 		}
 		public class ServerinfoResponse {
 			public string Machine { get; set; }
-			public object Cpu { get; set; }
-			public object Mem { get; set; }
-			public object Fs { get; set; }
+			public JsonNode Cpu { get; set; }
+			public JsonNode Mem { get; set; }
+			public JsonNode Fs { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
@@ -25,9 +25,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<ServerinfoResponse>> Serverinfo()
+		public async Task<Response<ServerinfoResponse>> Serverinfo()
 		{
-			var result = await _app.Request<ServerinfoResponse>("server-info", useToken: false);
+			Response<ServerinfoResponse> result = await _app.Request<ServerinfoResponse>("server-info", useToken: false);
 			return result;
 		}
 	}

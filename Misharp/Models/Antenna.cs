@@ -1,18 +1,14 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Antenna {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string Name { get; set; }
-		public class KeywordsItemsItemType {
-			public string Keywords { get; set; }
-		}
-		public List<List<KeywordsItemsItemType>> Keywords { get; set; }
-		public class ExcludeKeywordsItemsItemType {
-			public string ExcludeKeywords { get; set; }
-		}
-		public List<List<ExcludeKeywordsItemsItemType>> ExcludeKeywords { get; set; }
+		public List<List<string>> Keywords { get; set; }
+		public List<List<string>> ExcludeKeywords { get; set; }
 		public string Src { get; set; }
 		public string UserListId { get; set; }
 		public List<string> Users { get; set; }

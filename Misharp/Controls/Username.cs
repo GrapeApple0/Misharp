@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class UsernameApi {
 		private Misharp.App _app;
 		public UsernameApi(Misharp.App app)
@@ -19,13 +19,13 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<UsernameAvailableResponse>> Available(string username)
+		public async Task<Response<UsernameAvailableResponse>> Available(string username)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "username", username },
 			};
-			var result = await _app.Request<UsernameAvailableResponse>("username/available", param, useToken: false);
+			Response<UsernameAvailableResponse> result = await _app.Request<UsernameAvailableResponse>("username/available", param, useToken: false);
 			return result;
 		}
 	}

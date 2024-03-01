@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class PingApi {
 		private Misharp.App _app;
 		public PingApi(Misharp.App app)
@@ -19,9 +19,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<PingResponse>> Ping()
+		public async Task<Response<PingResponse>> Ping()
 		{
-			var result = await _app.Request<PingResponse>("ping", useToken: false);
+			Response<PingResponse> result = await _app.Request<PingResponse>("ping", useToken: false);
 			return result;
 		}
 	}

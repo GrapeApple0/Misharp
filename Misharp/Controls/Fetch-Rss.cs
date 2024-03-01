@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class FetchRssApi {
 		private Misharp.App _app;
 		public FetchRssApi(Misharp.App app)
@@ -21,13 +21,13 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<FetchrssResponse>> Fetchrss(string url)
+		public async Task<Response<FetchrssResponse>> Fetchrss(string url)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "url", url },
 			};
-			var result = await _app.Request<FetchrssResponse>("fetch-rss", param, useToken: false);
+			Response<FetchrssResponse> result = await _app.Request<FetchrssResponse>("fetch-rss", param, useToken: false);
 			return result;
 		}
 	}

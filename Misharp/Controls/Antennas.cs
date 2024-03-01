@@ -1,14 +1,14 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class AntennasApi {
 		private Misharp.App _app;
 		public AntennasApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<Antenna>> Create(string name,CreateSrcEnum src,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null,List<string>? keywords = null,List<string>? excludeKeywords = null,List<string>? users = null)
+		public async Task<Response<Model.Antenna>> Create(string name,CreateSrcEnum src,List<List<string>> keywords,List<List<string>> excludeKeywords,List<string> users,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -24,7 +24,7 @@ namespace Misharp.Controls {
 				{ "withFile", withFile },
 				{ "notify", notify },
 			};
-			var result = await _app.Request<Antenna>("antennas/create", param, useToken: true);
+			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/create", param, useToken: true);
 			return result;
 		}
 		public enum CreateSrcEnum {
@@ -39,21 +39,21 @@ namespace Misharp.Controls {
 			[StringValue("users_blacklist")]
 			Users_blacklist,
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string antennaId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string antennaId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "antennaId", antennaId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("antennas/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<Antenna>>> List()
+		public async Task<Response<List<Model.Antenna>>> List()
 		{
-			var result = await _app.Request<List<Antenna>>("antennas/list", useToken: true);
+			Response<List<Model.Antenna>> result = await _app.Request<List<Model.Antenna>>("antennas/list", useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<Note>>> Notes(string antennaId,string sinceId,string untilId,int sinceDate,int untilDate,int limit = 10)
+		public async Task<Response<List<Model.Note>>> Notes(string antennaId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -64,19 +64,19 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			var result = await _app.Request<List<Note>>("antennas/notes", param, useToken: true);
+			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("antennas/notes", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Antenna>> Show(string antennaId)
+		public async Task<Response<Model.Antenna>> Show(string antennaId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "antennaId", antennaId },
 			};
-			var result = await _app.Request<Antenna>("antennas/show", param, useToken: true);
+			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/show", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null,List<string>? keywords = null,List<string>? excludeKeywords = null,List<string>? users = null)
+		public async Task<Response<Model.Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,List<List<string>> keywords,List<List<string>> excludeKeywords,List<string> users,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -93,7 +93,7 @@ namespace Misharp.Controls {
 				{ "withFile", withFile },
 				{ "notify", notify },
 			};
-			var result = await _app.Request<Antenna>("antennas/update", param, useToken: true);
+			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/update", param, useToken: true);
 			return result;
 		}
 		public enum UpdateSrcEnum {

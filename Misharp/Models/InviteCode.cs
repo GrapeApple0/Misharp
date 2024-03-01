@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class InviteCode {
@@ -6,8 +8,8 @@ namespace Misharp.Model {
 		public string Code { get; set; }
 		public DateTime ExpiresAt { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public object CreatedBy { get; set; }
-		public object UsedBy { get; set; }
+		public JsonNode CreatedBy { get; set; }
+		public JsonNode UsedBy { get; set; }
 		public DateTime UsedAt { get; set; }
 		public bool Used { get; set; }
 		public override string ToString()

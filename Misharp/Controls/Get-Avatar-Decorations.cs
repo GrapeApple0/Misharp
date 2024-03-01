@@ -1,16 +1,16 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class GetAvatarDecorationsApi {
 		private Misharp.App _app;
 		public GetAvatarDecorationsApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<object>>> Getavatardecorations()
+		public async Task<Response<List<JsonNode>>> Getavatardecorations()
 		{
-			var result = await _app.Request<List<object>>("get-avatar-decorations", useToken: false);
+			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("get-avatar-decorations", useToken: false);
 			return result;
 		}
 	}

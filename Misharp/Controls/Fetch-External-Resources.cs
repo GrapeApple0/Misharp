@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class FetchExternalResourcesApi {
 		private Misharp.App _app;
 		public FetchExternalResourcesApi(Misharp.App app)
@@ -21,14 +21,14 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<FetchexternalresourcesResponse>> Fetchexternalresources(string url,string hash)
+		public async Task<Response<FetchexternalresourcesResponse>> Fetchexternalresources(string url,string hash)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "url", url },
 				{ "hash", hash },
 			};
-			var result = await _app.Request<FetchexternalresourcesResponse>("fetch-external-resources", param, useToken: true);
+			Response<FetchexternalresourcesResponse> result = await _app.Request<FetchexternalresourcesResponse>("fetch-external-resources", param, useToken: true);
 			return result;
 		}
 	}

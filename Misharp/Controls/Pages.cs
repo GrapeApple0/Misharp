@@ -1,14 +1,14 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class PagesApi {
 		private Misharp.App _app;
 		public PagesApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<Page>> Create(string title,string name,string script,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null,CreateFontEnum font = CreateFontEnum.SansSerif,bool alignCenter = false,bool hideTitleWhenPinned = false)
+		public async Task<Response<Model.Page>> Create(string title,string name,List<object> content,List<object> variables,string script,string? summary = null,string? eyeCatchingImageId = null,CreateFontEnum font = CreateFontEnum.SansSerif,bool alignCenter = false,bool hideTitleWhenPinned = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -23,7 +23,7 @@ namespace Misharp.Controls {
 				{ "alignCenter", alignCenter },
 				{ "hideTitleWhenPinned", hideTitleWhenPinned },
 			};
-			var result = await _app.Request<Page>("pages/create", param, useToken: true);
+			Response<Model.Page> result = await _app.Request<Model.Page>("pages/create", param, useToken: true);
 			return result;
 		}
 		public enum CreateFontEnum {
@@ -32,30 +32,30 @@ namespace Misharp.Controls {
 			[StringValue("sans-serif")]
 			SansSerif,
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string pageId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string pageId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "pageId", pageId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("pages/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("pages/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<Page>>> Featured()
+		public async Task<Response<List<Model.Page>>> Featured()
 		{
-			var result = await _app.Request<List<Page>>("pages/featured", useToken: false);
+			Response<List<Model.Page>> result = await _app.Request<List<Model.Page>>("pages/featured", useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Like(string pageId)
+		public async Task<Response<Model.EmptyResponse>> Like(string pageId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "pageId", pageId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("pages/like", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("pages/like", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Page>> Show(string pageId,string name,string username)
+		public async Task<Response<Model.Page>> Show(string pageId,string name,string username)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -63,19 +63,19 @@ namespace Misharp.Controls {
 				{ "name", name },
 				{ "username", username },
 			};
-			var result = await _app.Request<Page>("pages/show", param, useToken: false);
+			Response<Model.Page> result = await _app.Request<Model.Page>("pages/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Unlike(string pageId)
+		public async Task<Response<Model.EmptyResponse>> Unlike(string pageId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "pageId", pageId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("pages/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("pages/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Update(string pageId,string title,string name,string script,UpdateFontEnum font,bool alignCenter,bool hideTitleWhenPinned,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null)
+		public async Task<Response<Model.EmptyResponse>> Update(string pageId,string title,string name,List<object> content,List<object> variables,string script,UpdateFontEnum font,bool alignCenter,bool hideTitleWhenPinned,string? summary = null,string? eyeCatchingImageId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -91,7 +91,7 @@ namespace Misharp.Controls {
 				{ "alignCenter", alignCenter },
 				{ "hideTitleWhenPinned", hideTitleWhenPinned },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("pages/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("pages/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum UpdateFontEnum {

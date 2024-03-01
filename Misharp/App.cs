@@ -1,5 +1,4 @@
 ﻿using Misharp.Controls;
-using Misharp.Models;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -160,7 +159,7 @@ public class App
         throw new Exception(resultContent);
     }
 
-    public async Task<Response<T>> Request<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    public async Task<Model.Response<T>> Request<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
         using var client = new HttpClient();
         var param = (from kv in ps
@@ -199,15 +198,14 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
-            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
-            Console.WriteLine(resultContent);
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Model.Response<T>(response.StatusCode);
             var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return new Response<T>(response.StatusCode, result);
+            if (result != null) return new Model.Response<T>(response.StatusCode, result);
         }
         throw new Exception(resultContent);
     }
 
-    public async Task<Response<T>> Request<T>(string endpoint, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    public async Task<Model.Response<T>> Request<T>(string endpoint, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
         using var client = new HttpClient();
         var param = new Dictionary<string, object>();
@@ -240,9 +238,9 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
-            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Model.Response<T>(response.StatusCode);
             var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return new Response<T>(response.StatusCode, result);
+            if (result != null) return new Model.Response<T>(response.StatusCode, result);
         }
         throw new Exception(resultContent);
     }
@@ -259,7 +257,7 @@ public class App
         return ms.ToArray();
     }
 
-    public async Task<Response<T>> RequestFormData<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    public async Task<Model.Response<T>> RequestFormData<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
         using var client = new HttpClient();
         MultipartFormDataContent content = new MultipartFormDataContent();
@@ -311,9 +309,9 @@ public class App
         };
         if (response.StatusCode == successStatusCode)
         {
-            if (response.StatusCode == HttpStatusCode.NoContent) return new Response<T>(response.StatusCode);
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Model.Response<T>(response.StatusCode);
             var result = JsonSerializer.Deserialize<T>(resultContent, options);
-            if (result != null) return new Response<T>(response.StatusCode, result);
+            if (result != null) return new Model.Response<T>(response.StatusCode, result);
         }
         throw new Exception(resultContent);
     }

@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class MiauthApi {
 		private Misharp.App _app;
 		public MiauthApi(Misharp.App app)
@@ -19,7 +19,7 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<MiauthGentokenResponse>> Gentoken(string? session = null,string? name = null,string? description = null,string? iconUrl = null,List<string>? permission = null)
+		public async Task<Response<MiauthGentokenResponse>> Gentoken(List<string> permission,string? session = null,string? name = null,string? description = null,string? iconUrl = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -29,7 +29,7 @@ namespace Misharp.Controls {
 				{ "iconUrl", iconUrl },
 				{ "permission", permission },
 			};
-			var result = await _app.Request<MiauthGentokenResponse>("miauth/gen-token", param, useToken: true);
+			Response<MiauthGentokenResponse> result = await _app.Request<MiauthGentokenResponse>("miauth/gen-token", param, useToken: true);
 			return result;
 		}
 	}

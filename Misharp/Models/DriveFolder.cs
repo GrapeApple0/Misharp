@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class DriveFolder {
@@ -8,7 +10,7 @@ namespace Misharp.Model {
 		public string ParentId { get; set; }
 		public decimal FoldersCount { get; set; }
 		public decimal FilesCount { get; set; }
-		public object Parent { get; set; }
+		public JsonNode Parent { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

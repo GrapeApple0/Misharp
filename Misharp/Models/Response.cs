@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Misharp.Models
+namespace Misharp.Model
 {
     public class Response<T> where T : class
     {

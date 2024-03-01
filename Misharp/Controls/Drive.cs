@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class DriveApi {
 		private Misharp.App _app;
 		public Drive.FilesApi FilesApi;
@@ -25,12 +25,12 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<DriveResponse>> Drive()
+		public async Task<Response<DriveResponse>> Drive()
 		{
-			var result = await _app.Request<DriveResponse>("drive", useToken: true);
+			Response<DriveResponse> result = await _app.Request<DriveResponse>("drive", useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<DriveFile>>> Files(string sinceId,string untilId,int limit = 10,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
+		public async Task<Response<List<Model.DriveFile>>> Files(string sinceId,int limit = 10,string? untilId = null,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -41,7 +41,7 @@ namespace Misharp.Controls {
 				{ "type", type },
 				{ "sort", sort },
 			};
-			var result = await _app.Request<List<DriveFile>>("drive/files", param, useToken: true);
+			Response<List<Model.DriveFile>> result = await _app.Request<List<Model.DriveFile>>("drive/files", param, useToken: true);
 			return result;
 		}
 		public enum FilesSortEnum {
@@ -58,7 +58,7 @@ namespace Misharp.Controls {
 			[StringValue("-size")]
 			Minussize,
 		}
-		public async Task<Models.Response<List<DriveFolder>>> Folders(string sinceId,string untilId,int limit = 10,string? folderId = null)
+		public async Task<Response<List<Model.DriveFolder>>> Folders(string sinceId,int limit = 10,string? untilId = null,string? folderId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -67,10 +67,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<List<DriveFolder>>("drive/folders", param, useToken: true);
+			Response<List<Model.DriveFolder>> result = await _app.Request<List<Model.DriveFolder>>("drive/folders", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<DriveFile>>> Stream(string sinceId,string untilId,string type,int limit = 10)
+		public async Task<Response<List<Model.DriveFile>>> Stream(string sinceId,string type,int limit = 10,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -79,7 +79,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "type", type },
 			};
-			var result = await _app.Request<List<DriveFile>>("drive/stream", param, useToken: true);
+			Response<List<Model.DriveFile>> result = await _app.Request<List<Model.DriveFile>>("drive/stream", param, useToken: true);
 			return result;
 		}
 	}
@@ -92,7 +92,7 @@ namespace Misharp.Controls.Drive {
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<Note>>> Attachednotes(string sinceId,string untilId,string fileId,int limit = 10)
+		public async Task<Response<List<Model.Note>>> Attachednotes(string sinceId,string fileId,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -101,10 +101,10 @@ namespace Misharp.Controls.Drive {
 				{ "limit", limit },
 				{ "fileId", fileId },
 			};
-			var result = await _app.Request<List<Note>>("drive/files/attached-notes", param, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("drive/files/attached-notes", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<DriveFile>> Create(Stream file,string? folderId = null,string? name = null,string? comment = null,bool isSensitive = false,bool force = false)
+		public async Task<Response<Model.DriveFile>> Create(Stream file,string? folderId = null,string? name = null,string? comment = null,bool isSensitive = false,bool force = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -115,48 +115,48 @@ namespace Misharp.Controls.Drive {
 				{ "force", force },
 				{ "file", file },
 			};
-			var result = await _app.RequestFormData<DriveFile>("drive/files/create", param, useToken: true);
+			var result = await _app.RequestFormData<Model.DriveFile>("drive/files/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string fileId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string fileId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "fileId", fileId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("drive/files/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("drive/files/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<DriveFile>>> Findbyhash(string md5)
+		public async Task<Response<List<Model.DriveFile>>> Findbyhash(string md5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "md5", md5 },
 			};
-			var result = await _app.Request<List<DriveFile>>("drive/files/find-by-hash", param, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/files/find-by-hash", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<DriveFile>>> Find(string name,string? folderId = null)
+		public async Task<Response<List<Model.DriveFile>>> Find(string name,string? folderId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<List<DriveFile>>("drive/files/find", param, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/files/find", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<DriveFile>> Show(string fileId,string url)
+		public async Task<Response<Model.DriveFile>> Show(string fileId,string url)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "fileId", fileId },
 				{ "url", url },
 			};
-			var result = await _app.Request<DriveFile>("drive/files/show", param, useToken: true);
+			var result = await _app.Request<Model.DriveFile>("drive/files/show", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<DriveFile>> Update(string fileId,string name,bool isSensitive,string? folderId = null,string? comment = null)
+		public async Task<Response<Model.DriveFile>> Update(string fileId,string name,bool isSensitive,string? folderId = null,string? comment = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -166,10 +166,10 @@ namespace Misharp.Controls.Drive {
 				{ "isSensitive", isSensitive },
 				{ "comment", comment },
 			};
-			var result = await _app.Request<DriveFile>("drive/files/update", param, useToken: true);
+			var result = await _app.Request<Model.DriveFile>("drive/files/update", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Uploadfromurl(string url,string? folderId = null,bool isSensitive = false,string? comment = null,string? marker = null,bool force = false)
+		public async Task<Response<Model.EmptyResponse>> Uploadfromurl(string url,string? folderId = null,bool isSensitive = false,string? comment = null,string? marker = null,bool force = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -180,7 +180,7 @@ namespace Misharp.Controls.Drive {
 				{ "marker", marker },
 				{ "force", force },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("drive/files/upload-from-url", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("drive/files/upload-from-url", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -191,45 +191,45 @@ namespace Misharp.Controls.Drive {
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<DriveFolder>> Create(string name = "Untitled",string? parentId = null)
+		public async Task<Response<Model.DriveFolder>> Create(string name = "Untitled",string? parentId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<DriveFolder>("drive/folders/create", param, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string folderId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string folderId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("drive/folders/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("drive/folders/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<DriveFolder>>> Find(string name,string? parentId = null)
+		public async Task<Response<List<Model.DriveFolder>>> Find(string name,string? parentId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<List<DriveFolder>>("drive/folders/find", param, useToken: true);
+			var result = await _app.Request<List<Model.DriveFolder>>("drive/folders/find", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<DriveFolder>> Show(string folderId)
+		public async Task<Response<Model.DriveFolder>> Show(string folderId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<DriveFolder>("drive/folders/show", param, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/show", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<DriveFolder>> Update(string folderId,string name,string? parentId = null)
+		public async Task<Response<Model.DriveFolder>> Update(string folderId,string name,string? parentId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -237,7 +237,7 @@ namespace Misharp.Controls.Drive {
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<DriveFolder>("drive/folders/update", param, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/update", param, useToken: true);
 			return result;
 		}
 	}

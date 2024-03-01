@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class UserDetailedNotMe {
@@ -8,19 +10,13 @@ namespace Misharp.Model {
 		public string Host { get; set; }
 		public string AvatarUrl { get; set; }
 		public string AvatarBlurhash { get; set; }
-		public class AvatarDecorationsItemType {
-			public object AvatarDecorations { get; set; }
-		}
-		public List<AvatarDecorationsItemType> AvatarDecorations { get; set; }
+		public List<object> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
 		public bool IsCat { get; set; }
-		public object Instance { get; set; }
-		public object Emojis { get; set; }
+		public JsonNode Instance { get; set; }
+		public JsonNode Emojis { get; set; }
 		public string OnlineStatus { get; set; }
-		public class BadgeRolesItemType {
-			public object BadgeRoles { get; set; }
-		}
-		public List<BadgeRolesItemType> BadgeRoles { get; set; }
+		public List<object> BadgeRoles { get; set; }
 		public string Url { get; set; }
 		public string Uri { get; set; }
 		public string MovedTo { get; set; }
@@ -37,10 +33,7 @@ namespace Misharp.Model {
 		public string Location { get; set; }
 		public string Birthday { get; set; }
 		public string Lang { get; set; }
-		public class FieldsItemType {
-			public object Fields { get; set; }
-		}
-		public List<FieldsItemType> Fields { get; set; }
+		public List<object> Fields { get; set; }
 		public List<string> VerifiedLinks { get; set; }
 		public decimal FollowersCount { get; set; }
 		public decimal FollowingCount { get; set; }
@@ -48,7 +41,7 @@ namespace Misharp.Model {
 		public List<string> PinnedNoteIds { get; set; }
 		public List<Note> PinnedNotes { get; set; }
 		public string PinnedPageId { get; set; }
-		public object PinnedPage { get; set; }
+		public JsonNode PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
 		public string FollowingVisibility { get; set; }
 		public string FollowersVisibility { get; set; }

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Signin {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string Ip { get; set; }
-		public object Headers { get; set; }
+		public JsonNode Headers { get; set; }
 		public bool Success { get; set; }
 		public override string ToString()
 		{

@@ -1,14 +1,14 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class FlashApi {
 		private Misharp.App _app;
 		public FlashApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<Flash>> Create(string title,string summary,string script,List<string>? permissions = null)
+		public async Task<Response<Model.Flash>> Create(string title,string summary,string script,List<string> permissions)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -17,52 +17,51 @@ namespace Misharp.Controls {
 				{ "script", script },
 				{ "permissions", permissions },
 			};
-			var result = await _app.Request<Flash>("flash/create", param, useToken: true);
+			Response<Model.Flash> result = await _app.Request<Model.Flash>("flash/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string flashId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string flashId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "flashId", flashId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("flash/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("flash/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<Flash>>> Featured()
+		public async Task<Response<List<Model.Flash>>> Featured()
 		{
-			var result = await _app.Request<List<Flash>>("flash/featured", useToken: false);
+			Response<List<Model.Flash>> result = await _app.Request<List<Model.Flash>>("flash/featured", useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Like(string flashId)
-		{
-			var param = new Dictionary<string, object?>	
-			{
-				{ "flashId", flashId },
-			};
-			var result = await _app.Request<Models.EmptyResponse>("flash/like", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-			return result;
-		}
-		public async Task<Models.Response<Flash>> Show(string flashId,string username)
-		{
-			var param = new Dictionary<string, object?>	
-			{
-				{ "flashId", flashId },
-				{ "username", username },
-			};
-			var result = await _app.Request<Flash>("flash/show", param, useToken: false);
-			return result;
-		}
-		public async Task<Models.Response<Models.EmptyResponse>> Unlike(string flashId)
+		public async Task<Response<Model.EmptyResponse>> Like(string flashId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "flashId", flashId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("flash/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("flash/like", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Update(string flashId,string title,string summary,string script,UpdateVisibilityEnum visibility,List<string>? permissions = null)
+		public async Task<Response<Model.Flash>> Show(string flashId)
+		{
+			var param = new Dictionary<string, object?>	
+			{
+				{ "flashId", flashId },
+			};
+			Response<Model.Flash> result = await _app.Request<Model.Flash>("flash/show", param, useToken: false);
+			return result;
+		}
+		public async Task<Response<Model.EmptyResponse>> Unlike(string flashId)
+		{
+			var param = new Dictionary<string, object?>	
+			{
+				{ "flashId", flashId },
+			};
+			var result = await _app.Request<Model.EmptyResponse>("flash/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			return result;
+		}
+		public async Task<Response<Model.EmptyResponse>> Update(string flashId,string title,string summary,string script,List<string> permissions,UpdateVisibilityEnum visibility)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -73,7 +72,7 @@ namespace Misharp.Controls {
 				{ "permissions", permissions },
 				{ "visibility", visibility },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("flash/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("flash/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum UpdateVisibilityEnum {
@@ -82,7 +81,7 @@ namespace Misharp.Controls {
 			[StringValue("private")]
 			Private,
 		}
-		public async Task<Models.Response<List<Flash>>> My(string sinceId,string untilId,int limit = 10)
+		public async Task<Response<List<Model.Flash>>> My(string sinceId,int limit = 10,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -90,10 +89,10 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<Flash>>("flash/my", param, useToken: true);
+			Response<List<Model.Flash>> result = await _app.Request<List<Model.Flash>>("flash/my", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<object>>> Mylikes(string sinceId,string untilId,int limit = 10)
+		public async Task<Response<List<JsonNode>>> Mylikes(string sinceId,int limit = 10,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -101,7 +100,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<object>>("flash/my-likes", param, useToken: true);
+			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("flash/my-likes", param, useToken: true);
 			return result;
 		}
 	}

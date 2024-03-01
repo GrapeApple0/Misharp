@@ -8,13 +8,13 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<object>>> Ranking(string gameMode)
+		public async Task<Model.Response<List<object>>> Ranking(string gameMode)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "gameMode", gameMode },
 			};
-			var result = await _app.Request<List<object>>("bubble-game/ranking", param, useToken: false);
+			Model.Response<List<object>> result = await _app.Request<List<object>>("bubble-game/ranking", param, useToken: false);
 			return result;
 		}
 	}

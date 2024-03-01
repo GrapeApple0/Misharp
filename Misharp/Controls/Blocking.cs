@@ -1,32 +1,32 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class BlockingApi {
 		private Misharp.App _app;
 		public BlockingApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<UserDetailedNotMe>> Create(string userId)
+		public async Task<Response<Model.UserDetailedNotMe>> Create(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<UserDetailedNotMe>("blocking/create", param, useToken: true);
+			Response<Model.UserDetailedNotMe> result = await _app.Request<Model.UserDetailedNotMe>("blocking/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<UserDetailedNotMe>> Delete(string userId)
+		public async Task<Response<Model.UserDetailedNotMe>> Delete(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<UserDetailedNotMe>("blocking/delete", param, useToken: true);
+			Response<Model.UserDetailedNotMe> result = await _app.Request<Model.UserDetailedNotMe>("blocking/delete", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<Blocking>>> List(string sinceId,string untilId,int limit = 30)
+		public async Task<Response<List<Model.Blocking>>> List(string sinceId,int limit = 30,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -34,7 +34,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<Blocking>>("blocking/list", param, useToken: true);
+			Response<List<Model.Blocking>> result = await _app.Request<List<Model.Blocking>>("blocking/list", param, useToken: true);
 			return result;
 		}
 	}

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class MeDetailedOnly {
@@ -27,29 +29,17 @@ namespace Misharp.Model {
 		public bool HasUnreadNotification { get; set; }
 		public bool HasPendingReceivedFollowRequest { get; set; }
 		public decimal UnreadNotificationsCount { get; set; }
-		public class MutedWordsItemsItemType {
-			public string MutedWords { get; set; }
-		}
-		public List<List<MutedWordsItemsItemType>> MutedWords { get; set; }
-		public class HardMutedWordsItemsItemType {
-			public string HardMutedWords { get; set; }
-		}
-		public List<List<HardMutedWordsItemsItemType>> HardMutedWords { get; set; }
+		public List<List<string>> MutedWords { get; set; }
+		public List<List<string>> HardMutedWords { get; set; }
 		public List<string> MutedInstances { get; set; }
-		public object NotificationRecieveConfig { get; set; }
+		public JsonNode NotificationRecieveConfig { get; set; }
 		public List<string> EmailNotificationTypes { get; set; }
-		public class AchievementsItemType {
-			public object Achievements { get; set; }
-		}
-		public List<AchievementsItemType> Achievements { get; set; }
+		public List<object> Achievements { get; set; }
 		public decimal LoggedInDays { get; set; }
-		public object Policies { get; set; }
+		public RolePolicies Policies { get; set; }
 		public string Email { get; set; }
 		public bool EmailVerified { get; set; }
-		public class SecurityKeysListItemType {
-			public object SecurityKeysList { get; set; }
-		}
-		public List<SecurityKeysListItemType> SecurityKeysList { get; set; }
+		public List<object> SecurityKeysList { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -110,7 +100,16 @@ namespace Misharp.Model {
 			if (this.Achievements != null && this.Achievements.Count > 0) this.Achievements.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 			sb.Append("  }\n");
 			sb.Append($"  loggedInDays: {this.LoggedInDays}\n");
-			sb.Append($"  policies: {this.Policies}\n");
+			var sbpolicies = new StringBuilder();
+			sbpolicies.Append("  policies: {\n");
+			if (this.Policies != null)
+			{
+				sbpolicies.Append(this.Policies);
+				sbpolicies.Replace("\n", "\n    ");
+				sbpolicies.Append("\n");
+			}
+			sbpolicies.Append("  }\n");
+			sb.Append(sbpolicies);
 			sb.Append($"  email: {this.Email}\n");
 			sb.Append($"  emailVerified: {this.EmailVerified}\n");
 			sb.Append("  securityKeysList: {\n");

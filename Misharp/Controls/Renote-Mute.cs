@@ -1,32 +1,32 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class RenoteMuteApi {
 		private Misharp.App _app;
 		public RenoteMuteApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Create(string userId)
+		public async Task<Response<Model.EmptyResponse>> Create(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("renote-mute/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("renote-mute/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string userId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("renote-mute/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("renote-mute/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<RenoteMuting>>> List(string sinceId,string untilId,int limit = 30)
+		public async Task<Response<List<Model.RenoteMuting>>> List(string sinceId,int limit = 30,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -34,7 +34,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<RenoteMuting>>("renote-mute/list", param, useToken: true);
+			Response<List<Model.RenoteMuting>> result = await _app.Request<List<Model.RenoteMuting>>("renote-mute/list", param, useToken: true);
 			return result;
 		}
 	}

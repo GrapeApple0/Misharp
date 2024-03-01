@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Page {
@@ -7,14 +9,8 @@ namespace Misharp.Model {
 		public DateTime UpdatedAt { get; set; }
 		public string UserId { get; set; }
 		public UserLite User { get; set; }
-		public class ContentItemType {
-			public object Content { get; set; }
-		}
-		public List<ContentItemType> Content { get; set; }
-		public class VariablesItemType {
-			public object Variables { get; set; }
-		}
-		public List<VariablesItemType> Variables { get; set; }
+		public List<PageBlock> Content { get; set; }
+		public List<object> Variables { get; set; }
 		public string Title { get; set; }
 		public string Name { get; set; }
 		public string Summary { get; set; }
@@ -23,7 +19,7 @@ namespace Misharp.Model {
 		public string Font { get; set; }
 		public string Script { get; set; }
 		public string EyeCatchingImageId { get; set; }
-		public object EyeCatchingImage { get; set; }
+		public JsonNode EyeCatchingImage { get; set; }
 		public List<DriveFile> AttachedFiles { get; set; }
 		public decimal LikedCount { get; set; }
 		public bool IsLiked { get; set; }
@@ -46,7 +42,19 @@ namespace Misharp.Model {
 			sbuser.Append("  }\n");
 			sb.Append(sbuser);
 			sb.Append("  content: {\n");
-			if (this.Content != null && this.Content.Count > 0) this.Content.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
+			if (this.Content != null && this.Content.Count > 0)
+			{
+				var sb2 = new StringBuilder();
+				sb2.Append("    ");
+				this.Content.ForEach(item =>
+				{
+					sb2.Append(item).Append(",");
+					if (item != this.Content.Last()) sb2.Append("\n");
+				});
+				sb2.Replace("\n", "\n    ");
+				sb2.Append("\n");
+				sb.Append(sb2);
+			}
 			sb.Append("  }\n");
 			sb.Append("  variables: {\n");
 			if (this.Variables != null && this.Variables.Count > 0) this.Variables.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));

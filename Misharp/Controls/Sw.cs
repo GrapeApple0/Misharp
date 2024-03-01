@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class SwApi {
 		private Misharp.App _app;
 		public SwApi(Misharp.App app)
@@ -23,13 +23,13 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<SwShowregistrationResponse>> Showregistration(string endpoint)
+		public async Task<Response<SwShowregistrationResponse>> Showregistration(string endpoint)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 			};
-			var result = await _app.Request<SwShowregistrationResponse>("sw/show-registration", param, useToken: true);
+			Response<SwShowregistrationResponse> result = await _app.Request<SwShowregistrationResponse>("sw/show-registration", param, useToken: true);
 			return result;
 		}
 		public class SwUpdateregistrationResponse {
@@ -47,14 +47,14 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<SwUpdateregistrationResponse>> Updateregistration(string endpoint,bool sendReadMessage)
+		public async Task<Response<SwUpdateregistrationResponse>> Updateregistration(string endpoint,bool sendReadMessage)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 				{ "sendReadMessage", sendReadMessage },
 			};
-			var result = await _app.Request<SwUpdateregistrationResponse>("sw/update-registration", param, useToken: true);
+			Response<SwUpdateregistrationResponse> result = await _app.Request<SwUpdateregistrationResponse>("sw/update-registration", param, useToken: true);
 			return result;
 		}
 		public class SwRegisterResponse {
@@ -76,7 +76,7 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<SwRegisterResponse>> Register(string endpoint,string auth,string publickey,bool sendReadMessage = false)
+		public async Task<Response<SwRegisterResponse>> Register(string endpoint,string auth,string publickey,bool sendReadMessage = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -85,16 +85,16 @@ namespace Misharp.Controls {
 				{ "publickey", publickey },
 				{ "sendReadMessage", sendReadMessage },
 			};
-			var result = await _app.Request<SwRegisterResponse>("sw/register", param, useToken: true);
+			Response<SwRegisterResponse> result = await _app.Request<SwRegisterResponse>("sw/register", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Unregister(string endpoint)
+		public async Task<Response<Model.EmptyResponse>> Unregister(string endpoint)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("sw/unregister", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("sw/unregister", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

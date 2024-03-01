@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class AuthApi {
 		private Misharp.App _app;
 		public Auth.SessionApi SessionApi;
@@ -10,13 +10,13 @@ namespace Misharp.Controls {
 			_app = app;
 			SessionApi = new Auth.SessionApi(_app);
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Accept(string token)
+		public async Task<Response<Model.EmptyResponse>> Accept(string token)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "token", token },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("auth/accept", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("auth/accept", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -42,7 +42,7 @@ namespace Misharp.Controls.Auth {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<AuthSessionGenerateResponse>> Generate(string appSecret)
+		public async Task<Response<AuthSessionGenerateResponse>> Generate(string appSecret)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -53,7 +53,7 @@ namespace Misharp.Controls.Auth {
 		}
 		public class AuthSessionShowResponse {
 			public string Id { get; set; }
-			public App App { get; set; }
+			public Model.App App { get; set; }
 			public string Token { get; set; }
 			public override string ToString()
 			{
@@ -75,7 +75,7 @@ namespace Misharp.Controls.Auth {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<AuthSessionShowResponse>> Show(string token)
+		public async Task<Response<AuthSessionShowResponse>> Show(string token)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -86,7 +86,7 @@ namespace Misharp.Controls.Auth {
 		}
 		public class AuthSessionUserkeyResponse {
 			public string AccessToken { get; set; }
-			public UserDetailedNotMe User { get; set; }
+			public Model.UserDetailedNotMe User { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
@@ -106,7 +106,7 @@ namespace Misharp.Controls.Auth {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<AuthSessionUserkeyResponse>> Userkey(string appSecret,string token)
+		public async Task<Response<AuthSessionUserkeyResponse>> Userkey(string appSecret,string token)
 		{
 			var param = new Dictionary<string, object?>	
 			{

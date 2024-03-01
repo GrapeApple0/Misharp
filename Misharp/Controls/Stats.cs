@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class StatsApi {
 		private Misharp.App _app;
 		public StatsApi(Misharp.App app)
@@ -31,9 +31,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<StatsResponse>> Stats()
+		public async Task<Response<StatsResponse>> Stats()
 		{
-			var result = await _app.Request<StatsResponse>("stats", useToken: false);
+			Response<StatsResponse> result = await _app.Request<StatsResponse>("stats", useToken: false);
 			return result;
 		}
 	}

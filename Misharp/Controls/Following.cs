@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class FollowingApi {
 		private Misharp.App _app;
 		public Following.RequestsApi RequestsApi;
@@ -10,26 +10,26 @@ namespace Misharp.Controls {
 			_app = app;
 			RequestsApi = new Following.RequestsApi(_app);
 		}
-		public async Task<Models.Response<UserLite>> Create(string userId,bool withReplies)
+		public async Task<Response<Model.UserLite>> Create(string userId,bool withReplies)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 				{ "withReplies", withReplies },
 			};
-			var result = await _app.Request<UserLite>("following/create", param, useToken: true);
+			Response<Model.UserLite> result = await _app.Request<Model.UserLite>("following/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<UserLite>> Delete(string userId)
+		public async Task<Response<Model.UserLite>> Delete(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<UserLite>("following/delete", param, useToken: true);
+			Response<Model.UserLite> result = await _app.Request<Model.UserLite>("following/delete", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<UserLite>> Update(string userId,UpdateNotifyEnum notify,bool withReplies)
+		public async Task<Response<Model.UserLite>> Update(string userId,UpdateNotifyEnum notify,bool withReplies)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -37,7 +37,7 @@ namespace Misharp.Controls {
 				{ "notify", notify },
 				{ "withReplies", withReplies },
 			};
-			var result = await _app.Request<UserLite>("following/update", param, useToken: true);
+			Response<Model.UserLite> result = await _app.Request<Model.UserLite>("following/update", param, useToken: true);
 			return result;
 		}
 		public enum UpdateNotifyEnum {
@@ -46,14 +46,14 @@ namespace Misharp.Controls {
 			[StringValue("none")]
 			None,
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Updateall(UpdateallNotifyEnum notify,bool withReplies)
+		public async Task<Response<Model.EmptyResponse>> Updateall(UpdateallNotifyEnum notify,bool withReplies)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "notify", notify },
 				{ "withReplies", withReplies },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("following/update-all", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("following/update-all", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum UpdateallNotifyEnum {
@@ -62,13 +62,13 @@ namespace Misharp.Controls {
 			[StringValue("none")]
 			None,
 		}
-		public async Task<Models.Response<UserLite>> Invalidate(string userId)
+		public async Task<Response<Model.UserLite>> Invalidate(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<UserLite>("following/invalidate", param, useToken: true);
+			Response<Model.UserLite> result = await _app.Request<Model.UserLite>("following/invalidate", param, useToken: true);
 			return result;
 		}
 	}
@@ -81,25 +81,25 @@ namespace Misharp.Controls.Following {
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Accept(string userId)
+		public async Task<Response<Model.EmptyResponse>> Accept(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("following/requests/accept", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("following/requests/accept", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<UserLite>> Cancel(string userId)
+		public async Task<Response<Model.UserLite>> Cancel(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<UserLite>("following/requests/cancel", param, useToken: true);
+			var result = await _app.Request<Model.UserLite>("following/requests/cancel", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<object>>> List(string sinceId,string untilId,int limit = 10)
+		public async Task<Response<List<JsonNode>>> List(string sinceId,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -107,16 +107,16 @@ namespace Misharp.Controls.Following {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			var result = await _app.Request<List<object>>("following/requests/list", param, useToken: true);
+			var result = await _app.Request<List<JsonNode>>("following/requests/list", param, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Reject(string userId)
+		public async Task<Response<Model.EmptyResponse>> Reject(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("following/requests/reject", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("following/requests/reject", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

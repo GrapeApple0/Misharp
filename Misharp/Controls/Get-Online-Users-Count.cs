@@ -1,7 +1,7 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class GetOnlineUsersCountApi {
 		private Misharp.App _app;
 		public GetOnlineUsersCountApi(Misharp.App app)
@@ -19,9 +19,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<GetonlineuserscountResponse>> Getonlineuserscount()
+		public async Task<Response<GetonlineuserscountResponse>> Getonlineuserscount()
 		{
-			var result = await _app.Request<GetonlineuserscountResponse>("get-online-users-count", useToken: false);
+			Response<GetonlineuserscountResponse> result = await _app.Request<GetonlineuserscountResponse>("get-online-users-count", useToken: false);
 			return result;
 		}
 	}

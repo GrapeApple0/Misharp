@@ -1,14 +1,14 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class HashtagsApi {
 		private Misharp.App _app;
 		public HashtagsApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<Hashtag>>> List(ListSortEnum sort,int limit = 10,bool attachedToUserOnly = false,bool attachedToLocalUserOnly = false,bool attachedToRemoteUserOnly = false)
+		public async Task<Response<List<Model.Hashtag>>> List(ListSortEnum sort,int limit = 10,bool attachedToUserOnly = false,bool attachedToLocalUserOnly = false,bool attachedToRemoteUserOnly = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -18,7 +18,7 @@ namespace Misharp.Controls {
 				{ "attachedToRemoteUserOnly", attachedToRemoteUserOnly },
 				{ "sort", sort },
 			};
-			var result = await _app.Request<List<Hashtag>>("hashtags/list", param, useToken: false);
+			Response<List<Model.Hashtag>> result = await _app.Request<List<Model.Hashtag>>("hashtags/list", param, useToken: false);
 			return result;
 		}
 		public enum ListSortEnum {
@@ -47,7 +47,7 @@ namespace Misharp.Controls {
 			[StringValue("-attachedRemoteUsers")]
 			MinusattachedRemoteUsers,
 		}
-		public async Task<Models.Response<List<string>>> Search(string query,int limit = 10,int offset = 0)
+		public async Task<Response<List<string>>> Search(string query,int limit = 10,int offset = 0)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -55,24 +55,24 @@ namespace Misharp.Controls {
 				{ "query", query },
 				{ "offset", offset },
 			};
-			var result = await _app.Request<List<string>>("hashtags/search", param, useToken: false);
+			Response<List<string>> result = await _app.Request<List<string>>("hashtags/search", param, useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<Hashtag>> Show(string tag)
+		public async Task<Response<Model.Hashtag>> Show(string tag)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "tag", tag },
 			};
-			var result = await _app.Request<Hashtag>("hashtags/show", param, useToken: false);
+			Response<Model.Hashtag> result = await _app.Request<Model.Hashtag>("hashtags/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<List<object>>> Trend()
+		public async Task<Response<List<JsonNode>>> Trend()
 		{
-			var result = await _app.Request<List<object>>("hashtags/trend", useToken: false);
+			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("hashtags/trend", useToken: false);
 			return result;
 		}
-		public async Task<Models.Response<List<UserDetailed>>> Users(string tag,UsersSortEnum sort,int limit = 10,UsersStateEnum state = UsersStateEnum.All,UsersOriginEnum origin = UsersOriginEnum.Local)
+		public async Task<Response<List<Model.UserDetailed>>> Users(string tag,UsersSortEnum sort,int limit = 10,UsersStateEnum state = UsersStateEnum.All,UsersOriginEnum origin = UsersOriginEnum.Local)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -82,7 +82,7 @@ namespace Misharp.Controls {
 				{ "state", state },
 				{ "origin", origin },
 			};
-			var result = await _app.Request<List<UserDetailed>>("hashtags/users", param, useToken: false);
+			Response<List<Model.UserDetailed>> result = await _app.Request<List<Model.UserDetailed>>("hashtags/users", param, useToken: false);
 			return result;
 		}
 		public enum UsersSortEnum {

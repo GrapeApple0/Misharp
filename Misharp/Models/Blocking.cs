@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class Blocking {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string BlockeeId { get; set; }
-		public UserDetailed Blockee { get; set; }
+		public UserDetailedNotMe Blockee { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

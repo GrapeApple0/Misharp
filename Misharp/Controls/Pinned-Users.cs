@@ -1,16 +1,16 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class PinnedUsersApi {
 		private Misharp.App _app;
 		public PinnedUsersApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<List<UserDetailed>>> Pinnedusers()
+		public async Task<Response<List<Model.UserDetailed>>> Pinnedusers()
 		{
-			var result = await _app.Request<List<UserDetailed>>("pinned-users", useToken: false);
+			Response<List<Model.UserDetailed>> result = await _app.Request<List<Model.UserDetailed>>("pinned-users", useToken: false);
 			return result;
 		}
 	}

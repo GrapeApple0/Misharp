@@ -1,28 +1,28 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-namespace Misharp.Controls {
+using System.Text.Json.Nodes;namespace Misharp.Controls {
 	public class InviteApi {
 		private Misharp.App _app;
 		public InviteApi(Misharp.App app)
 		{
 			_app = app;
 		}
-		public async Task<Models.Response<InviteCode>> Create()
+		public async Task<Response<Model.InviteCode>> Create()
 		{
-			var result = await _app.Request<InviteCode>("invite/create", useToken: true);
+			Response<Model.InviteCode> result = await _app.Request<Model.InviteCode>("invite/create", useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<Models.EmptyResponse>> Delete(string inviteId)
+		public async Task<Response<Model.EmptyResponse>> Delete(string inviteId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "inviteId", inviteId },
 			};
-			var result = await _app.Request<Models.EmptyResponse>("invite/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("invite/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Models.Response<List<InviteCode>>> List(string sinceId,string untilId,int limit = 30)
+		public async Task<Response<List<Model.InviteCode>>> List(string sinceId,int limit = 30,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -30,7 +30,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<InviteCode>>("invite/list", param, useToken: true);
+			Response<List<Model.InviteCode>> result = await _app.Request<List<Model.InviteCode>>("invite/list", param, useToken: true);
 			return result;
 		}
 		public class InviteLimitResponse {
@@ -44,9 +44,9 @@ namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Models.Response<InviteLimitResponse>> Limit()
+		public async Task<Response<InviteLimitResponse>> Limit()
 		{
-			var result = await _app.Request<InviteLimitResponse>("invite/limit", useToken: true);
+			Response<InviteLimitResponse> result = await _app.Request<InviteLimitResponse>("invite/limit", useToken: true);
 			return result;
 		}
 	}
