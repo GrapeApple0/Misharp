@@ -8,8 +8,11 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.Antenna>> Create(string name,CreateSrcEnum src,List<List<string>> keywords,List<List<string>> excludeKeywords,List<string> users,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null)
+		public async Task<Response<Model.Antenna>> Create(string name,CreateSrcEnum src,bool caseSensitive,bool localOnly,bool excludeBots,bool withReplies,bool withFile,string? userListId = null,List<List<string>>? keywords = null,List<List<string>>? excludeKeywords = null,List<string>? users = null)
 		{
+			keywords ??= new();
+			excludeKeywords ??= new();
+			users ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
@@ -20,9 +23,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "users", users },
 				{ "caseSensitive", caseSensitive },
 				{ "localOnly", localOnly },
+				{ "excludeBots", excludeBots },
 				{ "withReplies", withReplies },
 				{ "withFile", withFile },
-				{ "notify", notify },
 			};
 			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/create", param, useToken: true);
 			return result;
@@ -53,7 +56,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Antenna>> result = await _app.Request<List<Model.Antenna>>("antennas/list", useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Notes(string antennaId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> Notes(string antennaId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -76,8 +79,11 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/show", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,List<List<string>> keywords,List<List<string>> excludeKeywords,List<string> users,bool caseSensitive,bool localOnly,bool withReplies,bool withFile,bool notify,string? userListId = null)
+		public async Task<Response<Model.Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,bool caseSensitive,bool localOnly,bool excludeBots,bool withReplies,bool withFile,string? userListId = null,List<List<string>>? keywords = null,List<List<string>>? excludeKeywords = null,List<string>? users = null)
 		{
+			keywords ??= new();
+			excludeKeywords ??= new();
+			users ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "antennaId", antennaId },
@@ -89,9 +95,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "users", users },
 				{ "caseSensitive", caseSensitive },
 				{ "localOnly", localOnly },
+				{ "excludeBots", excludeBots },
 				{ "withReplies", withReplies },
 				{ "withFile", withFile },
-				{ "notify", notify },
 			};
 			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/update", param, useToken: true);
 			return result;

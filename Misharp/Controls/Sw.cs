@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class SwShowregistrationResponse {
+		public class SwShowRegistrationResponse {
 			public string UserId { get; set; }
 			public string Endpoint { get; set; }
 			public bool SendReadMessage { get; set; }
@@ -23,16 +23,16 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<SwShowregistrationResponse>> Showregistration(string endpoint)
+		public async Task<Response<SwShowRegistrationResponse>> ShowRegistration(string endpoint)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 			};
-			Response<SwShowregistrationResponse> result = await _app.Request<SwShowregistrationResponse>("sw/show-registration", param, useToken: true);
+			Response<SwShowRegistrationResponse> result = await _app.Request<SwShowRegistrationResponse>("sw/show-registration", param, useToken: true);
 			return result;
 		}
-		public class SwUpdateregistrationResponse {
+		public class SwUpdateRegistrationResponse {
 			public string UserId { get; set; }
 			public string Endpoint { get; set; }
 			public bool SendReadMessage { get; set; }
@@ -47,14 +47,14 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<SwUpdateregistrationResponse>> Updateregistration(string endpoint,bool sendReadMessage)
+		public async Task<Response<SwUpdateRegistrationResponse>> UpdateRegistration(string endpoint,bool sendReadMessage)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "endpoint", endpoint },
 				{ "sendReadMessage", sendReadMessage },
 			};
-			Response<SwUpdateregistrationResponse> result = await _app.Request<SwUpdateregistrationResponse>("sw/update-registration", param, useToken: true);
+			Response<SwUpdateRegistrationResponse> result = await _app.Request<SwUpdateRegistrationResponse>("sw/update-registration", param, useToken: true);
 			return result;
 		}
 		public class SwRegisterResponse {

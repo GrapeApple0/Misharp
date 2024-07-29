@@ -13,6 +13,7 @@ namespace Misharp.Model {
 		public decimal FollowersCount { get; set; }
 		public bool IsNotResponding { get; set; }
 		public bool IsSuspended { get; set; }
+		public string SuspensionState { get; set; }
 		public bool IsBlocked { get; set; }
 		public string SoftwareName { get; set; }
 		public string SoftwareVersion { get; set; }
@@ -41,6 +42,7 @@ namespace Misharp.Model {
 			sb.Append($"  followersCount: {this.FollowersCount}\n");
 			sb.Append($"  isNotResponding: {this.IsNotResponding}\n");
 			sb.Append($"  isSuspended: {this.IsSuspended}\n");
+			sb.Append($"  suspensionState: {this.SuspensionState}\n");
 			sb.Append($"  isBlocked: {this.IsBlocked}\n");
 			sb.Append($"  softwareName: {this.SoftwareName}\n");
 			sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");

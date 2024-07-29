@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class ServerinfoResponse {
+		public class ServerInfoResponse {
 			public string Machine { get; set; }
 			public JsonNode Cpu { get; set; }
 			public JsonNode Mem { get; set; }
@@ -25,9 +25,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<ServerinfoResponse>> Serverinfo()
+		public async Task<Response<ServerInfoResponse>> ServerInfo()
 		{
-			Response<ServerinfoResponse> result = await _app.Request<ServerinfoResponse>("server-info", useToken: false);
+			Response<ServerInfoResponse> result = await _app.Request<ServerInfoResponse>("server-info", useToken: false);
 			return result;
 		}
 	}

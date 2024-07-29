@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class GetonlineuserscountResponse {
+		public class GetOnlineUsersCountResponse {
 			public decimal Count { get; set; }
 			public override string ToString()
 			{
@@ -19,9 +19,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<GetonlineuserscountResponse>> Getonlineuserscount()
+		public async Task<Response<GetOnlineUsersCountResponse>> GetOnlineUsersCount()
 		{
-			Response<GetonlineuserscountResponse> result = await _app.Request<GetonlineuserscountResponse>("get-online-users-count", useToken: false);
+			Response<GetOnlineUsersCountResponse> result = await _app.Request<GetOnlineUsersCountResponse>("get-online-users-count", useToken: false);
 			return result;
 		}
 	}

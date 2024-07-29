@@ -36,7 +36,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("channels/follow", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Followed(string sinceId,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Model.Channel>>> Followed(string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -47,7 +47,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/followed", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Owned(string sinceId,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Model.Channel>>> Owned(string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -67,7 +67,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.Channel> result = await _app.Request<Model.Channel>("channels/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Timeline(string channelId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false)
+		public async Task<Response<List<Model.Note>>> Timeline(string channelId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -91,8 +91,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("channels/unfollow", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.Channel>> Update(string channelId,string name,List<string> pinnedNoteIds,string color,string? description = null,string? bannerId = null,bool? isArchived = null,bool? isSensitive = null,bool? allowRenoteToExternal = null)
+		public async Task<Response<Model.Channel>> Update(string channelId,string name,string color,string? description = null,string? bannerId = null,bool? isArchived = null,List<string>? pinnedNoteIds = null,bool? isSensitive = null,bool? allowRenoteToExternal = null)
 		{
+			pinnedNoteIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "channelId", channelId },
@@ -126,12 +127,12 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("channels/unfavorite", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Myfavorites()
+		public async Task<Response<List<Model.Channel>>> MyFavorites()
 		{
 			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/my-favorites", useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Search(string query,string sinceId,SearchTypeEnum type = SearchTypeEnum.NameAndDescription,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Model.Channel>>> Search(string query,SearchTypeEnum type = SearchTypeEnum.NameAndDescription,string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{

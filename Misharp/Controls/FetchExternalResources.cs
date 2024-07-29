@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class FetchexternalresourcesResponse {
+		public class FetchExternalResourcesResponse {
 			public string Type { get; set; }
 			public string Data { get; set; }
 			public override string ToString()
@@ -21,14 +21,14 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<FetchexternalresourcesResponse>> Fetchexternalresources(string url,string hash)
+		public async Task<Response<FetchExternalResourcesResponse>> FetchExternalResources(string url,string hash)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "url", url },
 				{ "hash", hash },
 			};
-			Response<FetchexternalresourcesResponse> result = await _app.Request<FetchexternalresourcesResponse>("fetch-external-resources", param, useToken: true);
+			Response<FetchExternalResourcesResponse> result = await _app.Request<FetchExternalResourcesResponse>("fetch-external-resources", param, useToken: true);
 			return result;
 		}
 	}

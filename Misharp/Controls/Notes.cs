@@ -16,7 +16,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			ReactionsApi = new Notes.ReactionsApi(_app);
 			ThreadMutingApi = new Notes.ThreadMutingApi(_app);
 		}
-		public async Task<Response<List<Model.Note>>> Notes(bool reply,bool renote,bool withFiles,bool poll,string sinceId,bool local = false,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Notes(bool reply,bool renote,bool withFiles,bool poll,bool local = false,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -32,7 +32,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Children(string noteId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Children(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -64,6 +64,12 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/conversation", param, useToken: false);
 			return result;
 		}
+		public class NotesCreatePollPropertyObject {
+			public List<string> Choices { get; set; }
+			public bool Multiple { get; set; }
+			public int ExpiresAt { get; set; }
+			public int ExpiredAfter { get; set; }
+		}
 		public class NotesCreateResponse {
 			public Model.Note CreatedNote { get; set; }
 			public override string ToString()
@@ -84,8 +90,11 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<NotesCreateResponse>> Create(List<string> visibleUserIds,List<string> fileIds,List<string> mediaIds,CreateVisibilityEnum visibility = CreateVisibilityEnum.Public,string? cw = null,bool localOnly = false,CreateReactionAcceptanceEnum? reactionAcceptance = null,bool noExtractMentions = false,bool noExtractHashtags = false,bool noExtractEmojis = false,string? replyId = null,string? renoteId = null,string? channelId = null,string? text = null,JsonNode? poll = null)
+		public async Task<Response<NotesCreateResponse>> Create(CreateVisibilityEnum visibility = CreateVisibilityEnum.Public,List<string>? visibleUserIds = null,string? cw = null,bool localOnly = false,CreateReactionAcceptanceEnum? reactionAcceptance = null,bool noExtractMentions = false,bool noExtractHashtags = false,bool noExtractEmojis = false,string? replyId = null,string? renoteId = null,string? channelId = null,string? text = null,List<string>? fileIds = null,List<string>? mediaIds = null,object? poll = null)
 		{
+			visibleUserIds ??= new();
+			fileIds ??= new();
+			mediaIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "visibility", visibility },
@@ -106,6 +115,12 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			};
 			Response<NotesCreateResponse> result = await _app.Request<NotesCreateResponse>("notes/create", param, useToken: true);
 			return result;
+		}
+		public class CreatePollParamObject {
+			public List<string> Choices { get; set; }
+			public bool Multiple { get; set; }
+			public int ExpiresAt { get; set; }
+			public int ExpiredAfter { get; set; }
 		}
 		public enum CreateVisibilityEnum {
 			[StringValue("public")]
@@ -147,7 +162,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/featured", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Globaltimeline(string sinceId,bool withFiles = false,bool withRenotes = true,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> GlobalTimeline(bool withFiles = false,bool withRenotes = true,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -162,7 +177,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/global-timeline", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Hybridtimeline(string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true,bool withReplies = false)
+		public async Task<Response<List<Model.Note>>> HybridTimeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true,bool withReplies = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -182,7 +197,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/hybrid-timeline", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Localtimeline(string sinceId,bool withFiles = false,bool withRenotes = true,bool withReplies = false,int limit = 10,string? untilId = null,bool allowPartial = false,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> LocalTimeline(bool withFiles = false,bool withRenotes = true,bool withReplies = false,int limit = 10,string? sinceId = null,string? untilId = null,bool allowPartial = false,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -199,7 +214,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/local-timeline", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Mentions(string sinceId,string visibility,bool following = false,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Mentions(string visibility,bool following = false,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -212,7 +227,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/mentions", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.NoteReaction>>> Reactions(string noteId,string sinceId,string? type = null,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.NoteReaction>>> Reactions(string noteId,string? type = null,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -225,7 +240,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.NoteReaction>> result = await _app.Request<List<Model.NoteReaction>>("notes/reactions", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Renotes(string noteId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Renotes(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -237,7 +252,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/renotes", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Replies(string noteId,string sinceId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Note>>> Replies(string noteId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -249,8 +264,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/replies", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Searchbytag(string sinceId,string tag,List<List<string>> query,bool? reply = null,bool? renote = null,bool withFiles = false,bool? poll = null,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Note>>> SearchByTag(string tag,bool? reply = null,bool? renote = null,bool withFiles = false,bool? poll = null,string? sinceId = null,string? untilId = null,int limit = 10,List<List<string>>? query = null)
 		{
+			query ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "reply", reply },
@@ -266,7 +282,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("notes/search-by-tag", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Search(string query,string sinceId,string host,string? untilId = null,int limit = 10,int offset = 0,string? userId = null,string? channelId = null)
+		public async Task<Response<List<Model.Note>>> Search(string query,string host,string? sinceId = null,string? untilId = null,int limit = 10,int offset = 0,string? userId = null,string? channelId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -313,7 +329,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<NotesStateResponse> result = await _app.Request<NotesStateResponse>("notes/state", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Timeline(string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true)
+		public async Task<Response<List<Model.Note>>> Timeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -364,7 +380,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("notes/unrenote", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Userlisttimeline(string listId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withRenotes = true,bool withFiles = false)
+		public async Task<Response<List<Model.Note>>> UserListTimeline(string listId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withRenotes = true,bool withFiles = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -420,12 +436,13 @@ namespace Misharp.Controls.Notes {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Model.Note>>> Recommendation(int limit = 10,int offset = 0)
+		public async Task<Response<List<Model.Note>>> Recommendation(int limit = 10,int offset = 0,bool excludeChannels = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "limit", limit },
 				{ "offset", offset },
+				{ "excludeChannels", excludeChannels },
 			};
 			var result = await _app.Request<List<Model.Note>>("notes/polls/recommendation", param, useToken: true);
 			return result;

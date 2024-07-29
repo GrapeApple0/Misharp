@@ -13,7 +13,6 @@ public class App
     public string Token { get; set; }
     private bool UseHttps { get; }
 
-    //public AdminApi AdminApi { get; }
     public AnnouncementsApi AnnouncementsApi { get; }
     public AntennasApi AntennasApi { get; }
     public ApApi ApApi { get; }
@@ -26,6 +25,7 @@ public class App
     public EmailAddressApi EmailAddressApi { get; }
     public EndpointApi EndpointApi { get; }
     public EndpointsApi EndpointsApi { get; }
+    public ExportCustomEmojisApi ExportCustomEmojisApi { get; }
     public FederationApi FederationApi { get; }
     public FollowingApi FollowingApi { get; }
     public GalleryApi GalleryApi { get; }
@@ -37,12 +37,13 @@ public class App
     public MetaApi MetaApi { get; }
     public EmojisApi EmojisApi { get; }
     public EmojiApi EmojiApi { get; }
+    public MiauthApi MiauthApi { get; }
     public MuteApi MuteApi { get; }
     public RenoteMuteApi RenoteMuteApi { get; }
     public MyApi MyApi { get; }
     public NotesApi NotesApi { get; }
     public NotificationsApi NotificationsApi { get; }
-    //public PagesApi PagesApi { get; }
+    public PagesApi PagesApi { get; }
     public FlashApi FlashApi { get; }
     public PingApi PingApi { get; }
     public PinnedUsersApi PinnedUsersApi { get; }
@@ -66,7 +67,6 @@ public class App
         this.Host = host;
         this.Token = token;
         this.UseHttps = useHttps;
-        //this.AdminApi = new AdminApi(this);
         this.AnnouncementsApi = new AnnouncementsApi(this);
         this.AntennasApi = new AntennasApi(this);
         this.ApApi = new ApApi(this);
@@ -79,6 +79,7 @@ public class App
         this.EmailAddressApi = new EmailAddressApi(this);
         this.EndpointApi = new EndpointApi(this);
         this.EndpointsApi = new EndpointsApi(this);
+        this.ExportCustomEmojisApi = new ExportCustomEmojisApi(this);
         this.FederationApi = new FederationApi(this);
         this.FollowingApi = new FollowingApi(this);
         this.GalleryApi = new GalleryApi(this);
@@ -90,12 +91,13 @@ public class App
         this.MetaApi = new MetaApi(this);
         this.EmojisApi = new EmojisApi(this);
         this.EmojiApi = new EmojiApi(this);
+        this.MiauthApi = new MiauthApi(this);
         this.MuteApi = new MuteApi(this);
         this.RenoteMuteApi = new RenoteMuteApi(this);
         this.MyApi = new MyApi(this);
         this.NotesApi = new NotesApi(this);
         this.NotificationsApi = new NotificationsApi(this);
-        //this.PagesApi = new PagesApi(this);
+        this.PagesApi = new PagesApi(this);
         this.FlashApi = new FlashApi(this);
         this.PingApi = new PingApi(this);
         this.PinnedUsersApi = new PinnedUsersApi(this);
@@ -126,7 +128,7 @@ public class App
             if (p.Value is Enum e)
                 param[p.Key] = e.GetStringValue() ?? p.Value;
 
-        if (useToken)
+        if (this.Token != "")
         {
             var i = new Dictionary<string, object>
             {
@@ -140,6 +142,7 @@ public class App
                     pair => pair.Value
                 );
         }
+        else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
         var content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -170,7 +173,7 @@ public class App
             if (p.Value is Enum e)
                 param[p.Key] = e.GetStringValue() ?? p.Value;
 
-        if (useToken)
+        if (this.Token != "")
         {
             var i = new Dictionary<string, object>
             {
@@ -184,6 +187,7 @@ public class App
                     pair => pair.Value
                 );
         }
+        else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
         var content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -210,7 +214,7 @@ public class App
         using var client = new HttpClient();
         var param = new Dictionary<string, object>();
 
-        if (useToken)
+        if (this.Token != "")
         {
             var i = new Dictionary<string, object>
             {
@@ -224,6 +228,7 @@ public class App
                     pair => pair.Value
                 );
         }
+        else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
         var content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -288,7 +293,7 @@ public class App
                 content.Add(c);
             }
         }
-        if (useToken)
+        if (this.Token != "")
         {
             var i = new StringContent(this.Token, new UTF8Encoding(false));
             i.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data")
@@ -297,6 +302,7 @@ public class App
             };
             content.Add(i);
         }
+        else if (useToken) throw new Exception("This endpoint requires token");
         HttpResponseMessage response = await client.PostAsync($"http{(UseHttps ? 's' : String.Empty)}://{this.Host}/api/{endpoint}", content);
 
         var resultContent = await response.Content.ReadAsStringAsync();

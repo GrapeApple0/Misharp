@@ -23,7 +23,7 @@ namespace Misharp.Model {
 		public bool HasUnreadSpecifiedNotes { get; set; }
 		public bool HasUnreadMentions { get; set; }
 		public bool HasUnreadAnnouncement { get; set; }
-		public List<Announcement> UnreadAnnouncements { get; set; }
+		public List<object> UnreadAnnouncements { get; set; }
 		public bool HasUnreadAntenna { get; set; }
 		public bool HasUnreadChannel { get; set; }
 		public bool HasUnreadNotification { get; set; }
@@ -32,7 +32,23 @@ namespace Misharp.Model {
 		public List<List<string>> MutedWords { get; set; }
 		public List<List<string>> HardMutedWords { get; set; }
 		public List<string> MutedInstances { get; set; }
-		public JsonNode NotificationRecieveConfig { get; set; }
+		public class MeDetailedOnlyNotificationRecieveConfigObject {
+			public JsonNode Note { get; set; }
+			public JsonNode Follow { get; set; }
+			public JsonNode Mention { get; set; }
+			public JsonNode Reply { get; set; }
+			public JsonNode Renote { get; set; }
+			public JsonNode Quote { get; set; }
+			public JsonNode Reaction { get; set; }
+			public JsonNode PollEnded { get; set; }
+			public JsonNode ReceiveFollowRequest { get; set; }
+			public JsonNode FollowRequestAccepted { get; set; }
+			public JsonNode RoleAssigned { get; set; }
+			public JsonNode AchievementEarned { get; set; }
+			public JsonNode App { get; set; }
+			public JsonNode Test { get; set; }
+		}
+		public MeDetailedOnlyNotificationRecieveConfigObject NotificationRecieveConfig { get; set; }
 		public List<string> EmailNotificationTypes { get; set; }
 		public List<object> Achievements { get; set; }
 		public decimal LoggedInDays { get; set; }

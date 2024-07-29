@@ -7,6 +7,7 @@ namespace Misharp.Model {
 		public bool GtlAvailable { get; set; }
 		public bool LtlAvailable { get; set; }
 		public bool CanPublicNote { get; set; }
+		public int MentionLimit { get; set; }
 		public bool CanInvite { get; set; }
 		public int InviteLimit { get; set; }
 		public int InviteLimitCycle { get; set; }
@@ -35,6 +36,7 @@ namespace Misharp.Model {
 			sb.Append($"  gtlAvailable: {this.GtlAvailable}\n");
 			sb.Append($"  ltlAvailable: {this.LtlAvailable}\n");
 			sb.Append($"  canPublicNote: {this.CanPublicNote}\n");
+			sb.Append($"  mentionLimit: {this.MentionLimit}\n");
 			sb.Append($"  canInvite: {this.CanInvite}\n");
 			sb.Append($"  inviteLimit: {this.InviteLimit}\n");
 			sb.Append($"  inviteLimitCycle: {this.InviteLimitCycle}\n");

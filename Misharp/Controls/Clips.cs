@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.EmptyResponse>> Addnote(string clipId,string noteId)
+		public async Task<Response<Model.EmptyResponse>> AddNote(string clipId,string noteId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -18,7 +18,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("clips/add-note", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Removenote(string clipId,string noteId)
+		public async Task<Response<Model.EmptyResponse>> RemoveNote(string clipId,string noteId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -53,7 +53,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Clip>> result = await _app.Request<List<Model.Clip>>("clips/list", useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Notes(string clipId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Notes(string clipId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -104,7 +104,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("clips/unfavorite", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Clip>>> Myfavorites()
+		public async Task<Response<List<Model.Clip>>> MyFavorites()
 		{
 			Response<List<Model.Clip>> result = await _app.Request<List<Model.Clip>>("clips/my-favorites", useToken: true);
 			return result;

@@ -8,8 +8,8 @@ namespace Misharp.Model {
 		public DateTime CreatedAt { get; set; }
 		public string FolloweeId { get; set; }
 		public string FollowerId { get; set; }
-		public JsonNode Followee { get; set; }
-		public JsonNode Follower { get; set; }
+		public UserDetailedNotMe Followee { get; set; }
+		public UserDetailedNotMe Follower { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

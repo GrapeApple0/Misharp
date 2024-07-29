@@ -12,7 +12,7 @@ namespace Misharp.Model {
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public List<string> FileIds { get; set; }
-		public List<DriveFile> Files { get; set; }
+		public List<object> Files { get; set; }
 		public List<string> Tags { get; set; }
 		public bool IsSensitive { get; set; }
 		public decimal LikedCount { get; set; }

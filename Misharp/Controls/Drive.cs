@@ -30,7 +30,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<DriveResponse> result = await _app.Request<DriveResponse>("drive", useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.DriveFile>>> Files(string sinceId,int limit = 10,string? untilId = null,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
+		public async Task<Response<List<Model.DriveFile>>> Files(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -58,7 +58,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("-size")]
 			Minussize,
 		}
-		public async Task<Response<List<Model.DriveFolder>>> Folders(string sinceId,int limit = 10,string? untilId = null,string? folderId = null)
+		public async Task<Response<List<Model.DriveFolder>>> Folders(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -70,7 +70,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.DriveFolder>> result = await _app.Request<List<Model.DriveFolder>>("drive/folders", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.DriveFile>>> Stream(string sinceId,string type,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.DriveFile>>> Stream(string type,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -92,7 +92,7 @@ namespace Misharp.Controls.Drive {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Model.Note>>> Attachednotes(string sinceId,string fileId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Note>>> AttachedNotes(string fileId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -127,7 +127,7 @@ namespace Misharp.Controls.Drive {
 			var result = await _app.Request<Model.EmptyResponse>("drive/files/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.DriveFile>>> Findbyhash(string md5)
+		public async Task<Response<List<Model.DriveFile>>> FindByHash(string md5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -169,7 +169,7 @@ namespace Misharp.Controls.Drive {
 			var result = await _app.Request<Model.DriveFile>("drive/files/update", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Uploadfromurl(string url,string? folderId = null,bool isSensitive = false,string? comment = null,string? marker = null,bool force = false)
+		public async Task<Response<Model.EmptyResponse>> UploadFromUrl(string url,string? folderId = null,bool isSensitive = false,string? comment = null,string? marker = null,bool force = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{

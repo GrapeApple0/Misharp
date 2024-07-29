@@ -46,7 +46,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("none")]
 			None,
 		}
-		public async Task<Response<Model.EmptyResponse>> Updateall(UpdateallNotifyEnum notify,bool withReplies)
+		public async Task<Response<Model.EmptyResponse>> UpdateAll(UpdateAllNotifyEnum notify,bool withReplies)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -56,7 +56,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("following/update-all", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public enum UpdateallNotifyEnum {
+		public enum UpdateAllNotifyEnum {
 			[StringValue("normal")]
 			Normal,
 			[StringValue("none")]
@@ -99,7 +99,7 @@ namespace Misharp.Controls.Following {
 			var result = await _app.Request<Model.UserLite>("following/requests/cancel", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> List(string sinceId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<JsonNode>>> List(string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{

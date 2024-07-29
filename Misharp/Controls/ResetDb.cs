@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.EmptyResponse>> Resetdb()
+		public async Task<Response<Model.EmptyResponse>> ResetDb()
 		{
 			var result = await _app.Request<Model.EmptyResponse>("reset-db", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;

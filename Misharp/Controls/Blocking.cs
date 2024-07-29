@@ -26,7 +26,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.UserDetailedNotMe> result = await _app.Request<Model.UserDetailedNotMe>("blocking/delete", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Blocking>>> List(string sinceId,int limit = 30,string? untilId = null)
+		public async Task<Response<List<Model.Blocking>>> List(int limit = 30,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{

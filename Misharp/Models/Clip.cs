@@ -14,6 +14,7 @@ namespace Misharp.Model {
 		public bool IsPublic { get; set; }
 		public decimal FavoritedCount { get; set; }
 		public bool IsFavorited { get; set; }
+		public int NotesCount { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -37,6 +38,7 @@ namespace Misharp.Model {
 			sb.Append($"  isPublic: {this.IsPublic}\n");
 			sb.Append($"  favoritedCount: {this.FavoritedCount}\n");
 			sb.Append($"  isFavorited: {this.IsFavorited}\n");
+			sb.Append($"  notesCount: {this.NotesCount}\n");
 			sb.Append("}");
 			return sb.ToString();
 		}

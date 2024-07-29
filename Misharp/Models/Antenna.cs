@@ -14,11 +14,12 @@ namespace Misharp.Model {
 		public List<string> Users { get; set; }
 		public bool CaseSensitive { get; set; }
 		public bool LocalOnly { get; set; }
-		public bool Notify { get; set; }
+		public bool ExcludeBots { get; set; }
 		public bool WithReplies { get; set; }
 		public bool WithFile { get; set; }
 		public bool IsActive { get; set; }
 		public bool HasUnreadNote { get; set; }
+		public bool Notify { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -39,11 +40,12 @@ namespace Misharp.Model {
 			sb.Append("  }\n");
 			sb.Append($"  caseSensitive: {this.CaseSensitive}\n");
 			sb.Append($"  localOnly: {this.LocalOnly}\n");
-			sb.Append($"  notify: {this.Notify}\n");
+			sb.Append($"  excludeBots: {this.ExcludeBots}\n");
 			sb.Append($"  withReplies: {this.WithReplies}\n");
 			sb.Append($"  withFile: {this.WithFile}\n");
 			sb.Append($"  isActive: {this.IsActive}\n");
 			sb.Append($"  hasUnreadNote: {this.HasUnreadNote}\n");
+			sb.Append($"  notify: {this.Notify}\n");
 			sb.Append("}");
 			return sb.ToString();
 		}

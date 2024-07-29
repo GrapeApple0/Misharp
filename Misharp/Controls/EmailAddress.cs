@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class EmailaddressAvailableResponse {
+		public class EmailAddressAvailableResponse {
 			public bool Available { get; set; }
 			public string? Reason { get; set; }
 			public override string ToString()
@@ -21,13 +21,13 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<EmailaddressAvailableResponse>> Available(string emailAddress)
+		public async Task<Response<EmailAddressAvailableResponse>> Available(string emailAddress)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "emailAddress", emailAddress },
 			};
-			Response<EmailaddressAvailableResponse> result = await _app.Request<EmailaddressAvailableResponse>("email-address/available", param, useToken: false);
+			Response<EmailAddressAvailableResponse> result = await _app.Request<EmailAddressAvailableResponse>("email-address/available", param, useToken: false);
 			return result;
 		}
 	}

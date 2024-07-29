@@ -8,17 +8,25 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.Flash>> Create(string title,string summary,string script,List<string> permissions)
+		public async Task<Response<Model.Flash>> Create(string title,string summary,string script,List<string>? permissions = null,CreateVisibilityEnum visibility = CreateVisibilityEnum.Public)
 		{
+			permissions ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
 				{ "summary", summary },
 				{ "script", script },
 				{ "permissions", permissions },
+				{ "visibility", visibility },
 			};
 			Response<Model.Flash> result = await _app.Request<Model.Flash>("flash/create", param, useToken: true);
 			return result;
+		}
+		public enum CreateVisibilityEnum {
+			[StringValue("public")]
+			Public,
+			[StringValue("private")]
+			Private,
 		}
 		public async Task<Response<Model.EmptyResponse>> Delete(string flashId)
 		{
@@ -61,8 +69,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("flash/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Update(string flashId,string title,string summary,string script,List<string> permissions,UpdateVisibilityEnum visibility)
+		public async Task<Response<Model.EmptyResponse>> Update(string flashId,string title,string summary,string script,UpdateVisibilityEnum visibility,List<string>? permissions = null)
 		{
+			permissions ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "flashId", flashId },
@@ -81,7 +90,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("private")]
 			Private,
 		}
-		public async Task<Response<List<Model.Flash>>> My(string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Flash>>> My(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -92,7 +101,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Flash>> result = await _app.Request<List<Model.Flash>>("flash/my", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Mylikes(string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<JsonNode>>> MyLikes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{

@@ -26,16 +26,16 @@ namespace Misharp.Model {
 		public decimal FollowingCount { get; set; }
 		public decimal NotesCount { get; set; }
 		public List<string> PinnedNoteIds { get; set; }
-		public List<Note> PinnedNotes { get; set; }
+		public List<object> PinnedNotes { get; set; }
 		public string PinnedPageId { get; set; }
-		public JsonNode PinnedPage { get; set; }
+		public Page PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
 		public string FollowingVisibility { get; set; }
 		public string FollowersVisibility { get; set; }
 		public bool TwoFactorEnabled { get; set; }
 		public bool UsePasswordLessLogin { get; set; }
 		public bool SecurityKeys { get; set; }
-		public List<RoleLite> Roles { get; set; }
+		public List<object> Roles { get; set; }
 		public string Memo { get; set; }
 		public string ModerationNote { get; set; }
 		public bool IsFollowing { get; set; }

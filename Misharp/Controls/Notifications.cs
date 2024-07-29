@@ -19,12 +19,17 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("notifications/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Markallasread()
+		public async Task<Response<Model.EmptyResponse>> Flush()
+		{
+			var result = await _app.Request<Model.EmptyResponse>("notifications/flush", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			return result;
+		}
+		public async Task<Response<Model.EmptyResponse>> MarkAllAsRead()
 		{
 			var result = await _app.Request<Model.EmptyResponse>("notifications/mark-all-as-read", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Testnotification()
+		public async Task<Response<Model.EmptyResponse>> TestNotification()
 		{
 			var result = await _app.Request<Model.EmptyResponse>("notifications/test-notification", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;

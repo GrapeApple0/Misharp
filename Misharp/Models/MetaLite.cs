@@ -43,10 +43,12 @@ namespace Misharp.Model {
 		public bool EnableServiceWorker { get; set; }
 		public bool TranslatorAvailable { get; set; }
 		public string MediaProxy { get; set; }
+		public bool EnableUrlPreview { get; set; }
 		public string BackgroundImageUrl { get; set; }
 		public string ImpressumUrl { get; set; }
 		public string LogoImageUrl { get; set; }
 		public string PrivacyPolicyUrl { get; set; }
+		public string InquiryUrl { get; set; }
 		public List<string> ServerRules { get; set; }
 		public string ThemeColor { get; set; }
 		public RolePolicies Policies { get; set; }
@@ -97,10 +99,12 @@ namespace Misharp.Model {
 			sb.Append($"  enableServiceWorker: {this.EnableServiceWorker}\n");
 			sb.Append($"  translatorAvailable: {this.TranslatorAvailable}\n");
 			sb.Append($"  mediaProxy: {this.MediaProxy}\n");
+			sb.Append($"  enableUrlPreview: {this.EnableUrlPreview}\n");
 			sb.Append($"  backgroundImageUrl: {this.BackgroundImageUrl}\n");
 			sb.Append($"  impressumUrl: {this.ImpressumUrl}\n");
 			sb.Append($"  logoImageUrl: {this.LogoImageUrl}\n");
 			sb.Append($"  privacyPolicyUrl: {this.PrivacyPolicyUrl}\n");
+			sb.Append($"  inquiryUrl: {this.InquiryUrl}\n");
 			sb.Append("  serverRules: {\n");
 			if (this.ServerRules != null && this.ServerRules.Count > 0) this.ServerRules.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 			sb.Append("  }\n");

@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Model.Following>>> Followers(string host,string sinceId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Following>>> Followers(string host,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -20,7 +20,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Following>> result = await _app.Request<List<Model.Following>>("federation/followers", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Following>>> Following(string host,string sinceId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Following>>> Following(string host,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -81,7 +81,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("-latestRequestReceivedAt")]
 			MinuslatestRequestReceivedAt,
 		}
-		public async Task<Response<Model.EmptyResponse>> Updateremoteuser(string userId)
+		public async Task<Response<Model.EmptyResponse>> UpdateRemoteUser(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -90,7 +90,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("federation/update-remote-user", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.UserDetailedNotMe>>> Users(string host,string sinceId,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.UserDetailedNotMe>>> Users(string host,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{

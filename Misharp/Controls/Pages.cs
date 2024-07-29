@@ -8,8 +8,10 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.Page>> Create(string title,string name,List<object> content,List<object> variables,string script,string? summary = null,string? eyeCatchingImageId = null,CreateFontEnum font = CreateFontEnum.SansSerif,bool alignCenter = false,bool hideTitleWhenPinned = false)
+		public async Task<Response<Model.Page>> Create(string title,string name,string script,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null,CreateFontEnum font = CreateFontEnum.SansSerif,bool alignCenter = false,bool hideTitleWhenPinned = false)
 		{
+			content ??= new();
+			variables ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
@@ -75,8 +77,10 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("pages/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Update(string pageId,string title,string name,List<object> content,List<object> variables,string script,UpdateFontEnum font,bool alignCenter,bool hideTitleWhenPinned,string? summary = null,string? eyeCatchingImageId = null)
+		public async Task<Response<Model.EmptyResponse>> Update(string pageId,string title,string name,string script,UpdateFontEnum font,bool alignCenter,bool hideTitleWhenPinned,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null)
 		{
+			content ??= new();
+			variables ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "pageId", pageId },

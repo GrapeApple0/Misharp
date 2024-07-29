@@ -12,14 +12,20 @@ namespace Misharp.Model {
 		public decimal Size { get; set; }
 		public bool IsSensitive { get; set; }
 		public string Blurhash { get; set; }
-		public JsonNode Properties { get; set; }
+		public class DriveFilePropertiesObject {
+			public decimal Width { get; set; }
+			public decimal Height { get; set; }
+			public decimal Orientation { get; set; }
+			public string AvgColor { get; set; }
+		}
+		public DriveFilePropertiesObject Properties { get; set; }
 		public string Url { get; set; }
 		public string ThumbnailUrl { get; set; }
 		public string Comment { get; set; }
 		public string FolderId { get; set; }
-		public JsonNode Folder { get; set; }
+		public DriveFolder Folder { get; set; }
 		public string UserId { get; set; }
-		public JsonNode User { get; set; }
+		public UserLite User { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

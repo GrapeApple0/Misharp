@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.EmptyResponse>> Requestresetpassword(string username,string email)
+		public async Task<Response<Model.EmptyResponse>> RequestResetPassword(string username,string email)
 		{
 			var param = new Dictionary<string, object?>	
 			{

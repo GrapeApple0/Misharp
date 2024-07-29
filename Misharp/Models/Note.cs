@@ -13,23 +13,37 @@ namespace Misharp.Model {
 		public UserLite User { get; set; }
 		public string ReplyId { get; set; }
 		public string RenoteId { get; set; }
-		public JsonNode Reply { get; set; }
-		public JsonNode Renote { get; set; }
+		public Note Reply { get; set; }
+		public Note Renote { get; set; }
 		public bool IsHidden { get; set; }
 		public string Visibility { get; set; }
 		public List<string> Mentions { get; set; }
 		public List<string> VisibleUserIds { get; set; }
 		public List<string> FileIds { get; set; }
-		public List<DriveFile> Files { get; set; }
+		public List<object> Files { get; set; }
 		public List<string> Tags { get; set; }
-		public JsonNode Poll { get; set; }
+		public class NotePollObject {
+			public DateTime ExpiresAt { get; set; }
+			public bool Multiple { get; set; }
+			public List<object> Choices { get; set; }
+		}
+		public NotePollObject Poll { get; set; }
 		public JsonNode Emojis { get; set; }
 		public string ChannelId { get; set; }
-		public JsonNode Channel { get; set; }
+		public class NoteChannelObject {
+			public string Id { get; set; }
+			public string Name { get; set; }
+			public string Color { get; set; }
+			public bool IsSensitive { get; set; }
+			public bool AllowRenoteToExternal { get; set; }
+			public string UserId { get; set; }
+		}
+		public NoteChannelObject Channel { get; set; }
 		public bool LocalOnly { get; set; }
 		public string ReactionAcceptance { get; set; }
 		public JsonNode ReactionEmojis { get; set; }
 		public JsonNode Reactions { get; set; }
+		public decimal ReactionCount { get; set; }
 		public decimal RenoteCount { get; set; }
 		public decimal RepliesCount { get; set; }
 		public string Uri { get; set; }
@@ -98,6 +112,7 @@ namespace Misharp.Model {
 			sb.Append($"  reactionAcceptance: {this.ReactionAcceptance}\n");
 			sb.Append($"  reactionEmojis: {this.ReactionEmojis}\n");
 			sb.Append($"  reactions: {this.Reactions}\n");
+			sb.Append($"  reactionCount: {this.ReactionCount}\n");
 			sb.Append($"  renoteCount: {this.RenoteCount}\n");
 			sb.Append($"  repliesCount: {this.RepliesCount}\n");
 			sb.Append($"  uri: {this.Uri}\n");

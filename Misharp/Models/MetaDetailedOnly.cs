@@ -4,7 +4,19 @@ using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class MetaDetailedOnly {
-		public JsonNode Features { get; set; }
+		public class MetaDetailedOnlyFeaturesObject {
+			public bool Registration { get; set; }
+			public bool EmailRequiredForSignup { get; set; }
+			public bool LocalTimeline { get; set; }
+			public bool GlobalTimeline { get; set; }
+			public bool Hcaptcha { get; set; }
+			public bool Turnstile { get; set; }
+			public bool Recaptcha { get; set; }
+			public bool ObjectStorage { get; set; }
+			public bool ServiceWorker { get; set; }
+			public bool Miauth { get; set; }
+		}
+		public MetaDetailedOnlyFeaturesObject Features { get; set; }
 		public string ProxyAccountName { get; set; }
 		public bool RequireSetup { get; set; }
 		public bool CacheRemoteFiles { get; set; }

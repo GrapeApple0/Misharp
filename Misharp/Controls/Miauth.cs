@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class MiauthGentokenResponse {
+		public class MiauthGenTokenResponse {
 			public string Token { get; set; }
 			public override string ToString()
 			{
@@ -19,8 +19,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<MiauthGentokenResponse>> Gentoken(List<string> permission,string? session = null,string? name = null,string? description = null,string? iconUrl = null)
+		public async Task<Response<MiauthGenTokenResponse>> GenToken(string? session = null,string? name = null,string? description = null,string? iconUrl = null,List<string>? permission = null)
 		{
+			permission ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "session", session },
@@ -29,7 +30,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "iconUrl", iconUrl },
 				{ "permission", permission },
 			};
-			Response<MiauthGentokenResponse> result = await _app.Request<MiauthGentokenResponse>("miauth/gen-token", param, useToken: true);
+			Response<MiauthGenTokenResponse> result = await _app.Request<MiauthGenTokenResponse>("miauth/gen-token", param, useToken: true);
 			return result;
 		}
 	}

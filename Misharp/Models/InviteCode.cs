@@ -8,8 +8,8 @@ namespace Misharp.Model {
 		public string Code { get; set; }
 		public DateTime ExpiresAt { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public JsonNode CreatedBy { get; set; }
-		public JsonNode UsedBy { get; set; }
+		public UserLite CreatedBy { get; set; }
+		public UserLite UsedBy { get; set; }
 		public DateTime UsedAt { get; set; }
 		public bool Used { get; set; }
 		public override string ToString()

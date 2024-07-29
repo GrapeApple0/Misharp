@@ -54,7 +54,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("remote")]
 			Remote,
 		}
-		public async Task<Response<List<Model.Clip>>> Clips(string userId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Clip>>> Clips(string userId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -66,7 +66,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Clip>> result = await _app.Request<List<Model.Clip>>("users/clips", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Following>>> Followers(string sinceId,string userId,string username,string? untilId = null,int limit = 10,string? host = null)
+		public async Task<Response<List<Model.Following>>> Followers(string userId,string username,string? sinceId = null,string? untilId = null,int limit = 10,string? host = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -80,7 +80,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Following>> result = await _app.Request<List<Model.Following>>("users/followers", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Following>>> Following(string sinceId,string userId,string username,string? untilId = null,int limit = 10,string? host = null,string? birthday = null)
+		public async Task<Response<List<Model.Following>>> Following(string userId,string username,string? sinceId = null,string? untilId = null,int limit = 10,string? host = null,string? birthday = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -95,7 +95,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Following>> result = await _app.Request<List<Model.Following>>("users/following", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Getfrequentlyrepliedusers(string userId,int limit = 10)
+		public async Task<Response<List<JsonNode>>> GetFrequentlyRepliedUsers(string userId,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -105,7 +105,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("users/get-frequently-replied-users", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Featurednotes(string userId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> FeaturedNotes(string userId,int limit = 10,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -116,7 +116,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("users/featured-notes", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Notes(string userId,string sinceId,bool withReplies = false,bool withRenotes = true,bool withChannelNotes = false,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool withFiles = false)
+		public async Task<Response<List<Model.Note>>> Notes(string userId,bool withReplies = false,bool withRenotes = true,bool withChannelNotes = false,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool withFiles = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -135,7 +135,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("users/notes", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Page>>> Pages(string userId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Page>>> Pages(string userId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -147,7 +147,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Page>> result = await _app.Request<List<Model.Page>>("users/pages", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Flash>>> Flashs(string userId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.Flash>>> Flashs(string userId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -159,7 +159,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Flash>> result = await _app.Request<List<Model.Flash>>("users/flashs", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.NoteReaction>>> Reactions(string userId,string sinceId,int limit = 10,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.NoteReaction>>> Reactions(string userId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -201,7 +201,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<UsersRelationResponse> result = await _app.Request<UsersRelationResponse>("users/relation", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Reportabuse(string userId,string comment)
+		public async Task<Response<Model.EmptyResponse>> ReportAbuse(string userId,string comment)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -211,7 +211,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("users/report-abuse", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.User>>> Searchbyusernameandhost(int limit = 10,bool detail = true,string? username = null,string? host = null)
+		public async Task<Response<List<Model.User>>> SearchByUsernameAndHost(int limit = 10,bool detail = true,string? username = null,string? host = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -514,8 +514,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				return sb.ToString();
 			}
 		}
-		public async Task<Response<UsersShowResponse>> Show(string userId,List<string> userIds,string username,string? host = null)
+		public async Task<Response<UsersShowResponse>> Show(string userId,string username,List<string>? userIds = null,string? host = null)
 		{
+			userIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
@@ -535,7 +536,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("users/achievements", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Updatememo(string userId,string? memo = null)
+		public async Task<Response<Model.EmptyResponse>> UpdateMemo(string userId,string? memo = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -555,7 +556,7 @@ namespace Misharp.Controls.Users {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Model.GalleryPost>>> Posts(string userId,string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.GalleryPost>>> Posts(string userId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -661,7 +662,7 @@ namespace Misharp.Controls.Users {
 			var result = await _app.Request<Model.UserList>("users/lists/update", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.UserList>> Createfrompublic(string name,string listId)
+		public async Task<Response<Model.UserList>> CreateFromPublic(string name,string listId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -671,7 +672,7 @@ namespace Misharp.Controls.Users {
 			var result = await _app.Request<Model.UserList>("users/lists/create-from-public", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.EmptyResponse>> Updatemembership(string listId,string userId,bool withReplies)
+		public async Task<Response<Model.EmptyResponse>> UpdateMembership(string listId,string userId,bool withReplies)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -682,7 +683,7 @@ namespace Misharp.Controls.Users {
 			var result = await _app.Request<Model.EmptyResponse>("users/lists/update-membership", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Getmemberships(string listId,string sinceId,bool forPublic = false,int limit = 30,string? untilId = null)
+		public async Task<Response<List<JsonNode>>> GetMemberships(string listId,bool forPublic = false,int limit = 30,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{

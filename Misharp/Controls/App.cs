@@ -8,8 +8,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.App>> Create(string name,string description,List<string> permission,string? callbackUrl = null)
+		public async Task<Response<Model.App>> Create(string name,string description,List<string>? permission = null,string? callbackUrl = null)
 		{
+			permission ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },

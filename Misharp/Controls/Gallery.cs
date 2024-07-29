@@ -25,7 +25,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.GalleryPost>> result = await _app.Request<List<Model.GalleryPost>>("gallery/popular", useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.GalleryPost>>> Posts(string sinceId,int limit = 10,string? untilId = null)
+		public async Task<Response<List<Model.GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -46,8 +46,9 @@ namespace Misharp.Controls.Gallery {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.GalleryPost>> Create(string title,List<string> fileIds,string? description = null,bool isSensitive = false)
+		public async Task<Response<Model.GalleryPost>> Create(string title,string? description = null,List<string>? fileIds = null,bool isSensitive = false)
 		{
+			fileIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
@@ -94,8 +95,9 @@ namespace Misharp.Controls.Gallery {
 			var result = await _app.Request<Model.EmptyResponse>("gallery/posts/unlike", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<Model.GalleryPost>> Update(string postId,string title,List<string> fileIds,string? description = null,bool isSensitive = false)
+		public async Task<Response<Model.GalleryPost>> Update(string postId,string title,string? description = null,List<string>? fileIds = null,bool isSensitive = false)
 		{
+			fileIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "postId", postId },

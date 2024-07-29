@@ -13,7 +13,15 @@ namespace Misharp.Model {
 		public List<object> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
 		public bool IsCat { get; set; }
-		public JsonNode Instance { get; set; }
+		public class UserLiteInstanceObject {
+			public string Name { get; set; }
+			public string SoftwareName { get; set; }
+			public string SoftwareVersion { get; set; }
+			public string IconUrl { get; set; }
+			public string FaviconUrl { get; set; }
+			public string ThemeColor { get; set; }
+		}
+		public UserLiteInstanceObject Instance { get; set; }
 		public JsonNode Emojis { get; set; }
 		public string OnlineStatus { get; set; }
 		public List<object> BadgeRoles { get; set; }

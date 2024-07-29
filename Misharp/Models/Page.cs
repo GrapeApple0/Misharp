@@ -9,7 +9,7 @@ namespace Misharp.Model {
 		public DateTime UpdatedAt { get; set; }
 		public string UserId { get; set; }
 		public UserLite User { get; set; }
-		public List<PageBlock> Content { get; set; }
+		public List<object> Content { get; set; }
 		public List<object> Variables { get; set; }
 		public string Title { get; set; }
 		public string Name { get; set; }
@@ -19,8 +19,8 @@ namespace Misharp.Model {
 		public string Font { get; set; }
 		public string Script { get; set; }
 		public string EyeCatchingImageId { get; set; }
-		public JsonNode EyeCatchingImage { get; set; }
-		public List<DriveFile> AttachedFiles { get; set; }
+		public DriveFile EyeCatchingImage { get; set; }
+		public List<object> AttachedFiles { get; set; }
 		public decimal LikedCount { get; set; }
 		public bool IsLiked { get; set; }
 		public override string ToString()

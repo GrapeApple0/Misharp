@@ -7,6 +7,7 @@ namespace Misharp
 {
     public class Streaming
     {
+
         public Streaming(App app)
         {
             _app = app;

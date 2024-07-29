@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<Model.EmptyResponse>> Exportcustomemojis()
+		public async Task<Response<Model.EmptyResponse>> ExportCustomEmojis()
 		{
 			var result = await _app.Request<Model.EmptyResponse>("export-custom-emojis", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;

@@ -8,7 +8,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<JsonNode>>> Getavatardecorations()
+		public async Task<Response<List<JsonNode>>> GetAvatarDecorations()
 		{
 			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("get-avatar-decorations", useToken: false);
 			return result;
