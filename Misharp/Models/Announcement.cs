@@ -6,10 +6,10 @@ namespace Misharp.Model {
 	public class Announcement {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public DateTime UpdatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 		public string Text { get; set; }
 		public string Title { get; set; }
-		public string ImageUrl { get; set; }
+		public string? ImageUrl { get; set; }
 		public string Icon { get; set; }
 		public string Display { get; set; }
 		public bool NeedConfirmationToRead { get; set; }

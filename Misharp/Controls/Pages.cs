@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class PagesApi {
 		private Misharp.App _app;
 		public PagesApi(Misharp.App app)

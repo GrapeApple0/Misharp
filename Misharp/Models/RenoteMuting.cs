@@ -15,16 +15,16 @@ namespace Misharp.Model {
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  muteeId: {this.MuteeId}\n");
-			var sbmutee = new StringBuilder();
-			sbmutee.Append("  mutee: {\n");
+			var sbMutee = new StringBuilder();
+			sbMutee.Append("  mutee: [\n");
 			if (this.Mutee != null)
 			{
-				sbmutee.Append(this.Mutee);
-				sbmutee.Replace("\n", "\n    ");
-				sbmutee.Append("\n");
+				sbMutee.Append(this.Mutee);
+				sbMutee.Replace("\n", "\n    ");
+				sbMutee.Append("\n");
 			}
-			sbmutee.Append("  }\n");
-			sb.Append(sbmutee);
+			sbMutee.Append("  ]\n");
+			sb.Append(sbMutee);
 			sb.Append("}");
 			return sb.ToString();
 		}

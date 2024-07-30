@@ -13,16 +13,16 @@ namespace Misharp.Model {
 			sb.Append("class RoleCondFormulaValueNot: {\n");
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  type: {this.Type}\n");
-			var sbvalue = new StringBuilder();
-			sbvalue.Append("  value: {\n");
+			var sbValue = new StringBuilder();
+			sbValue.Append("  value: [\n");
 			if (this.Value != null)
 			{
-				sbvalue.Append(this.Value);
-				sbvalue.Replace("\n", "\n    ");
-				sbvalue.Append("\n");
+				sbValue.Append(this.Value);
+				sbValue.Replace("\n", "\n    ");
+				sbValue.Append("\n");
 			}
-			sbvalue.Append("  }\n");
-			sb.Append(sbvalue);
+			sbValue.Append("  ]\n");
+			sb.Append(sbValue);
 			sb.Append("}");
 			return sb.ToString();
 		}

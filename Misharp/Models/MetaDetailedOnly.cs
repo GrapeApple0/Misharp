@@ -15,9 +15,26 @@ namespace Misharp.Model {
 			public bool ObjectStorage { get; set; }
 			public bool ServiceWorker { get; set; }
 			public bool Miauth { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("class MetaDetailedOnlyFeaturesObject: {\n");
+				sb.Append($"  registration: {this.Registration}\n");
+				sb.Append($"  emailRequiredForSignup: {this.EmailRequiredForSignup}\n");
+				sb.Append($"  localTimeline: {this.LocalTimeline}\n");
+				sb.Append($"  globalTimeline: {this.GlobalTimeline}\n");
+				sb.Append($"  hcaptcha: {this.Hcaptcha}\n");
+				sb.Append($"  turnstile: {this.Turnstile}\n");
+				sb.Append($"  recaptcha: {this.Recaptcha}\n");
+				sb.Append($"  objectStorage: {this.ObjectStorage}\n");
+				sb.Append($"  serviceWorker: {this.ServiceWorker}\n");
+				sb.Append($"  miauth: {this.Miauth}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public MetaDetailedOnlyFeaturesObject Features { get; set; }
-		public string ProxyAccountName { get; set; }
+		public string? ProxyAccountName { get; set; }
 		public bool RequireSetup { get; set; }
 		public bool CacheRemoteFiles { get; set; }
 		public bool CacheRemoteSensitiveFiles { get; set; }
@@ -25,7 +42,16 @@ namespace Misharp.Model {
 		{
 			var sb = new StringBuilder();
 			sb.Append("class MetaDetailedOnly: {\n");
-			sb.Append($"  features: {this.Features}\n");
+			var sbFeatures = new StringBuilder();
+			sbFeatures.Append("  features: [\n");
+			if (this.Features != null)
+			{
+				sbFeatures.Append(this.Features);
+				sbFeatures.Replace("\n", "\n    ");
+				sbFeatures.Append("\n");
+			}
+			sbFeatures.Append("  ]\n");
+			sb.Append(sbFeatures);
 			sb.Append($"  proxyAccountName: {this.ProxyAccountName}\n");
 			sb.Append($"  requireSetup: {this.RequireSetup}\n");
 			sb.Append($"  cacheRemoteFiles: {this.CacheRemoteFiles}\n");

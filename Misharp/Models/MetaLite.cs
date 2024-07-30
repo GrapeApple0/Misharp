@@ -4,53 +4,74 @@ using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
 	public class MetaLite {
-		public string MaintainerName { get; set; }
-		public string MaintainerEmail { get; set; }
+		public string? MaintainerName { get; set; }
+		public string? MaintainerEmail { get; set; }
 		public string Version { get; set; }
 		public bool ProvidesTarball { get; set; }
-		public string Name { get; set; }
-		public string ShortName { get; set; }
+		public string? Name { get; set; }
+		public string? ShortName { get; set; }
 		public string Uri { get; set; }
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		public List<string> Langs { get; set; }
-		public string TosUrl { get; set; }
-		public string RepositoryUrl { get; set; }
-		public string FeedbackUrl { get; set; }
-		public string DefaultDarkTheme { get; set; }
-		public string DefaultLightTheme { get; set; }
+		public string? TosUrl { get; set; }
+		public string? RepositoryUrl { get; set; }
+		public string? FeedbackUrl { get; set; }
+		public string? DefaultDarkTheme { get; set; }
+		public string? DefaultLightTheme { get; set; }
 		public bool DisableRegistration { get; set; }
 		public bool EmailRequiredForSignup { get; set; }
 		public bool EnableHcaptcha { get; set; }
-		public string HcaptchaSiteKey { get; set; }
+		public string? HcaptchaSiteKey { get; set; }
 		public bool EnableMcaptcha { get; set; }
-		public string McaptchaSiteKey { get; set; }
-		public string McaptchaInstanceUrl { get; set; }
+		public string? McaptchaSiteKey { get; set; }
+		public string? McaptchaInstanceUrl { get; set; }
 		public bool EnableRecaptcha { get; set; }
-		public string RecaptchaSiteKey { get; set; }
+		public string? RecaptchaSiteKey { get; set; }
 		public bool EnableTurnstile { get; set; }
-		public string TurnstileSiteKey { get; set; }
-		public string SwPublickey { get; set; }
+		public string? TurnstileSiteKey { get; set; }
+		public string? SwPublickey { get; set; }
 		public string MascotImageUrl { get; set; }
-		public string BannerUrl { get; set; }
-		public string ServerErrorImageUrl { get; set; }
-		public string InfoImageUrl { get; set; }
-		public string NotFoundImageUrl { get; set; }
-		public string IconUrl { get; set; }
+		public string? BannerUrl { get; set; }
+		public string? ServerErrorImageUrl { get; set; }
+		public string? InfoImageUrl { get; set; }
+		public string? NotFoundImageUrl { get; set; }
+		public string? IconUrl { get; set; }
 		public decimal MaxNoteTextLength { get; set; }
-		public List<object> Ads { get; set; }
+		public class MetaLiteAdsPropertyType {
+			public string Id { get; set; }
+			public string Url { get; set; }
+			public string Place { get; set; }
+			public decimal Ratio { get; set; }
+			public string ImageUrl { get; set; }
+			public int DayOfWeek { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("class MetaLiteAdsPropertyType: {\n");
+				sb.Append($"  id: {this.Id}\n");
+				sb.Append($"  url: {this.Url}\n");
+				sb.Append($"  place: {this.Place}\n");
+				sb.Append($"  ratio: {this.Ratio}\n");
+				sb.Append($"  imageUrl: {this.ImageUrl}\n");
+				sb.Append($"  dayOfWeek: {this.DayOfWeek}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
+		}
+		public List<MetaLiteAdsPropertyType> Ads { get; set; }
 		public decimal NotesPerOneAd { get; set; }
 		public bool EnableEmail { get; set; }
 		public bool EnableServiceWorker { get; set; }
 		public bool TranslatorAvailable { get; set; }
 		public string MediaProxy { get; set; }
 		public bool EnableUrlPreview { get; set; }
-		public string BackgroundImageUrl { get; set; }
-		public string ImpressumUrl { get; set; }
-		public string LogoImageUrl { get; set; }
-		public string PrivacyPolicyUrl { get; set; }
-		public string InquiryUrl { get; set; }
+		public string? BackgroundImageUrl { get; set; }
+		public string? ImpressumUrl { get; set; }
+		public string? LogoImageUrl { get; set; }
+		public string? PrivacyPolicyUrl { get; set; }
+		public string? InquiryUrl { get; set; }
 		public List<string> ServerRules { get; set; }
-		public string ThemeColor { get; set; }
+		public string? ThemeColor { get; set; }
 		public RolePolicies Policies { get; set; }
 		public override string ToString()
 		{
@@ -64,9 +85,17 @@ namespace Misharp.Model {
 			sb.Append($"  shortName: {this.ShortName}\n");
 			sb.Append($"  uri: {this.Uri}\n");
 			sb.Append($"  description: {this.Description}\n");
-			sb.Append("  langs: {\n");
-			if (this.Langs != null && this.Langs.Count > 0) this.Langs.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  langs: [\n");
+			if (this.Langs != null && this.Langs.Count > 0)
+			{
+				var sbLangs = new StringBuilder();
+				sbLangs.Append("    ");
+				this.Langs.ForEach(item => sbLangs.Append(item).Append(",\n"));
+				sbLangs.Replace("\n", "\n    ");
+				sbLangs.Length -= 4;
+				sb.Append(sbLangs);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  tosUrl: {this.TosUrl}\n");
 			sb.Append($"  repositoryUrl: {this.RepositoryUrl}\n");
 			sb.Append($"  feedbackUrl: {this.FeedbackUrl}\n");
@@ -91,9 +120,17 @@ namespace Misharp.Model {
 			sb.Append($"  notFoundImageUrl: {this.NotFoundImageUrl}\n");
 			sb.Append($"  iconUrl: {this.IconUrl}\n");
 			sb.Append($"  maxNoteTextLength: {this.MaxNoteTextLength}\n");
-			sb.Append("  ads: {\n");
-			if (this.Ads != null && this.Ads.Count > 0) this.Ads.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  ads: [\n");
+			if (this.Ads != null && this.Ads.Count > 0)
+			{
+				var sbAds = new StringBuilder();
+				sbAds.Append("    ");
+				this.Ads.ForEach(item => sbAds.Append(item).Append(",\n"));
+				sbAds.Replace("\n", "\n    ");
+				sbAds.Length -= 4;
+				sb.Append(sbAds);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  notesPerOneAd: {this.NotesPerOneAd}\n");
 			sb.Append($"  enableEmail: {this.EnableEmail}\n");
 			sb.Append($"  enableServiceWorker: {this.EnableServiceWorker}\n");
@@ -105,20 +142,28 @@ namespace Misharp.Model {
 			sb.Append($"  logoImageUrl: {this.LogoImageUrl}\n");
 			sb.Append($"  privacyPolicyUrl: {this.PrivacyPolicyUrl}\n");
 			sb.Append($"  inquiryUrl: {this.InquiryUrl}\n");
-			sb.Append("  serverRules: {\n");
-			if (this.ServerRules != null && this.ServerRules.Count > 0) this.ServerRules.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  serverRules: [\n");
+			if (this.ServerRules != null && this.ServerRules.Count > 0)
+			{
+				var sbServerRules = new StringBuilder();
+				sbServerRules.Append("    ");
+				this.ServerRules.ForEach(item => sbServerRules.Append(item).Append(",\n"));
+				sbServerRules.Replace("\n", "\n    ");
+				sbServerRules.Length -= 4;
+				sb.Append(sbServerRules);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  themeColor: {this.ThemeColor}\n");
-			var sbpolicies = new StringBuilder();
-			sbpolicies.Append("  policies: {\n");
+			var sbPolicies = new StringBuilder();
+			sbPolicies.Append("  policies: [\n");
 			if (this.Policies != null)
 			{
-				sbpolicies.Append(this.Policies);
-				sbpolicies.Replace("\n", "\n    ");
-				sbpolicies.Append("\n");
+				sbPolicies.Append(this.Policies);
+				sbPolicies.Replace("\n", "\n    ");
+				sbPolicies.Append("\n");
 			}
-			sbpolicies.Append("  }\n");
-			sb.Append(sbpolicies);
+			sbPolicies.Append("  ]\n");
+			sb.Append(sbPolicies);
 			sb.Append("}");
 			return sb.ToString();
 		}

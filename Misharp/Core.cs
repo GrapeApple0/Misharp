@@ -7,6 +7,21 @@ namespace Misharp;
 
 public class Core
 {
+    public static string AddIndent(string str)
+    {
+        var lines = str.Split(new[] { '\n' }, StringSplitOptions.None);
+        StringBuilder sb = new StringBuilder();
+        foreach (var line in lines)
+        {
+            sb.Append("    ").Append(line).Append('\n');
+        }
+        if (sb.Length > 0)
+        {
+            sb.Length--;
+        }
+        return sb.ToString();
+    }
+
     public static async Task<object?> Request<T>(App app, string endpoint, Dictionary<string, object>? ps,
         bool useToken = false)
     {

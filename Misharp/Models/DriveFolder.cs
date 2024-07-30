@@ -7,10 +7,10 @@ namespace Misharp.Model {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string Name { get; set; }
-		public string ParentId { get; set; }
+		public string? ParentId { get; set; }
 		public decimal FoldersCount { get; set; }
 		public decimal FilesCount { get; set; }
-		public DriveFolder Parent { get; set; }
+		public DriveFolder? Parent { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -21,7 +21,16 @@ namespace Misharp.Model {
 			sb.Append($"  parentId: {this.ParentId}\n");
 			sb.Append($"  foldersCount: {this.FoldersCount}\n");
 			sb.Append($"  filesCount: {this.FilesCount}\n");
-			sb.Append($"  parent: {this.Parent}\n");
+			var sbParent = new StringBuilder();
+			sbParent.Append("  parent: [\n");
+			if (this.Parent != null)
+			{
+				sbParent.Append(this.Parent);
+				sbParent.Replace("\n", "\n    ");
+				sbParent.Append("\n");
+			}
+			sbParent.Append("  ]\n");
+			sb.Append(sbParent);
 			sb.Append("}");
 			return sb.ToString();
 		}

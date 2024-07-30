@@ -15,20 +15,20 @@ namespace Misharp.Model {
 		public bool IsSuspended { get; set; }
 		public string SuspensionState { get; set; }
 		public bool IsBlocked { get; set; }
-		public string SoftwareName { get; set; }
-		public string SoftwareVersion { get; set; }
-		public bool OpenRegistrations { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
-		public string MaintainerName { get; set; }
-		public string MaintainerEmail { get; set; }
+		public string? SoftwareName { get; set; }
+		public string? SoftwareVersion { get; set; }
+		public bool? OpenRegistrations { get; set; }
+		public string? Name { get; set; }
+		public string? Description { get; set; }
+		public string? MaintainerName { get; set; }
+		public string? MaintainerEmail { get; set; }
 		public bool IsSilenced { get; set; }
-		public string IconUrl { get; set; }
-		public string FaviconUrl { get; set; }
-		public string ThemeColor { get; set; }
-		public DateTime InfoUpdatedAt { get; set; }
-		public DateTime LatestRequestReceivedAt { get; set; }
-		public string ModerationNote { get; set; }
+		public string? IconUrl { get; set; }
+		public string? FaviconUrl { get; set; }
+		public string? ThemeColor { get; set; }
+		public DateTime? InfoUpdatedAt { get; set; }
+		public DateTime? LatestRequestReceivedAt { get; set; }
+		public string? ModerationNote { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

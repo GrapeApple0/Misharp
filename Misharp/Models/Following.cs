@@ -18,8 +18,26 @@ namespace Misharp.Model {
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  followeeId: {this.FolloweeId}\n");
 			sb.Append($"  followerId: {this.FollowerId}\n");
-			sb.Append($"  followee: {this.Followee}\n");
-			sb.Append($"  follower: {this.Follower}\n");
+			var sbFollowee = new StringBuilder();
+			sbFollowee.Append("  followee: [\n");
+			if (this.Followee != null)
+			{
+				sbFollowee.Append(this.Followee);
+				sbFollowee.Replace("\n", "\n    ");
+				sbFollowee.Append("\n");
+			}
+			sbFollowee.Append("  ]\n");
+			sb.Append(sbFollowee);
+			var sbFollower = new StringBuilder();
+			sbFollower.Append("  follower: [\n");
+			if (this.Follower != null)
+			{
+				sbFollower.Append(this.Follower);
+				sbFollower.Replace("\n", "\n    ");
+				sbFollower.Append("\n");
+			}
+			sbFollower.Append("  ]\n");
+			sb.Append(sbFollower);
 			sb.Append("}");
 			return sb.ToString();
 		}

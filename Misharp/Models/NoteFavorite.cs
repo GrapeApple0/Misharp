@@ -14,16 +14,16 @@ namespace Misharp.Model {
 			sb.Append("class NoteFavorite: {\n");
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
-			var sbnote = new StringBuilder();
-			sbnote.Append("  note: {\n");
+			var sbNote = new StringBuilder();
+			sbNote.Append("  note: [\n");
 			if (this.Note != null)
 			{
-				sbnote.Append(this.Note);
-				sbnote.Replace("\n", "\n    ");
-				sbnote.Append("\n");
+				sbNote.Append(this.Note);
+				sbNote.Replace("\n", "\n    ");
+				sbNote.Append("\n");
 			}
-			sbnote.Append("  }\n");
-			sb.Append(sbnote);
+			sbNote.Append("  ]\n");
+			sb.Append(sbNote);
 			sb.Append($"  noteId: {this.NoteId}\n");
 			sb.Append("}");
 			return sb.ToString();

@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class NotesApi {
 		private Misharp.App _app;
 		public Notes.FavoritesApi FavoritesApi;
@@ -67,8 +68,21 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		public class NotesCreatePollPropertyObject {
 			public List<string> Choices { get; set; }
 			public bool Multiple { get; set; }
-			public int ExpiresAt { get; set; }
-			public int ExpiredAfter { get; set; }
+			public int? ExpiresAt { get; set; }
+			public int? ExpiredAfter { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append("  choices: {\n");
+				if (this.Choices != null && this.Choices.Count > 0) this.Choices.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
+				sb.Append("  }\n");
+				sb.Append($"  multiple: {this.Multiple}\n");
+				sb.Append($"  expiresAt: {this.ExpiresAt}\n");
+				sb.Append($"  expiredAfter: {this.ExpiredAfter}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public class NotesCreateResponse {
 			public Model.Note CreatedNote { get; set; }
@@ -81,7 +95,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				if (this.CreatedNote != null)
 				{
 					sbcreatedNote.Append(this.CreatedNote);
-					sbcreatedNote.Replace("\n", "\n    ");
+					sbcreatedNote.Replace("\n", "\n  ");
 					sbcreatedNote.Append("\n");
 				}
 				sbcreatedNote.Append("  }\n");
@@ -119,8 +133,21 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 		public class CreatePollParamObject {
 			public List<string> Choices { get; set; }
 			public bool Multiple { get; set; }
-			public int ExpiresAt { get; set; }
-			public int ExpiredAfter { get; set; }
+			public int? ExpiresAt { get; set; }
+			public int? ExpiredAfter { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append("  choices: {\n");
+				if (this.Choices != null && this.Choices.Count > 0) this.Choices.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
+				sb.Append("  }\n");
+				sb.Append($"  multiple: {this.Multiple}\n");
+				sb.Append($"  expiresAt: {this.ExpiresAt}\n");
+				sb.Append($"  expiredAfter: {this.ExpiredAfter}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public enum CreateVisibilityEnum {
 			[StringValue("public")]

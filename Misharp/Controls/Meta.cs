@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class MetaApi {
 		private Misharp.App _app;
 		public MetaApi(Misharp.App app)
@@ -42,7 +43,28 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public string? NotFoundImageUrl { get; set; }
 			public string? IconUrl { get; set; }
 			public decimal MaxNoteTextLength { get; set; }
-			public List<object> Ads { get; set; }
+			public class AdsItemsProperty {
+				public string Id { get; set; }
+				public string Url { get; set; }
+				public string Place { get; set; }
+				public decimal Ratio { get; set; }
+				public string ImageUrl { get; set; }
+				public int DayOfWeek { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  place: {this.Place}\n");
+					sb.Append($"  ratio: {this.Ratio}\n");
+					sb.Append($"  imageUrl: {this.ImageUrl}\n");
+					sb.Append($"  dayOfWeek: {this.DayOfWeek}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<AdsItemsProperty> Ads { get; set; }
 			public decimal NotesPerOneAd { get; set; }
 			public bool EnableEmail { get; set; }
 			public bool EnableServiceWorker { get; set; }
@@ -57,7 +79,36 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public List<string> ServerRules { get; set; }
 			public string? ThemeColor { get; set; }
 			public Model.RolePolicies Policies { get; set; }
-			public JsonNode Features { get; set; }
+		public class FeaturesProperty {
+			public bool Registration { get; set; }
+			public bool EmailRequiredForSignup { get; set; }
+			public bool LocalTimeline { get; set; }
+			public bool GlobalTimeline { get; set; }
+			public bool Hcaptcha { get; set; }
+			public bool Turnstile { get; set; }
+			public bool Recaptcha { get; set; }
+			public bool ObjectStorage { get; set; }
+			public bool ServiceWorker { get; set; }
+			public bool Miauth { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  registration: {this.Registration}\n");
+				sb.Append($"  emailRequiredForSignup: {this.EmailRequiredForSignup}\n");
+				sb.Append($"  localTimeline: {this.LocalTimeline}\n");
+				sb.Append($"  globalTimeline: {this.GlobalTimeline}\n");
+				sb.Append($"  hcaptcha: {this.Hcaptcha}\n");
+				sb.Append($"  turnstile: {this.Turnstile}\n");
+				sb.Append($"  recaptcha: {this.Recaptcha}\n");
+				sb.Append($"  objectStorage: {this.ObjectStorage}\n");
+				sb.Append($"  serviceWorker: {this.ServiceWorker}\n");
+				sb.Append($"  miauth: {this.Miauth}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
+		}
+			public FeaturesProperty Features { get; set; }
 			public string? ProxyAccountName { get; set; }
 			public bool RequireSetup { get; set; }
 			public bool CacheRemoteFiles { get; set; }
@@ -124,12 +175,21 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				if (this.Policies != null)
 				{
 					sbpolicies.Append(this.Policies);
-					sbpolicies.Replace("\n", "\n    ");
+					sbpolicies.Replace("\n", "\n  ");
 					sbpolicies.Append("\n");
 				}
 				sbpolicies.Append("  }\n");
 				sb.Append(sbpolicies);
-				sb.Append($"  features: {this.Features}\n");
+				var sbfeatures = new StringBuilder();
+				sbfeatures.Append("  features: {\n");
+				if (this.Features != null)
+				{
+					sbfeatures.Append(this.Features);
+					sbfeatures.Replace("\n", "\n  ");
+					sbfeatures.Append("\n");
+				}
+				sbfeatures.Append("  }\n");
+				sb.Append(sbfeatures);
 				sb.Append($"  proxyAccountName: {this.ProxyAccountName}\n");
 				sb.Append($"  requireSetup: {this.RequireSetup}\n");
 				sb.Append($"  cacheRemoteFiles: {this.CacheRemoteFiles}\n");

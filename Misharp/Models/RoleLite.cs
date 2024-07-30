@@ -6,8 +6,8 @@ namespace Misharp.Model {
 	public class RoleLite {
 		public string Id { get; set; }
 		public string Name { get; set; }
-		public string Color { get; set; }
-		public string IconUrl { get; set; }
+		public string? Color { get; set; }
+		public string? IconUrl { get; set; }
 		public string Description { get; set; }
 		public bool IsModerator { get; set; }
 		public bool IsAdministrator { get; set; }

@@ -6,11 +6,11 @@ namespace Misharp.Model {
 	public class Channel {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public DateTime LastNotedAt { get; set; }
+		public DateTime? LastNotedAt { get; set; }
 		public string Name { get; set; }
-		public string Description { get; set; }
-		public string UserId { get; set; }
-		public string BannerUrl { get; set; }
+		public string? Description { get; set; }
+		public string? UserId { get; set; }
+		public string? BannerUrl { get; set; }
 		public List<string> PinnedNoteIds { get; set; }
 		public string Color { get; set; }
 		public bool IsArchived { get; set; }
@@ -20,7 +20,7 @@ namespace Misharp.Model {
 		public bool AllowRenoteToExternal { get; set; }
 		public bool IsFollowing { get; set; }
 		public bool IsFavorited { get; set; }
-		public List<object> PinnedNotes { get; set; }
+		public List<Note> PinnedNotes { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -32,9 +32,17 @@ namespace Misharp.Model {
 			sb.Append($"  description: {this.Description}\n");
 			sb.Append($"  userId: {this.UserId}\n");
 			sb.Append($"  bannerUrl: {this.BannerUrl}\n");
-			sb.Append("  pinnedNoteIds: {\n");
-			if (this.PinnedNoteIds != null && this.PinnedNoteIds.Count > 0) this.PinnedNoteIds.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  pinnedNoteIds: [\n");
+			if (this.PinnedNoteIds != null && this.PinnedNoteIds.Count > 0)
+			{
+				var sbPinnedNoteIds = new StringBuilder();
+				sbPinnedNoteIds.Append("    ");
+				this.PinnedNoteIds.ForEach(item => sbPinnedNoteIds.Append(item).Append(",\n"));
+				sbPinnedNoteIds.Replace("\n", "\n    ");
+				sbPinnedNoteIds.Length -= 4;
+				sb.Append(sbPinnedNoteIds);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  color: {this.Color}\n");
 			sb.Append($"  isArchived: {this.IsArchived}\n");
 			sb.Append($"  usersCount: {this.UsersCount}\n");
@@ -43,7 +51,7 @@ namespace Misharp.Model {
 			sb.Append($"  allowRenoteToExternal: {this.AllowRenoteToExternal}\n");
 			sb.Append($"  isFollowing: {this.IsFollowing}\n");
 			sb.Append($"  isFavorited: {this.IsFavorited}\n");
-			sb.Append("  pinnedNotes: {\n");
+			sb.Append("  pinnedNotes: [\n");
 			if (this.PinnedNotes != null && this.PinnedNotes.Count > 0)
 			{
 				var sb2 = new StringBuilder();
@@ -57,7 +65,7 @@ namespace Misharp.Model {
 				sb2.Append("\n");
 				sb.Append(sb2);
 			}
-			sb.Append("  }\n");
+			sb.Append("  ]\n");
 			sb.Append("}");
 			return sb.ToString();
 		}

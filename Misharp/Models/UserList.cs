@@ -16,9 +16,17 @@ namespace Misharp.Model {
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  name: {this.Name}\n");
-			sb.Append("  userIds: {\n");
-			if (this.UserIds != null && this.UserIds.Count > 0) this.UserIds.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  userIds: [\n");
+			if (this.UserIds != null && this.UserIds.Count > 0)
+			{
+				var sbUserIds = new StringBuilder();
+				sbUserIds.Append("    ");
+				this.UserIds.ForEach(item => sbUserIds.Append(item).Append(",\n"));
+				sbUserIds.Replace("\n", "\n    ");
+				sbUserIds.Length -= 4;
+				sb.Append(sbUserIds);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  isPublic: {this.IsPublic}\n");
 			sb.Append("}");
 			return sb.ToString();

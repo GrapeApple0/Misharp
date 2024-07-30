@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class HashtagsApi {
 		private Misharp.App _app;
 		public HashtagsApi(Misharp.App app)
@@ -67,9 +68,9 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.Hashtag> result = await _app.Request<Model.Hashtag>("hashtags/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Trend()
+		public async Task<Response<List<object>>> Trend()
 		{
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("hashtags/trend", useToken: false);
+			Response<List<object>> result = await _app.Request<List<object>>("hashtags/trend", useToken: false);
 			return result;
 		}
 		public async Task<Response<List<Model.UserDetailed>>> Users(string tag,UsersSortEnum sort,int limit = 10,UsersStateEnum state = UsersStateEnum.All,UsersOriginEnum origin = UsersOriginEnum.Local)

@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class IApi {
 		private Misharp.App _app;
 		public I.GalleryApi GalleryApi;
@@ -19,13 +20,13 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.MeDetailed> result = await _app.Request<Model.MeDetailed>("i", useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Apps(AppsSortEnum sort)
+		public async Task<Response<List<object>>> Apps(AppsSortEnum sort)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "sort", sort },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/apps", param, useToken: true);
+			Response<List<object>> result = await _app.Request<List<object>>("i/apps", param, useToken: true);
 			return result;
 		}
 		public enum AppsSortEnum {
@@ -38,7 +39,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			[StringValue("-lastUsedAt")]
 			MinuslastUsedAt,
 		}
-		public async Task<Response<List<JsonNode>>> AuthorizedApps(int limit = 10,int offset = 0,AuthorizedAppsSortEnum sort = AuthorizedAppsSortEnum.Desc)
+		public async Task<Response<List<object>>> AuthorizedApps(int limit = 10,int offset = 0,AuthorizedAppsSortEnum sort = AuthorizedAppsSortEnum.Desc)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -46,7 +47,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "offset", offset },
 				{ "sort", sort },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/authorized-apps", param, useToken: true);
+			Response<List<object>> result = await _app.Request<List<object>>("i/authorized-apps", param, useToken: true);
 			return result;
 		}
 		public enum AuthorizedAppsSortEnum {
@@ -377,7 +378,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Notification>> result = await _app.Request<List<Model.Notification>>("i/notifications-grouped", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> PageLikes(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<object>>> PageLikes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -385,7 +386,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("i/page-likes", param, useToken: true);
+			Response<List<object>> result = await _app.Request<List<object>>("i/page-likes", param, useToken: true);
 			return result;
 		}
 		public async Task<Response<List<Model.Page>>> Pages(int limit = 10,string? sinceId = null,string? untilId = null)
@@ -487,6 +488,153 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public JsonNode AchievementEarned { get; set; }
 			public JsonNode App { get; set; }
 			public JsonNode Test { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				var sbnote = new StringBuilder();
+				sbnote.Append("  note: {\n");
+				if (this.Note != null)
+				{
+					sbnote.Append(this.Note);
+					sbnote.Replace("\n", "\n  ");
+					sbnote.Append("\n");
+				}
+				sbnote.Append("  }\n");
+				sb.Append(sbnote);
+				var sbfollow = new StringBuilder();
+				sbfollow.Append("  follow: {\n");
+				if (this.Follow != null)
+				{
+					sbfollow.Append(this.Follow);
+					sbfollow.Replace("\n", "\n  ");
+					sbfollow.Append("\n");
+				}
+				sbfollow.Append("  }\n");
+				sb.Append(sbfollow);
+				var sbmention = new StringBuilder();
+				sbmention.Append("  mention: {\n");
+				if (this.Mention != null)
+				{
+					sbmention.Append(this.Mention);
+					sbmention.Replace("\n", "\n  ");
+					sbmention.Append("\n");
+				}
+				sbmention.Append("  }\n");
+				sb.Append(sbmention);
+				var sbreply = new StringBuilder();
+				sbreply.Append("  reply: {\n");
+				if (this.Reply != null)
+				{
+					sbreply.Append(this.Reply);
+					sbreply.Replace("\n", "\n  ");
+					sbreply.Append("\n");
+				}
+				sbreply.Append("  }\n");
+				sb.Append(sbreply);
+				var sbrenote = new StringBuilder();
+				sbrenote.Append("  renote: {\n");
+				if (this.Renote != null)
+				{
+					sbrenote.Append(this.Renote);
+					sbrenote.Replace("\n", "\n  ");
+					sbrenote.Append("\n");
+				}
+				sbrenote.Append("  }\n");
+				sb.Append(sbrenote);
+				var sbquote = new StringBuilder();
+				sbquote.Append("  quote: {\n");
+				if (this.Quote != null)
+				{
+					sbquote.Append(this.Quote);
+					sbquote.Replace("\n", "\n  ");
+					sbquote.Append("\n");
+				}
+				sbquote.Append("  }\n");
+				sb.Append(sbquote);
+				var sbreaction = new StringBuilder();
+				sbreaction.Append("  reaction: {\n");
+				if (this.Reaction != null)
+				{
+					sbreaction.Append(this.Reaction);
+					sbreaction.Replace("\n", "\n  ");
+					sbreaction.Append("\n");
+				}
+				sbreaction.Append("  }\n");
+				sb.Append(sbreaction);
+				var sbpollEnded = new StringBuilder();
+				sbpollEnded.Append("  pollEnded: {\n");
+				if (this.PollEnded != null)
+				{
+					sbpollEnded.Append(this.PollEnded);
+					sbpollEnded.Replace("\n", "\n  ");
+					sbpollEnded.Append("\n");
+				}
+				sbpollEnded.Append("  }\n");
+				sb.Append(sbpollEnded);
+				var sbreceiveFollowRequest = new StringBuilder();
+				sbreceiveFollowRequest.Append("  receiveFollowRequest: {\n");
+				if (this.ReceiveFollowRequest != null)
+				{
+					sbreceiveFollowRequest.Append(this.ReceiveFollowRequest);
+					sbreceiveFollowRequest.Replace("\n", "\n  ");
+					sbreceiveFollowRequest.Append("\n");
+				}
+				sbreceiveFollowRequest.Append("  }\n");
+				sb.Append(sbreceiveFollowRequest);
+				var sbfollowRequestAccepted = new StringBuilder();
+				sbfollowRequestAccepted.Append("  followRequestAccepted: {\n");
+				if (this.FollowRequestAccepted != null)
+				{
+					sbfollowRequestAccepted.Append(this.FollowRequestAccepted);
+					sbfollowRequestAccepted.Replace("\n", "\n  ");
+					sbfollowRequestAccepted.Append("\n");
+				}
+				sbfollowRequestAccepted.Append("  }\n");
+				sb.Append(sbfollowRequestAccepted);
+				var sbroleAssigned = new StringBuilder();
+				sbroleAssigned.Append("  roleAssigned: {\n");
+				if (this.RoleAssigned != null)
+				{
+					sbroleAssigned.Append(this.RoleAssigned);
+					sbroleAssigned.Replace("\n", "\n  ");
+					sbroleAssigned.Append("\n");
+				}
+				sbroleAssigned.Append("  }\n");
+				sb.Append(sbroleAssigned);
+				var sbachievementEarned = new StringBuilder();
+				sbachievementEarned.Append("  achievementEarned: {\n");
+				if (this.AchievementEarned != null)
+				{
+					sbachievementEarned.Append(this.AchievementEarned);
+					sbachievementEarned.Replace("\n", "\n  ");
+					sbachievementEarned.Append("\n");
+				}
+				sbachievementEarned.Append("  }\n");
+				sb.Append(sbachievementEarned);
+				var sbapp = new StringBuilder();
+				sbapp.Append("  app: {\n");
+				if (this.App != null)
+				{
+					sbapp.Append(this.App);
+					sbapp.Replace("\n", "\n  ");
+					sbapp.Append("\n");
+				}
+				sbapp.Append("  }\n");
+				sb.Append(sbapp);
+				var sbtest = new StringBuilder();
+				sbtest.Append("  test: {\n");
+				if (this.Test != null)
+				{
+					sbtest.Append(this.Test);
+					sbtest.Replace("\n", "\n  ");
+					sbtest.Append("\n");
+				}
+				sbtest.Append("  }\n");
+				sb.Append(sbtest);
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<Model.MeDetailed>> Update(bool isLocked,bool isExplorable,bool hideOnlineStatus,bool publicReactions,bool carefulBot,bool autoAcceptFollowed,bool noCrawle,bool preventAiLearning,bool isBot,bool isCat,bool injectFeaturedNote,bool receiveAnnouncementEmail,bool alwaysMarkNsfw,bool autoSensitive,UpdateFollowingVisibilityEnum followingVisibility,UpdateFollowersVisibilityEnum followersVisibility,UpdateNotificationRecieveConfigParamObject notificationRecieveConfig,string? name = null,string? description = null,string? location = null,string? birthday = null,UpdateLangEnum? lang = null,string? avatarId = null,List<object>? avatarDecorations = null,string? bannerId = null,List<object>? fields = null,string? pinnedPageId = null,List<JsonNode>? mutedWords = null,List<JsonNode>? hardMutedWords = null,List<string>? mutedInstances = null,List<string>? emailNotificationTypes = null,List<string>? alsoKnownAs = null)
 		{
@@ -550,6 +698,153 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public JsonNode AchievementEarned { get; set; }
 			public JsonNode App { get; set; }
 			public JsonNode Test { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				var sbnote = new StringBuilder();
+				sbnote.Append("  note: {\n");
+				if (this.Note != null)
+				{
+					sbnote.Append(this.Note);
+					sbnote.Replace("\n", "\n  ");
+					sbnote.Append("\n");
+				}
+				sbnote.Append("  }\n");
+				sb.Append(sbnote);
+				var sbfollow = new StringBuilder();
+				sbfollow.Append("  follow: {\n");
+				if (this.Follow != null)
+				{
+					sbfollow.Append(this.Follow);
+					sbfollow.Replace("\n", "\n  ");
+					sbfollow.Append("\n");
+				}
+				sbfollow.Append("  }\n");
+				sb.Append(sbfollow);
+				var sbmention = new StringBuilder();
+				sbmention.Append("  mention: {\n");
+				if (this.Mention != null)
+				{
+					sbmention.Append(this.Mention);
+					sbmention.Replace("\n", "\n  ");
+					sbmention.Append("\n");
+				}
+				sbmention.Append("  }\n");
+				sb.Append(sbmention);
+				var sbreply = new StringBuilder();
+				sbreply.Append("  reply: {\n");
+				if (this.Reply != null)
+				{
+					sbreply.Append(this.Reply);
+					sbreply.Replace("\n", "\n  ");
+					sbreply.Append("\n");
+				}
+				sbreply.Append("  }\n");
+				sb.Append(sbreply);
+				var sbrenote = new StringBuilder();
+				sbrenote.Append("  renote: {\n");
+				if (this.Renote != null)
+				{
+					sbrenote.Append(this.Renote);
+					sbrenote.Replace("\n", "\n  ");
+					sbrenote.Append("\n");
+				}
+				sbrenote.Append("  }\n");
+				sb.Append(sbrenote);
+				var sbquote = new StringBuilder();
+				sbquote.Append("  quote: {\n");
+				if (this.Quote != null)
+				{
+					sbquote.Append(this.Quote);
+					sbquote.Replace("\n", "\n  ");
+					sbquote.Append("\n");
+				}
+				sbquote.Append("  }\n");
+				sb.Append(sbquote);
+				var sbreaction = new StringBuilder();
+				sbreaction.Append("  reaction: {\n");
+				if (this.Reaction != null)
+				{
+					sbreaction.Append(this.Reaction);
+					sbreaction.Replace("\n", "\n  ");
+					sbreaction.Append("\n");
+				}
+				sbreaction.Append("  }\n");
+				sb.Append(sbreaction);
+				var sbpollEnded = new StringBuilder();
+				sbpollEnded.Append("  pollEnded: {\n");
+				if (this.PollEnded != null)
+				{
+					sbpollEnded.Append(this.PollEnded);
+					sbpollEnded.Replace("\n", "\n  ");
+					sbpollEnded.Append("\n");
+				}
+				sbpollEnded.Append("  }\n");
+				sb.Append(sbpollEnded);
+				var sbreceiveFollowRequest = new StringBuilder();
+				sbreceiveFollowRequest.Append("  receiveFollowRequest: {\n");
+				if (this.ReceiveFollowRequest != null)
+				{
+					sbreceiveFollowRequest.Append(this.ReceiveFollowRequest);
+					sbreceiveFollowRequest.Replace("\n", "\n  ");
+					sbreceiveFollowRequest.Append("\n");
+				}
+				sbreceiveFollowRequest.Append("  }\n");
+				sb.Append(sbreceiveFollowRequest);
+				var sbfollowRequestAccepted = new StringBuilder();
+				sbfollowRequestAccepted.Append("  followRequestAccepted: {\n");
+				if (this.FollowRequestAccepted != null)
+				{
+					sbfollowRequestAccepted.Append(this.FollowRequestAccepted);
+					sbfollowRequestAccepted.Replace("\n", "\n  ");
+					sbfollowRequestAccepted.Append("\n");
+				}
+				sbfollowRequestAccepted.Append("  }\n");
+				sb.Append(sbfollowRequestAccepted);
+				var sbroleAssigned = new StringBuilder();
+				sbroleAssigned.Append("  roleAssigned: {\n");
+				if (this.RoleAssigned != null)
+				{
+					sbroleAssigned.Append(this.RoleAssigned);
+					sbroleAssigned.Replace("\n", "\n  ");
+					sbroleAssigned.Append("\n");
+				}
+				sbroleAssigned.Append("  }\n");
+				sb.Append(sbroleAssigned);
+				var sbachievementEarned = new StringBuilder();
+				sbachievementEarned.Append("  achievementEarned: {\n");
+				if (this.AchievementEarned != null)
+				{
+					sbachievementEarned.Append(this.AchievementEarned);
+					sbachievementEarned.Replace("\n", "\n  ");
+					sbachievementEarned.Append("\n");
+				}
+				sbachievementEarned.Append("  }\n");
+				sb.Append(sbachievementEarned);
+				var sbapp = new StringBuilder();
+				sbapp.Append("  app: {\n");
+				if (this.App != null)
+				{
+					sbapp.Append(this.App);
+					sbapp.Replace("\n", "\n  ");
+					sbapp.Append("\n");
+				}
+				sbapp.Append("  }\n");
+				sb.Append(sbapp);
+				var sbtest = new StringBuilder();
+				sbtest.Append("  test: {\n");
+				if (this.Test != null)
+				{
+					sbtest.Append(this.Test);
+					sbtest.Replace("\n", "\n  ");
+					sbtest.Append("\n");
+				}
+				sbtest.Append("  }\n");
+				sb.Append(sbtest);
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public enum UpdateFollowingVisibilityEnum {
 			[StringValue("public")]
@@ -1021,7 +1316,7 @@ namespace Misharp.Controls.I {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<JsonNode>>> Likes(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<object>>> Likes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -1029,7 +1324,7 @@ namespace Misharp.Controls.I {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<JsonNode>>("i/gallery/likes", param, useToken: true);
+			var result = await _app.Request<List<object>>("i/gallery/likes", param, useToken: true);
 			return result;
 		}
 		public async Task<Response<List<Model.GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
@@ -1099,9 +1394,9 @@ namespace Misharp.Controls.I {
 			var result = await _app.Request<Model.EmptyResponse>("i/registry/remove", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> ScopesWithDomain()
+		public async Task<Response<List<object>>> ScopesWithDomain()
 		{
-			var result = await _app.Request<List<JsonNode>>("i/registry/scopes-with-domain", useToken: true);
+			var result = await _app.Request<List<object>>("i/registry/scopes-with-domain", useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Set(string key,JsonNode value,List<string>? scope = null,string? domain = null)
@@ -1167,9 +1462,9 @@ namespace Misharp.Controls.I {
 			var result = await _app.Request<IWebhooksCreateResponse>("i/webhooks/create", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> List()
+		public async Task<Response<List<object>>> List()
 		{
-			var result = await _app.Request<List<JsonNode>>("i/webhooks/list", useToken: true);
+			var result = await _app.Request<List<object>>("i/webhooks/list", useToken: true);
 			return result;
 		}
 		public class IWebhooksShowResponse {

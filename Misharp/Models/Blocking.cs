@@ -15,16 +15,16 @@ namespace Misharp.Model {
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  blockeeId: {this.BlockeeId}\n");
-			var sbblockee = new StringBuilder();
-			sbblockee.Append("  blockee: {\n");
+			var sbBlockee = new StringBuilder();
+			sbBlockee.Append("  blockee: [\n");
 			if (this.Blockee != null)
 			{
-				sbblockee.Append(this.Blockee);
-				sbblockee.Replace("\n", "\n    ");
-				sbblockee.Append("\n");
+				sbBlockee.Append(this.Blockee);
+				sbBlockee.Replace("\n", "\n    ");
+				sbBlockee.Append("\n");
 			}
-			sbblockee.Append("  }\n");
-			sb.Append(sbblockee);
+			sbBlockee.Append("  ]\n");
+			sb.Append(sbBlockee);
 			sb.Append("}");
 			return sb.ToString();
 		}

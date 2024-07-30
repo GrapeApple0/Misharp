@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class FollowingApi {
 		private Misharp.App _app;
 		public Following.RequestsApi RequestsApi;
@@ -99,7 +100,7 @@ namespace Misharp.Controls.Following {
 			var result = await _app.Request<Model.UserLite>("following/requests/cancel", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> List(string? sinceId = null,string? untilId = null,int limit = 10)
+		public async Task<Response<List<object>>> List(string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -107,7 +108,7 @@ namespace Misharp.Controls.Following {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			var result = await _app.Request<List<JsonNode>>("following/requests/list", param, useToken: true);
+			var result = await _app.Request<List<object>>("following/requests/list", param, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Reject(string userId)

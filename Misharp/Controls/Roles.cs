@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class RolesApi {
 		private Misharp.App _app;
 		public RolesApi(Misharp.App app)
@@ -22,7 +23,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<Model.Role> result = await _app.Request<Model.Role>("roles/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Users(string roleId,string? sinceId = null,string? untilId = null,int limit = 10)
+		public async Task<Response<List<object>>> Users(string roleId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -31,7 +32,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("roles/users", param, useToken: false);
+			Response<List<object>> result = await _app.Request<List<object>>("roles/users", param, useToken: false);
 			return result;
 		}
 		public async Task<Response<List<Model.Note>>> Notes(string roleId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)

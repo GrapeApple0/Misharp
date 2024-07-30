@@ -6,7 +6,7 @@ namespace Misharp.Model {
 	public class Muting {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public DateTime ExpiresAt { get; set; }
+		public DateTime? ExpiresAt { get; set; }
 		public string MuteeId { get; set; }
 		public UserDetailedNotMe Mutee { get; set; }
 		public override string ToString()
@@ -17,16 +17,16 @@ namespace Misharp.Model {
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  expiresAt: {this.ExpiresAt}\n");
 			sb.Append($"  muteeId: {this.MuteeId}\n");
-			var sbmutee = new StringBuilder();
-			sbmutee.Append("  mutee: {\n");
+			var sbMutee = new StringBuilder();
+			sbMutee.Append("  mutee: [\n");
 			if (this.Mutee != null)
 			{
-				sbmutee.Append(this.Mutee);
-				sbmutee.Replace("\n", "\n    ");
-				sbmutee.Append("\n");
+				sbMutee.Append(this.Mutee);
+				sbMutee.Replace("\n", "\n    ");
+				sbMutee.Append("\n");
 			}
-			sbmutee.Append("  }\n");
-			sb.Append(sbmutee);
+			sbMutee.Append("  ]\n");
+			sb.Append(sbMutee);
 			sb.Append("}");
 			return sb.ToString();
 		}

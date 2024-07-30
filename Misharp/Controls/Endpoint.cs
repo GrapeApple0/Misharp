@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class EndpointApi {
 		private Misharp.App _app;
 		public EndpointApi(Misharp.App app)
@@ -9,7 +10,20 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			_app = app;
 		}
 		public class EndpointResponse {
-			public List<object> Params { get; set; }
+			public class ParamsItemsProperty {
+				public string Name { get; set; }
+				public string Type { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  type: {this.Type}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<ParamsItemsProperty> Params { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();

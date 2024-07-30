@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class AuthApi {
 		private Misharp.App _app;
 		public Auth.SessionApi SessionApi;
@@ -65,7 +66,7 @@ namespace Misharp.Controls.Auth {
 				if (this.App != null)
 				{
 					sbapp.Append(this.App);
-					sbapp.Replace("\n", "\n    ");
+					sbapp.Replace("\n", "\n  ");
 					sbapp.Append("\n");
 				}
 				sbapp.Append("  }\n");
@@ -97,7 +98,7 @@ namespace Misharp.Controls.Auth {
 				if (this.User != null)
 				{
 					sbuser.Append(this.User);
-					sbuser.Replace("\n", "\n    ");
+					sbuser.Replace("\n", "\n  ");
 					sbuser.Append("\n");
 				}
 				sbuser.Append("  }\n");

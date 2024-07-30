@@ -10,9 +10,9 @@ namespace Misharp.Model {
 		public string UserId { get; set; }
 		public UserLite User { get; set; }
 		public string Title { get; set; }
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		public List<string> FileIds { get; set; }
-		public List<object> Files { get; set; }
+		public List<DriveFile> Files { get; set; }
 		public List<string> Tags { get; set; }
 		public bool IsSensitive { get; set; }
 		public decimal LikedCount { get; set; }
@@ -25,22 +25,30 @@ namespace Misharp.Model {
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  updatedAt: {this.UpdatedAt}\n");
 			sb.Append($"  userId: {this.UserId}\n");
-			var sbuser = new StringBuilder();
-			sbuser.Append("  user: {\n");
+			var sbUser = new StringBuilder();
+			sbUser.Append("  user: [\n");
 			if (this.User != null)
 			{
-				sbuser.Append(this.User);
-				sbuser.Replace("\n", "\n    ");
-				sbuser.Append("\n");
+				sbUser.Append(this.User);
+				sbUser.Replace("\n", "\n    ");
+				sbUser.Append("\n");
 			}
-			sbuser.Append("  }\n");
-			sb.Append(sbuser);
+			sbUser.Append("  ]\n");
+			sb.Append(sbUser);
 			sb.Append($"  title: {this.Title}\n");
 			sb.Append($"  description: {this.Description}\n");
-			sb.Append("  fileIds: {\n");
-			if (this.FileIds != null && this.FileIds.Count > 0) this.FileIds.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
-			sb.Append("  files: {\n");
+			sb.Append("  fileIds: [\n");
+			if (this.FileIds != null && this.FileIds.Count > 0)
+			{
+				var sbFileIds = new StringBuilder();
+				sbFileIds.Append("    ");
+				this.FileIds.ForEach(item => sbFileIds.Append(item).Append(",\n"));
+				sbFileIds.Replace("\n", "\n    ");
+				sbFileIds.Length -= 4;
+				sb.Append(sbFileIds);
+			}
+			sb.Append("  ]\n");
+			sb.Append("  files: [\n");
 			if (this.Files != null && this.Files.Count > 0)
 			{
 				var sb2 = new StringBuilder();
@@ -54,10 +62,18 @@ namespace Misharp.Model {
 				sb2.Append("\n");
 				sb.Append(sb2);
 			}
-			sb.Append("  }\n");
-			sb.Append("  tags: {\n");
-			if (this.Tags != null && this.Tags.Count > 0) this.Tags.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-			sb.Append("  }\n");
+			sb.Append("  ]\n");
+			sb.Append("  tags: [\n");
+			if (this.Tags != null && this.Tags.Count > 0)
+			{
+				var sbTags = new StringBuilder();
+				sbTags.Append("    ");
+				this.Tags.ForEach(item => sbTags.Append(item).Append(",\n"));
+				sbTags.Replace("\n", "\n    ");
+				sbTags.Length -= 4;
+				sb.Append(sbTags);
+			}
+			sb.Append("  ]\n");
 			sb.Append($"  isSensitive: {this.IsSensitive}\n");
 			sb.Append($"  likedCount: {this.LikedCount}\n");
 			sb.Append($"  isLiked: {this.IsLiked}\n");

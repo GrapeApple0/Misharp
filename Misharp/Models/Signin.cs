@@ -16,7 +16,16 @@ namespace Misharp.Model {
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  ip: {this.Ip}\n");
-			sb.Append($"  headers: {this.Headers}\n");
+			var sbHeaders = new StringBuilder();
+			sbHeaders.Append("  headers: [\n");
+			if (this.Headers != null)
+			{
+				sbHeaders.Append(this.Headers);
+				sbHeaders.Replace("\n", "\n    ");
+				sbHeaders.Append("\n");
+			}
+			sbHeaders.Append("  ]\n");
+			sb.Append(sbHeaders);
 			sb.Append($"  success: {this.Success}\n");
 			sb.Append("}");
 			return sb.ToString();

@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class UsersApi {
 		private Misharp.App _app;
 		public Users.GalleryApi GalleryApi;
@@ -95,14 +96,14 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Following>> result = await _app.Request<List<Model.Following>>("users/following", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> GetFrequentlyRepliedUsers(string userId,int limit = 10)
+		public async Task<Response<List<object>>> GetFrequentlyRepliedUsers(string userId,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 				{ "limit", limit },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("users/get-frequently-replied-users", param, useToken: false);
+			Response<List<object>> result = await _app.Request<List<object>>("users/get-frequently-replied-users", param, useToken: false);
 			return result;
 		}
 		public async Task<Response<List<Model.Note>>> FeaturedNotes(string userId,int limit = 10,string? untilId = null)
@@ -251,13 +252,70 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public string? Host { get; set; }
 			public string? AvatarUrl { get; set; }
 			public string? AvatarBlurhash { get; set; }
-			public List<object> AvatarDecorations { get; set; }
+			public class AvatarDecorationsItemsProperty {
+				public string Id { get; set; }
+				public decimal Angle { get; set; }
+				public bool FlipH { get; set; }
+				public string Url { get; set; }
+				public decimal OffsetX { get; set; }
+				public decimal OffsetY { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  angle: {this.Angle}\n");
+					sb.Append($"  flipH: {this.FlipH}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  offsetX: {this.OffsetX}\n");
+					sb.Append($"  offsetY: {this.OffsetY}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<AvatarDecorationsItemsProperty> AvatarDecorations { get; set; }
 			public bool IsBot { get; set; }
 			public bool IsCat { get; set; }
-			public JsonNode Instance { get; set; }
-			public JsonNode Emojis { get; set; }
+		public class InstanceProperty {
+			public string? Name { get; set; }
+			public string? SoftwareName { get; set; }
+			public string? SoftwareVersion { get; set; }
+			public string? IconUrl { get; set; }
+			public string? FaviconUrl { get; set; }
+			public string? ThemeColor { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  name: {this.Name}\n");
+				sb.Append($"  softwareName: {this.SoftwareName}\n");
+				sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
+				sb.Append($"  iconUrl: {this.IconUrl}\n");
+				sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
+				sb.Append($"  themeColor: {this.ThemeColor}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
+		}
+			public InstanceProperty Instance { get; set; }
+			public object Emojis { get; set; }
 			public string OnlineStatus { get; set; }
-			public List<object> BadgeRoles { get; set; }
+			public class BadgeRolesItemsProperty {
+				public string Name { get; set; }
+				public string? IconUrl { get; set; }
+				public decimal DisplayOrder { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  displayOrder: {this.DisplayOrder}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<BadgeRolesItemsProperty> BadgeRoles { get; set; }
 			public string? Url { get; set; }
 			public string? Uri { get; set; }
 			public string? MovedTo { get; set; }
@@ -274,7 +332,20 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public string? Location { get; set; }
 			public string? Birthday { get; set; }
 			public string? Lang { get; set; }
-			public List<object> Fields { get; set; }
+			public class FieldsItemsProperty {
+				public string Name { get; set; }
+				public string Value { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  value: {this.Value}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<FieldsItemsProperty> Fields { get; set; }
 			public List<string> VerifiedLinks { get; set; }
 			public decimal FollowersCount { get; set; }
 			public decimal FollowingCount { get; set; }
@@ -282,7 +353,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public List<string> PinnedNoteIds { get; set; }
 			public List<Model.Note> PinnedNotes { get; set; }
 			public string? PinnedPageId { get; set; }
-			public JsonNode? PinnedPage { get; set; }
+			public object? PinnedPage { get; set; }
 			public bool PublicReactions { get; set; }
 			public string FollowingVisibility { get; set; }
 			public string FollowersVisibility { get; set; }
@@ -330,14 +401,205 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			public List<List<string>> MutedWords { get; set; }
 			public List<List<string>> HardMutedWords { get; set; }
 			public List<string>? MutedInstances { get; set; }
-			public JsonNode NotificationRecieveConfig { get; set; }
+		public class NotificationRecieveConfigProperty {
+			public JsonNode Note { get; set; }
+			public JsonNode Follow { get; set; }
+			public JsonNode Mention { get; set; }
+			public JsonNode Reply { get; set; }
+			public JsonNode Renote { get; set; }
+			public JsonNode Quote { get; set; }
+			public JsonNode Reaction { get; set; }
+			public JsonNode PollEnded { get; set; }
+			public JsonNode ReceiveFollowRequest { get; set; }
+			public JsonNode FollowRequestAccepted { get; set; }
+			public JsonNode RoleAssigned { get; set; }
+			public JsonNode AchievementEarned { get; set; }
+			public JsonNode App { get; set; }
+			public JsonNode Test { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				var sbnote = new StringBuilder();
+				sbnote.Append("  note: {\n");
+				if (this.Note != null)
+				{
+					sbnote.Append(this.Note);
+					sbnote.Replace("\n", "\n  ");
+					sbnote.Append("\n");
+				}
+				sbnote.Append("  }\n");
+				sb.Append(sbnote);
+				var sbfollow = new StringBuilder();
+				sbfollow.Append("  follow: {\n");
+				if (this.Follow != null)
+				{
+					sbfollow.Append(this.Follow);
+					sbfollow.Replace("\n", "\n  ");
+					sbfollow.Append("\n");
+				}
+				sbfollow.Append("  }\n");
+				sb.Append(sbfollow);
+				var sbmention = new StringBuilder();
+				sbmention.Append("  mention: {\n");
+				if (this.Mention != null)
+				{
+					sbmention.Append(this.Mention);
+					sbmention.Replace("\n", "\n  ");
+					sbmention.Append("\n");
+				}
+				sbmention.Append("  }\n");
+				sb.Append(sbmention);
+				var sbreply = new StringBuilder();
+				sbreply.Append("  reply: {\n");
+				if (this.Reply != null)
+				{
+					sbreply.Append(this.Reply);
+					sbreply.Replace("\n", "\n  ");
+					sbreply.Append("\n");
+				}
+				sbreply.Append("  }\n");
+				sb.Append(sbreply);
+				var sbrenote = new StringBuilder();
+				sbrenote.Append("  renote: {\n");
+				if (this.Renote != null)
+				{
+					sbrenote.Append(this.Renote);
+					sbrenote.Replace("\n", "\n  ");
+					sbrenote.Append("\n");
+				}
+				sbrenote.Append("  }\n");
+				sb.Append(sbrenote);
+				var sbquote = new StringBuilder();
+				sbquote.Append("  quote: {\n");
+				if (this.Quote != null)
+				{
+					sbquote.Append(this.Quote);
+					sbquote.Replace("\n", "\n  ");
+					sbquote.Append("\n");
+				}
+				sbquote.Append("  }\n");
+				sb.Append(sbquote);
+				var sbreaction = new StringBuilder();
+				sbreaction.Append("  reaction: {\n");
+				if (this.Reaction != null)
+				{
+					sbreaction.Append(this.Reaction);
+					sbreaction.Replace("\n", "\n  ");
+					sbreaction.Append("\n");
+				}
+				sbreaction.Append("  }\n");
+				sb.Append(sbreaction);
+				var sbpollEnded = new StringBuilder();
+				sbpollEnded.Append("  pollEnded: {\n");
+				if (this.PollEnded != null)
+				{
+					sbpollEnded.Append(this.PollEnded);
+					sbpollEnded.Replace("\n", "\n  ");
+					sbpollEnded.Append("\n");
+				}
+				sbpollEnded.Append("  }\n");
+				sb.Append(sbpollEnded);
+				var sbreceiveFollowRequest = new StringBuilder();
+				sbreceiveFollowRequest.Append("  receiveFollowRequest: {\n");
+				if (this.ReceiveFollowRequest != null)
+				{
+					sbreceiveFollowRequest.Append(this.ReceiveFollowRequest);
+					sbreceiveFollowRequest.Replace("\n", "\n  ");
+					sbreceiveFollowRequest.Append("\n");
+				}
+				sbreceiveFollowRequest.Append("  }\n");
+				sb.Append(sbreceiveFollowRequest);
+				var sbfollowRequestAccepted = new StringBuilder();
+				sbfollowRequestAccepted.Append("  followRequestAccepted: {\n");
+				if (this.FollowRequestAccepted != null)
+				{
+					sbfollowRequestAccepted.Append(this.FollowRequestAccepted);
+					sbfollowRequestAccepted.Replace("\n", "\n  ");
+					sbfollowRequestAccepted.Append("\n");
+				}
+				sbfollowRequestAccepted.Append("  }\n");
+				sb.Append(sbfollowRequestAccepted);
+				var sbroleAssigned = new StringBuilder();
+				sbroleAssigned.Append("  roleAssigned: {\n");
+				if (this.RoleAssigned != null)
+				{
+					sbroleAssigned.Append(this.RoleAssigned);
+					sbroleAssigned.Replace("\n", "\n  ");
+					sbroleAssigned.Append("\n");
+				}
+				sbroleAssigned.Append("  }\n");
+				sb.Append(sbroleAssigned);
+				var sbachievementEarned = new StringBuilder();
+				sbachievementEarned.Append("  achievementEarned: {\n");
+				if (this.AchievementEarned != null)
+				{
+					sbachievementEarned.Append(this.AchievementEarned);
+					sbachievementEarned.Replace("\n", "\n  ");
+					sbachievementEarned.Append("\n");
+				}
+				sbachievementEarned.Append("  }\n");
+				sb.Append(sbachievementEarned);
+				var sbapp = new StringBuilder();
+				sbapp.Append("  app: {\n");
+				if (this.App != null)
+				{
+					sbapp.Append(this.App);
+					sbapp.Replace("\n", "\n  ");
+					sbapp.Append("\n");
+				}
+				sbapp.Append("  }\n");
+				sb.Append(sbapp);
+				var sbtest = new StringBuilder();
+				sbtest.Append("  test: {\n");
+				if (this.Test != null)
+				{
+					sbtest.Append(this.Test);
+					sbtest.Replace("\n", "\n  ");
+					sbtest.Append("\n");
+				}
+				sbtest.Append("  }\n");
+				sb.Append(sbtest);
+				sb.Append("}");
+				return sb.ToString();
+			}
+		}
+			public NotificationRecieveConfigProperty NotificationRecieveConfig { get; set; }
 			public List<string> EmailNotificationTypes { get; set; }
-			public List<object> Achievements { get; set; }
+			public class AchievementsItemsProperty {
+				public string Name { get; set; }
+				public decimal UnlockedAt { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  unlockedAt: {this.UnlockedAt}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<AchievementsItemsProperty> Achievements { get; set; }
 			public decimal LoggedInDays { get; set; }
 			public Model.RolePolicies Policies { get; set; }
 			public string? Email { get; set; }
 			public bool? EmailVerified { get; set; }
-			public List<object> SecurityKeysList { get; set; }
+			public class SecurityKeysListItemsProperty {
+				public string Id { get; set; }
+				public string Name { get; set; }
+				public DateTime LastUsed { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("{\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  lastUsed: {this.LastUsed}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+			}
+			public List<SecurityKeysListItemsProperty> SecurityKeysList { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
@@ -353,8 +615,26 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				sb.Append("  }\n");
 				sb.Append($"  isBot: {this.IsBot}\n");
 				sb.Append($"  isCat: {this.IsCat}\n");
-				sb.Append($"  instance: {this.Instance}\n");
-				sb.Append($"  emojis: {this.Emojis}\n");
+				var sbinstance = new StringBuilder();
+				sbinstance.Append("  instance: {\n");
+				if (this.Instance != null)
+				{
+					sbinstance.Append(this.Instance);
+					sbinstance.Replace("\n", "\n  ");
+					sbinstance.Append("\n");
+				}
+				sbinstance.Append("  }\n");
+				sb.Append(sbinstance);
+				var sbemojis = new StringBuilder();
+				sbemojis.Append("  emojis: {\n");
+				if (this.Emojis != null)
+				{
+					sbemojis.Append(this.Emojis);
+					sbemojis.Replace("\n", "\n  ");
+					sbemojis.Append("\n");
+				}
+				sbemojis.Append("  }\n");
+				sb.Append(sbemojis);
 				sb.Append($"  onlineStatus: {this.OnlineStatus}\n");
 				sb.Append("  badgeRoles: {\n");
 				if (this.BadgeRoles != null && this.BadgeRoles.Count > 0) this.BadgeRoles.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
@@ -405,7 +685,16 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				}
 				sb.Append("  }\n");
 				sb.Append($"  pinnedPageId: {this.PinnedPageId}\n");
-				sb.Append($"  pinnedPage: {this.PinnedPage}\n");
+				var sbpinnedPage = new StringBuilder();
+				sbpinnedPage.Append("  pinnedPage: {\n");
+				if (this.PinnedPage != null)
+				{
+					sbpinnedPage.Append(this.PinnedPage);
+					sbpinnedPage.Replace("\n", "\n  ");
+					sbpinnedPage.Append("\n");
+				}
+				sbpinnedPage.Append("  }\n");
+				sb.Append(sbpinnedPage);
 				sb.Append($"  publicReactions: {this.PublicReactions}\n");
 				sb.Append($"  followingVisibility: {this.FollowingVisibility}\n");
 				sb.Append($"  followersVisibility: {this.FollowersVisibility}\n");
@@ -487,7 +776,16 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				sb.Append("  mutedInstances: {\n");
 				if (this.MutedInstances != null && this.MutedInstances.Count > 0) this.MutedInstances.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 				sb.Append("  }\n");
-				sb.Append($"  notificationRecieveConfig: {this.NotificationRecieveConfig}\n");
+				var sbnotificationRecieveConfig = new StringBuilder();
+				sbnotificationRecieveConfig.Append("  notificationRecieveConfig: {\n");
+				if (this.NotificationRecieveConfig != null)
+				{
+					sbnotificationRecieveConfig.Append(this.NotificationRecieveConfig);
+					sbnotificationRecieveConfig.Replace("\n", "\n  ");
+					sbnotificationRecieveConfig.Append("\n");
+				}
+				sbnotificationRecieveConfig.Append("  }\n");
+				sb.Append(sbnotificationRecieveConfig);
 				sb.Append("  emailNotificationTypes: {\n");
 				if (this.EmailNotificationTypes != null && this.EmailNotificationTypes.Count > 0) this.EmailNotificationTypes.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
 				sb.Append("  }\n");
@@ -500,7 +798,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				if (this.Policies != null)
 				{
 					sbpolicies.Append(this.Policies);
-					sbpolicies.Replace("\n", "\n    ");
+					sbpolicies.Replace("\n", "\n  ");
 					sbpolicies.Append("\n");
 				}
 				sbpolicies.Append("  }\n");
@@ -527,13 +825,13 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<UsersShowResponse> result = await _app.Request<UsersShowResponse>("users/show", param, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> Achievements(string userId)
+		public async Task<Response<List<object>>> Achievements(string userId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("users/achievements", param, useToken: false);
+			Response<List<object>> result = await _app.Request<List<object>>("users/achievements", param, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> UpdateMemo(string userId,string? memo = null)
@@ -683,7 +981,7 @@ namespace Misharp.Controls.Users {
 			var result = await _app.Request<Model.EmptyResponse>("users/lists/update-membership", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> GetMemberships(string listId,bool forPublic = false,int limit = 30,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<object>>> GetMemberships(string listId,bool forPublic = false,int limit = 30,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -693,7 +991,7 @@ namespace Misharp.Controls.Users {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<List<JsonNode>>("users/lists/get-memberships", param, useToken: false);
+			var result = await _app.Request<List<object>>("users/lists/get-memberships", param, useToken: false);
 			return result;
 		}
 	}

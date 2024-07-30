@@ -14,16 +14,16 @@ namespace Misharp.Model {
 			sb.Append("class NoteReaction: {\n");
 			sb.Append($"  id: {this.Id}\n");
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
-			var sbuser = new StringBuilder();
-			sbuser.Append("  user: {\n");
+			var sbUser = new StringBuilder();
+			sbUser.Append("  user: [\n");
 			if (this.User != null)
 			{
-				sbuser.Append(this.User);
-				sbuser.Replace("\n", "\n    ");
-				sbuser.Append("\n");
+				sbUser.Append(this.User);
+				sbUser.Replace("\n", "\n    ");
+				sbUser.Append("\n");
 			}
-			sbuser.Append("  }\n");
-			sb.Append(sbuser);
+			sbUser.Append("  ]\n");
+			sb.Append(sbUser);
 			sb.Append($"  type: {this.Type}\n");
 			sb.Append("}");
 			return sb.ToString();

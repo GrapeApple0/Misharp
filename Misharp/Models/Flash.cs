@@ -12,7 +12,7 @@ namespace Misharp.Model {
 		public string Title { get; set; }
 		public string Summary { get; set; }
 		public string Script { get; set; }
-		public decimal LikedCount { get; set; }
+		public decimal? LikedCount { get; set; }
 		public bool IsLiked { get; set; }
 		public override string ToString()
 		{
@@ -22,16 +22,16 @@ namespace Misharp.Model {
 			sb.Append($"  createdAt: {this.CreatedAt}\n");
 			sb.Append($"  updatedAt: {this.UpdatedAt}\n");
 			sb.Append($"  userId: {this.UserId}\n");
-			var sbuser = new StringBuilder();
-			sbuser.Append("  user: {\n");
+			var sbUser = new StringBuilder();
+			sbUser.Append("  user: [\n");
 			if (this.User != null)
 			{
-				sbuser.Append(this.User);
-				sbuser.Replace("\n", "\n    ");
-				sbuser.Append("\n");
+				sbUser.Append(this.User);
+				sbUser.Replace("\n", "\n    ");
+				sbUser.Append("\n");
 			}
-			sbuser.Append("  }\n");
-			sb.Append(sbuser);
+			sbUser.Append("  ]\n");
+			sb.Append(sbUser);
 			sb.Append($"  title: {this.Title}\n");
 			sb.Append($"  summary: {this.Summary}\n");
 			sb.Append($"  script: {this.Script}\n");

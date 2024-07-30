@@ -1,7 +1,8 @@
 using Misharp;
 using Misharp.Model;
 using System.Text;
-using System.Text.Json.Nodes;namespace Misharp.Controls {
+using System.Text.Json.Nodes;
+namespace Misharp.Controls {
 	public class FlashApi {
 		private Misharp.App _app;
 		public FlashApi(Misharp.App app)
@@ -101,7 +102,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 			Response<List<Model.Flash>> result = await _app.Request<List<Model.Flash>>("flash/my", param, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<JsonNode>>> MyLikes(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<object>>> MyLikes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -109,7 +110,7 @@ using System.Text.Json.Nodes;namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			Response<List<JsonNode>> result = await _app.Request<List<JsonNode>>("flash/my-likes", param, useToken: true);
+			Response<List<object>> result = await _app.Request<List<object>>("flash/my-likes", param, useToken: true);
 			return result;
 		}
 	}
