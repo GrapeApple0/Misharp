@@ -22,7 +22,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<MiauthGenTokenResponse>> GenToken(string? session = null,string? name = null,string? description = null,string? iconUrl = null,List<string>? permission = null)
 		{
-			permission ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "session", session },

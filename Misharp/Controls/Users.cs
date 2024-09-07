@@ -814,7 +814,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<UsersShowResponse>> Show(string userId,string username,List<string>? userIds = null,string? host = null)
 		{
-			userIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "userId", userId },

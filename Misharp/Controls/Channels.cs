@@ -94,7 +94,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.Channel>> Update(string channelId,string name,string color,string? description = null,string? bannerId = null,bool? isArchived = null,List<string>? pinnedNoteIds = null,bool? isSensitive = null,bool? allowRenoteToExternal = null)
 		{
-			pinnedNoteIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "channelId", channelId },

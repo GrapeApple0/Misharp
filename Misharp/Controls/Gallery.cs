@@ -49,7 +49,6 @@ namespace Misharp.Controls.Gallery {
 		}
 		public async Task<Response<Model.GalleryPost>> Create(string title,string? description = null,List<string>? fileIds = null,bool isSensitive = false)
 		{
-			fileIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
@@ -98,7 +97,6 @@ namespace Misharp.Controls.Gallery {
 		}
 		public async Task<Response<Model.GalleryPost>> Update(string postId,string title,string? description = null,List<string>? fileIds = null,bool isSensitive = false)
 		{
-			fileIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "postId", postId },

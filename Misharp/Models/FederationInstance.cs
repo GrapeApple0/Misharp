@@ -23,6 +23,7 @@ namespace Misharp.Model {
 		public string? MaintainerName { get; set; }
 		public string? MaintainerEmail { get; set; }
 		public bool IsSilenced { get; set; }
+		public bool IsMediaSilenced { get; set; }
 		public string? IconUrl { get; set; }
 		public string? FaviconUrl { get; set; }
 		public string? ThemeColor { get; set; }
@@ -52,6 +53,7 @@ namespace Misharp.Model {
 			sb.Append($"  maintainerName: {this.MaintainerName}\n");
 			sb.Append($"  maintainerEmail: {this.MaintainerEmail}\n");
 			sb.Append($"  isSilenced: {this.IsSilenced}\n");
+			sb.Append($"  isMediaSilenced: {this.IsMediaSilenced}\n");
 			sb.Append($"  iconUrl: {this.IconUrl}\n");
 			sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
 			sb.Append($"  themeColor: {this.ThemeColor}\n");

@@ -73,6 +73,7 @@ namespace Misharp.Model {
 		public List<string> ServerRules { get; set; }
 		public string? ThemeColor { get; set; }
 		public RolePolicies Policies { get; set; }
+		public string NoteSearchableScope { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -164,6 +165,7 @@ namespace Misharp.Model {
 			}
 			sbPolicies.Append("  ]\n");
 			sb.Append(sbPolicies);
+			sb.Append($"  noteSearchableScope: {this.NoteSearchableScope}\n");
 			sb.Append("}");
 			return sb.ToString();
 		}

@@ -19,6 +19,7 @@ namespace Misharp.Model {
 		public bool CanHideAds { get; set; }
 		public int DriveCapacityMb { get; set; }
 		public bool AlwaysMarkNsfw { get; set; }
+		public bool CanUpdateBioMedia { get; set; }
 		public int PinLimit { get; set; }
 		public int AntennaLimit { get; set; }
 		public int WordMuteLimit { get; set; }
@@ -48,6 +49,7 @@ namespace Misharp.Model {
 			sb.Append($"  canHideAds: {this.CanHideAds}\n");
 			sb.Append($"  driveCapacityMb: {this.DriveCapacityMb}\n");
 			sb.Append($"  alwaysMarkNsfw: {this.AlwaysMarkNsfw}\n");
+			sb.Append($"  canUpdateBioMedia: {this.CanUpdateBioMedia}\n");
 			sb.Append($"  pinLimit: {this.PinLimit}\n");
 			sb.Append($"  antennaLimit: {this.AntennaLimit}\n");
 			sb.Append($"  wordMuteLimit: {this.WordMuteLimit}\n");

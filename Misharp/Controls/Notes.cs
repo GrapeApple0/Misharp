@@ -66,7 +66,7 @@ namespace Misharp.Controls {
 			return result;
 		}
 		public class NotesCreatePollPropertyObject {
-			public List<string> Choices { get; set; }
+			public UniqueList<string> Choices { get; set; }
 			public bool Multiple { get; set; }
 			public int? ExpiresAt { get; set; }
 			public int? ExpiredAfter { get; set; }
@@ -106,9 +106,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<NotesCreateResponse>> Create(CreateVisibilityEnum visibility = CreateVisibilityEnum.Public,List<string>? visibleUserIds = null,string? cw = null,bool localOnly = false,CreateReactionAcceptanceEnum? reactionAcceptance = null,bool noExtractMentions = false,bool noExtractHashtags = false,bool noExtractEmojis = false,string? replyId = null,string? renoteId = null,string? channelId = null,string? text = null,List<string>? fileIds = null,List<string>? mediaIds = null,object? poll = null)
 		{
-			visibleUserIds ??= new();
-			fileIds ??= new();
-			mediaIds ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "visibility", visibility },
@@ -131,7 +128,7 @@ namespace Misharp.Controls {
 			return result;
 		}
 		public class CreatePollParamObject {
-			public List<string> Choices { get; set; }
+			public UniqueList<string> Choices { get; set; }
 			public bool Multiple { get; set; }
 			public int? ExpiresAt { get; set; }
 			public int? ExpiredAfter { get; set; }
@@ -293,7 +290,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<List<Model.Note>>> SearchByTag(string tag,bool? reply = null,bool? renote = null,bool withFiles = false,bool? poll = null,string? sinceId = null,string? untilId = null,int limit = 10,List<List<string>>? query = null)
 		{
-			query ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "reply", reply },

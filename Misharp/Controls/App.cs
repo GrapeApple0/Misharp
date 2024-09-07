@@ -11,7 +11,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.App>> Create(string name,string description,List<string>? permission = null,string? callbackUrl = null)
 		{
-			permission ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },

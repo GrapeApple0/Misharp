@@ -11,8 +11,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.Page>> Create(string title,string name,string script,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null,CreateFontEnum font = CreateFontEnum.SansSerif,bool alignCenter = false,bool hideTitleWhenPinned = false)
 		{
-			content ??= new();
-			variables ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
@@ -80,8 +78,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.EmptyResponse>> Update(string pageId,string title,string name,string script,UpdateFontEnum font,bool alignCenter,bool hideTitleWhenPinned,string? summary = null,List<object>? content = null,List<object>? variables = null,string? eyeCatchingImageId = null)
 		{
-			content ??= new();
-			variables ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "pageId", pageId },

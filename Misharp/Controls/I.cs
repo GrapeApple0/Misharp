@@ -348,8 +348,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<List<Model.Notification>>> Notifications(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
 		{
-			includeTypes ??= new();
-			excludeTypes ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "limit", limit },
@@ -364,8 +362,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<List<Model.Notification>>> NotificationsGrouped(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
 		{
-			includeTypes ??= new();
-			excludeTypes ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "limit", limit },
@@ -638,13 +634,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.MeDetailed>> Update(bool isLocked,bool isExplorable,bool hideOnlineStatus,bool publicReactions,bool carefulBot,bool autoAcceptFollowed,bool noCrawle,bool preventAiLearning,bool isBot,bool isCat,bool injectFeaturedNote,bool receiveAnnouncementEmail,bool alwaysMarkNsfw,bool autoSensitive,UpdateFollowingVisibilityEnum followingVisibility,UpdateFollowersVisibilityEnum followersVisibility,UpdateNotificationRecieveConfigParamObject notificationRecieveConfig,string? name = null,string? description = null,string? location = null,string? birthday = null,UpdateLangEnum? lang = null,string? avatarId = null,List<object>? avatarDecorations = null,string? bannerId = null,List<object>? fields = null,string? pinnedPageId = null,List<JsonNode>? mutedWords = null,List<JsonNode>? hardMutedWords = null,List<string>? mutedInstances = null,List<string>? emailNotificationTypes = null,List<string>? alsoKnownAs = null)
 		{
-			avatarDecorations ??= new();
-			fields ??= new();
-			mutedWords ??= new();
-			hardMutedWords ??= new();
-			mutedInstances ??= new();
-			emailNotificationTypes ??= new();
-			alsoKnownAs ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
@@ -1361,7 +1350,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<IRegistryGetDetailResponse>> GetDetail(string key,List<string>? scope = null,string? domain = null)
 		{
-			scope ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "key", key },
@@ -1373,7 +1361,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<List<string>>> Keys(List<string>? scope = null,string? domain = null)
 		{
-			scope ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "scope", scope },
@@ -1384,7 +1371,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<Model.EmptyResponse>> Remove(string key,List<string>? scope = null,string? domain = null)
 		{
-			scope ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "key", key },
@@ -1401,7 +1387,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<Model.EmptyResponse>> Set(string key,JsonNode value,List<string>? scope = null,string? domain = null)
 		{
-			scope ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "key", key },
@@ -1451,7 +1436,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<IWebhooksCreateResponse>> Create(string name,string url,string? secret = null,List<string>? on = null)
 		{
-			on ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
@@ -1507,7 +1491,6 @@ namespace Misharp.Controls.I {
 		}
 		public async Task<Response<Model.EmptyResponse>> Update(string webhookId,string name,string url,bool active,string? secret = null,List<string>? on = null)
 		{
-			on ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "webhookId", webhookId },

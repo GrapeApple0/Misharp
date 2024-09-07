@@ -1,5 +1,6 @@
 ﻿using Misharp.Controls;
 using System.Net;
+using System.Net.Mime;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -9,9 +10,10 @@ namespace Misharp;
 
 public class App
 {
-    public string Host { get; set; }
-    public string Token { get; set; }
-    private bool UseHttps { get; }
+    public string Host { get; }
+    public string Token { get; }
+    public bool UseHttps { get; }
+    private HttpClient HttpClient { get; }
 
     public AnnouncementsApi AnnouncementsApi { get; }
     public AntennasApi AntennasApi { get; }
@@ -62,10 +64,11 @@ public class App
     public RetentionApi RetentionApi { get; }
     public Streaming Streaming { get; }
 
-    public App(string host, string token, bool useHttps = true)
+    public App(string host, string token, HttpClient? httpClient = null, bool useHttps = true)
     {
         this.Host = host;
         this.Token = token;
+        this.HttpClient = httpClient ?? new HttpClient();
         this.UseHttps = useHttps;
         this.AnnouncementsApi = new AnnouncementsApi(this);
         this.AntennasApi = new AntennasApi(this);
@@ -119,7 +122,6 @@ public class App
 
     public async Task Request(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.NoContent)
     {
-        using var client = new HttpClient();
         var param = (from kv in ps
                      where kv.Value != null
                      select kv).ToDictionary(kv => kv.Key, kv => kv.Value);
@@ -145,8 +147,8 @@ public class App
         else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
-        var content = new StringContent(data, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
+        var content = new StringContent(data, Encoding.UTF8, MediaTypeNames.Application.Json);
+        var response = await this.HttpClient.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
         var resultContent = await response.Content.ReadAsStringAsync();
 
         JsonSerializerOptions options = new()
@@ -164,7 +166,6 @@ public class App
 
     public async Task<Model.Response<T>> Request<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
-        using var client = new HttpClient();
         var param = (from kv in ps
                      where kv.Value != null
                      select kv).ToDictionary(kv => kv.Key, kv => kv.Value);
@@ -190,8 +191,8 @@ public class App
         else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
-        var content = new StringContent(data, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
+        var content = new StringContent(data, Encoding.UTF8, MediaTypeNames.Application.Json);
+        var response = await this.HttpClient.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
         var resultContent = await response.Content.ReadAsStringAsync();
 
         JsonSerializerOptions options = new()
@@ -211,7 +212,6 @@ public class App
 
     public async Task<Model.Response<T>> Request<T>(string endpoint, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
-        using var client = new HttpClient();
         var param = new Dictionary<string, object>();
 
         if (this.Token != "")
@@ -231,8 +231,76 @@ public class App
         else if (useToken) throw new Exception("This endpoint requires token");
 
         var data = JsonSerializer.Serialize(param);
-        var content = new StringContent(data, Encoding.UTF8, "application/json");
-        var response = await client.PostAsync($"http{(UseHttps ? 's' : String.Empty)}://{this.Host}/api/{endpoint}", content);
+        var content = new StringContent(data, Encoding.UTF8, MediaTypeNames.Application.Json);
+        Console.WriteLine($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}");
+        var response = await this.HttpClient.PostAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}", content);
+        var resultContent = await response.Content.ReadAsStringAsync();
+
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+        };
+        if (response.StatusCode == successStatusCode)
+        {
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Model.Response<T>(response.StatusCode);
+            var result = JsonSerializer.Deserialize<T>(resultContent, options);
+            if (result != null) return new Model.Response<T>(response.StatusCode, result);
+        }
+        throw new Exception(resultContent);
+    }
+
+    // reserved for future use
+    public async Task<Model.Response<T>> RequestGet<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    {
+        var param = new Dictionary<string, object>();
+
+        if (this.Token != "")
+        {
+            var i = new Dictionary<string, object>
+            {
+                { "i", this.Token }
+            };
+            param = param
+                .Concat(i.Where(pair =>
+                    !param.ContainsKey(pair.Key))
+                ).ToDictionary(
+                    pair => pair.Key,
+                    pair => pair.Value
+                );
+        }
+        else if (useToken) throw new Exception("This endpoint requires token");
+
+        var data = JsonSerializer.Serialize(param);
+
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}"),
+            Content = new StringContent(data, Encoding.UTF8, MediaTypeNames.Application.Json),
+        };
+
+        var response = await this.HttpClient.SendAsync(request);
+        var resultContent = await response.Content.ReadAsStringAsync();
+        JsonSerializerOptions options = new()
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+        };
+        if (response.StatusCode == successStatusCode)
+        {
+            if (response.StatusCode == HttpStatusCode.NoContent) return new Model.Response<T>(response.StatusCode);
+            var result = JsonSerializer.Deserialize<T>(resultContent, options);
+            if (result != null) return new Model.Response<T>(response.StatusCode, result);
+        }
+        throw new Exception(resultContent);
+    }
+
+    public async Task<Model.Response<T>> RequestGet<T>(string endpoint, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
+    {
+        var response = await this.HttpClient.GetAsync($"http{(UseHttps ? 's' : string.Empty)}://{this.Host}/api/{endpoint}");
         var resultContent = await response.Content.ReadAsStringAsync();
 
         JsonSerializerOptions options = new()
@@ -264,7 +332,6 @@ public class App
 
     public async Task<Model.Response<T>> RequestFormData<T>(string endpoint, Dictionary<string, object?> ps, bool useToken = false, HttpStatusCode successStatusCode = HttpStatusCode.OK) where T : class
     {
-        using var client = new HttpClient();
         MultipartFormDataContent content = new MultipartFormDataContent();
         foreach (var param in ps)
         {
@@ -303,7 +370,7 @@ public class App
             content.Add(i);
         }
         else if (useToken) throw new Exception("This endpoint requires token");
-        HttpResponseMessage response = await client.PostAsync($"http{(UseHttps ? 's' : String.Empty)}://{this.Host}/api/{endpoint}", content);
+        HttpResponseMessage response = await this.HttpClient.PostAsync($"http{(UseHttps ? 's' : String.Empty)}://{this.Host}/api/{endpoint}", content);
 
         var resultContent = await response.Content.ReadAsStringAsync();
 

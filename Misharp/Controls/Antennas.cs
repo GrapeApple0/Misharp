@@ -11,9 +11,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.Antenna>> Create(string name,CreateSrcEnum src,bool caseSensitive,bool localOnly,bool excludeBots,bool withReplies,bool withFile,string? userListId = null,List<List<string>>? keywords = null,List<List<string>>? excludeKeywords = null,List<string>? users = null)
 		{
-			keywords ??= new();
-			excludeKeywords ??= new();
-			users ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
@@ -82,9 +79,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,bool caseSensitive,bool localOnly,bool excludeBots,bool withReplies,bool withFile,string? userListId = null,List<List<string>>? keywords = null,List<List<string>>? excludeKeywords = null,List<string>? users = null)
 		{
-			keywords ??= new();
-			excludeKeywords ??= new();
-			users ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "antennaId", antennaId },

@@ -79,6 +79,7 @@ namespace Misharp.Controls {
 			public List<string> ServerRules { get; set; }
 			public string? ThemeColor { get; set; }
 			public Model.RolePolicies Policies { get; set; }
+			public string NoteSearchableScope { get; set; }
 		public class FeaturesProperty {
 			public bool Registration { get; set; }
 			public bool EmailRequiredForSignup { get; set; }
@@ -180,6 +181,7 @@ namespace Misharp.Controls {
 				}
 				sbpolicies.Append("  }\n");
 				sb.Append(sbpolicies);
+				sb.Append($"  noteSearchableScope: {this.NoteSearchableScope}\n");
 				var sbfeatures = new StringBuilder();
 				sbfeatures.Append("  features: {\n");
 				if (this.Features != null)

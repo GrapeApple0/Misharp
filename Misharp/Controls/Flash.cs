@@ -11,7 +11,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.Flash>> Create(string title,string summary,string script,List<string>? permissions = null,CreateVisibilityEnum visibility = CreateVisibilityEnum.Public)
 		{
-			permissions ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "title", title },
@@ -72,7 +71,6 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.EmptyResponse>> Update(string flashId,string title,string summary,string script,UpdateVisibilityEnum visibility,List<string>? permissions = null)
 		{
-			permissions ??= new();
 			var param = new Dictionary<string, object?>	
 			{
 				{ "flashId", flashId },
