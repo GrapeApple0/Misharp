@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
@@ -63,7 +62,7 @@ namespace Misharp.Model {
 			}
 		}
 		public NotePollObject? Poll { get; set; }
-		public Dictionary<string, string> Emojis { get; set; }
+		public Dictionary<string, > Emojis { get; set; }
 		public string? ChannelId { get; set; }
 		public class NoteChannelObject {
 			public string Id { get; set; }
@@ -89,8 +88,8 @@ namespace Misharp.Model {
 		public NoteChannelObject? Channel { get; set; }
 		public bool LocalOnly { get; set; }
 		public string? ReactionAcceptance { get; set; }
-		public Dictionary<string, string> ReactionEmojis { get; set; }
-		public Dictionary<string, decimal> Reactions { get; set; }
+		public Dictionary<string, > ReactionEmojis { get; set; }
+		public Dictionary<string, > Reactions { get; set; }
 		public decimal ReactionCount { get; set; }
 		public decimal RenoteCount { get; set; }
 		public decimal RepliesCount { get; set; }

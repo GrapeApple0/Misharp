@@ -9,9 +9,33 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<object>>> Retention()
+		public class RetentionItemResponseObject {
+			public DateTime CreatedAt { get; set; }
+			public decimal Users { get; set; }
+			public Dictionary<string, > Data { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("class RetentionItemResponseObject: {\n");
+				sb.Append($"  createdAt: {this.CreatedAt}\n");
+				sb.Append($"  users: {this.Users}\n");
+				var sbData = new StringBuilder();
+				sbData.Append("  data: [\n");
+				if (this.Data != null)
+				{
+					sbData.Append(this.Data);
+					sbData.Replace("\n", "\n    ");
+					sbData.Append("\n");
+				}
+				sbData.Append("  ]\n");
+				sb.Append(sbData);
+				sb.Append("}");
+				return sb.ToString();
+			}
+		}
+		public async Task<Response<List<RetentionItemResponseObject>>> Retention()
 		{
-			Response<List<object>> result = await _app.Request<List<object>>("retention", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("retention", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

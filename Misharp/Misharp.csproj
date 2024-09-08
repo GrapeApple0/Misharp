@@ -12,6 +12,6 @@
 		<RepositoryUrl>https://github.com/GrapeApple0/Misharp</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<Version>2024.7.0.3</Version>
+		<Version>2024.8.0.0</Version>
 	</PropertyGroup>
 </Project>

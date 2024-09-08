@@ -25,7 +25,7 @@ namespace Misharp.Controls {
 				{ "withReplies", withReplies },
 				{ "withFile", withFile },
 			};
-			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/create", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum CreateSrcEnum {
@@ -49,12 +49,12 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("antennas/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Antenna>>> List()
+		public async Task<Response<List<Antenna>>> List()
 		{
-			Response<List<Model.Antenna>> result = await _app.Request<List<Model.Antenna>>("antennas/list", useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/list", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Notes(string antennaId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Note>>> Notes(string antennaId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -65,7 +65,7 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("antennas/notes", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.Antenna>> Show(string antennaId)
@@ -74,7 +74,7 @@ namespace Misharp.Controls {
 			{
 				{ "antennaId", antennaId },
 			};
-			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/show", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.Antenna>> Update(string antennaId,string name,UpdateSrcEnum src,bool caseSensitive,bool localOnly,bool excludeBots,bool withReplies,bool withFile,string? userListId = null,List<List<string>>? keywords = null,List<List<string>>? excludeKeywords = null,List<string>? users = null)
@@ -94,7 +94,7 @@ namespace Misharp.Controls {
 				{ "withReplies", withReplies },
 				{ "withFile", withFile },
 			};
-			Response<Model.Antenna> result = await _app.Request<Model.Antenna>("antennas/update", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("antennas/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum UpdateSrcEnum {

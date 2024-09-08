@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
@@ -56,7 +55,7 @@ namespace Misharp.Model {
 			}
 		}
 		public MeDetailedInstanceObject Instance { get; set; }
-		public JsonNode Emojis { get; set; }
+		public Dictionary<string, string> Emojis { get; set; }
 		public string OnlineStatus { get; set; }
 		public class MeDetailedBadgeRolesPropertyType {
 			public string Name { get; set; }

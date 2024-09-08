@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
 namespace Misharp.Model {
-	public class Role {
+	public class Role : RoleLite {
 		public string Id { get; set; }
 		public string Name { get; set; }
 		public string? Color { get; set; }

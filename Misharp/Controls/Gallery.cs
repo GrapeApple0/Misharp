@@ -11,22 +11,22 @@ namespace Misharp.Controls {
 			_app = app;
 			PostsApi = new Gallery.PostsApi(_app);
 		}
-		public async Task<Response<List<Model.GalleryPost>>> Featured(int limit = 10,string? untilId = null)
+		public async Task<Response<List<GalleryPost>>> Featured(int limit = 10,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "limit", limit },
 				{ "untilId", untilId },
 			};
-			Response<List<Model.GalleryPost>> result = await _app.Request<List<Model.GalleryPost>>("gallery/featured", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/featured", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.GalleryPost>>> Popular()
+		public async Task<Response<List<GalleryPost>>> Popular()
 		{
-			Response<List<Model.GalleryPost>> result = await _app.Request<List<Model.GalleryPost>>("gallery/popular", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/popular", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -34,7 +34,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			Response<List<Model.GalleryPost>> result = await _app.Request<List<Model.GalleryPost>>("gallery/posts", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/posts", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}
@@ -56,7 +56,7 @@ namespace Misharp.Controls.Gallery {
 				{ "fileIds", fileIds },
 				{ "isSensitive", isSensitive },
 			};
-			var result = await _app.Request<Model.GalleryPost>("gallery/posts/create", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/posts/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Delete(string postId)
@@ -83,7 +83,7 @@ namespace Misharp.Controls.Gallery {
 			{
 				{ "postId", postId },
 			};
-			var result = await _app.Request<Model.GalleryPost>("gallery/posts/show", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/posts/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Unlike(string postId)
@@ -105,7 +105,7 @@ namespace Misharp.Controls.Gallery {
 				{ "fileIds", fileIds },
 				{ "isSensitive", isSensitive },
 			};
-			var result = await _app.Request<Model.GalleryPost>("gallery/posts/update", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("gallery/posts/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

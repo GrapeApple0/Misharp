@@ -9,22 +9,31 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class ApShowResponse {
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
-		}
-		public async Task<Response<ApShowResponse>> Show(string uri)
+		public async Task<Response<JsonNode>> Get(string uri)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "uri", uri },
 			};
-			Response<ApShowResponse> result = await _app.Request<ApShowResponse>("ap/show", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("ap/get", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			return result;
+		}
+		public class ShowResponse {
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
+		}
+		public async Task<Response<ShowResponse>> Show(string uri)
+		{
+			var param = new Dictionary<string, object?>	
+			{
+				{ "uri", uri },
+			};
+			var result = await _app.Request<Model.EmptyResponse>("ap/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

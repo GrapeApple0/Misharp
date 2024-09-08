@@ -9,9 +9,9 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Model.UserDetailed>>> PinnedUsers()
+		public async Task<Response<List<UserDetailed>>> PinnedUsers()
 		{
-			Response<List<Model.UserDetailed>> result = await _app.Request<List<Model.UserDetailed>>("pinned-users", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("pinned-users", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

@@ -11,7 +11,7 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<List<string>>> Endpoints()
 		{
-			Response<List<string>> result = await _app.Request<List<string>>("endpoints", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("endpoints", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

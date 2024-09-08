@@ -11,18 +11,18 @@ namespace Misharp.Controls {
 		}
 		public class GetOnlineUsersCountResponse {
 			public decimal Count { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  count: {this.Count}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  count: {this.Count}\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
 		}
 		public async Task<Response<GetOnlineUsersCountResponse>> GetOnlineUsersCount()
 		{
-			Response<GetOnlineUsersCountResponse> result = await _app.Request<GetOnlineUsersCountResponse>("get-online-users-count", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("get-online-users-count", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

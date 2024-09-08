@@ -18,7 +18,7 @@ namespace Misharp.Controls {
 				{ "permission", permission },
 				{ "callbackUrl", callbackUrl },
 			};
-			Response<Model.App> result = await _app.Request<Model.App>("app/create", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("app/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.App>> Show(string appId)
@@ -27,7 +27,7 @@ namespace Misharp.Controls {
 			{
 				{ "appId", appId },
 			};
-			Response<Model.App> result = await _app.Request<Model.App>("app/show", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("app/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

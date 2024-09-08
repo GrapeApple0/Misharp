@@ -9,18 +9,18 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class MiauthGenTokenResponse {
+		public class GenTokenResponse {
 			public string Token { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  token: {this.Token}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  token: {this.Token}\n");
+			sb.Append("}");
+			return sb.ToString();
 		}
-		public async Task<Response<MiauthGenTokenResponse>> GenToken(string? session = null,string? name = null,string? description = null,string? iconUrl = null,List<string>? permission = null)
+		}
+		public async Task<Response<GenTokenResponse>> GenToken(string? session = null,string? name = null,string? description = null,string? iconUrl = null,List<string>? permission = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -30,7 +30,7 @@ namespace Misharp.Controls {
 				{ "iconUrl", iconUrl },
 				{ "permission", permission },
 			};
-			Response<MiauthGenTokenResponse> result = await _app.Request<MiauthGenTokenResponse>("miauth/gen-token", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("miauth/gen-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

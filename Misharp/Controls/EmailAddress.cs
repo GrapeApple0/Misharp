@@ -9,26 +9,26 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class EmailAddressAvailableResponse {
+		public class AvailableResponse {
 			public bool Available { get; set; }
-			public string? Reason { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  available: {this.Available}\n");
-				sb.Append($"  reason: {this.Reason}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+			public string Reason { get; set; }
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  available: {this.Available}\n");
+			sb.Append($"  reason: {this.Reason}\n");
+			sb.Append("}");
+			return sb.ToString();
 		}
-		public async Task<Response<EmailAddressAvailableResponse>> Available(string emailAddress)
+		}
+		public async Task<Response<AvailableResponse>> Available(string emailAddress)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "emailAddress", emailAddress },
 			};
-			Response<EmailAddressAvailableResponse> result = await _app.Request<EmailAddressAvailableResponse>("email-address/available", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("email-address/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

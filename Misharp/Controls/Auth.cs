@@ -33,15 +33,15 @@ namespace Misharp.Controls.Auth {
 		public class AuthSessionGenerateResponse {
 			public string Token { get; set; }
 			public string Url { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  token: {this.Token}\n");
-				sb.Append($"  url: {this.Url}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  token: {this.Token}\n");
+			sb.Append($"  url: {this.Url}\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
 		}
 		public async Task<Response<AuthSessionGenerateResponse>> Generate(string appSecret)
 		{
@@ -49,32 +49,32 @@ namespace Misharp.Controls.Auth {
 			{
 				{ "appSecret", appSecret },
 			};
-			var result = await _app.Request<AuthSessionGenerateResponse>("auth/session/generate", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("auth/session/generate", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public class AuthSessionShowResponse {
 			public string Id { get; set; }
-			public Model.App App { get; set; }
+			public App App { get; set; }
 			public string Token { get; set; }
-			public override string ToString()
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  id: {this.Id}\n");
+			var sbApp = new StringBuilder();
+			sbApp.Append("  app: [\n");
+			if (this.App != null)
 			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  id: {this.Id}\n");
-				var sbapp = new StringBuilder();
-				sbapp.Append("  app: {\n");
-				if (this.App != null)
-				{
-					sbapp.Append(this.App);
-					sbapp.Replace("\n", "\n  ");
-					sbapp.Append("\n");
-				}
-				sbapp.Append("  }\n");
-				sb.Append(sbapp);
-				sb.Append($"  token: {this.Token}\n");
-				sb.Append("}");
-				return sb.ToString();
+				sbApp.Append(this.App);
+				sbApp.Replace("\n", "\n    ");
+				sbApp.Append("\n");
 			}
+			sbApp.Append("  ]\n");
+			sb.Append(sbApp);
+			sb.Append($"  token: {this.Token}\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
 		}
 		public async Task<Response<AuthSessionShowResponse>> Show(string token)
 		{
@@ -82,30 +82,30 @@ namespace Misharp.Controls.Auth {
 			{
 				{ "token", token },
 			};
-			var result = await _app.Request<AuthSessionShowResponse>("auth/session/show", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("auth/session/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public class AuthSessionUserkeyResponse {
 			public string AccessToken { get; set; }
-			public Model.UserDetailedNotMe User { get; set; }
-			public override string ToString()
+			public UserDetailedNotMe User { get; set; }
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  accessToken: {this.AccessToken}\n");
+			var sbUser = new StringBuilder();
+			sbUser.Append("  user: [\n");
+			if (this.User != null)
 			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  accessToken: {this.AccessToken}\n");
-				var sbuser = new StringBuilder();
-				sbuser.Append("  user: {\n");
-				if (this.User != null)
-				{
-					sbuser.Append(this.User);
-					sbuser.Replace("\n", "\n  ");
-					sbuser.Append("\n");
-				}
-				sbuser.Append("  }\n");
-				sb.Append(sbuser);
-				sb.Append("}");
-				return sb.ToString();
+				sbUser.Append(this.User);
+				sbUser.Replace("\n", "\n    ");
+				sbUser.Append("\n");
 			}
+			sbUser.Append("  ]\n");
+			sb.Append(sbUser);
+			sb.Append("}");
+			return sb.ToString();
+		}
 		}
 		public async Task<Response<AuthSessionUserkeyResponse>> Userkey(string appSecret,string token)
 		{
@@ -114,7 +114,7 @@ namespace Misharp.Controls.Auth {
 				{ "appSecret", appSecret },
 				{ "token", token },
 			};
-			var result = await _app.Request<AuthSessionUserkeyResponse>("auth/session/userkey", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("auth/session/userkey", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

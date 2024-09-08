@@ -11,7 +11,7 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.InviteCode>> Create()
 		{
-			Response<Model.InviteCode> result = await _app.Request<Model.InviteCode>("invite/create", useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("invite/create", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Delete(string inviteId)
@@ -23,7 +23,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("invite/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.InviteCode>>> List(int limit = 30,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<InviteCode>>> List(int limit = 30,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -31,23 +31,23 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			Response<List<Model.InviteCode>> result = await _app.Request<List<Model.InviteCode>>("invite/list", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("invite/list", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public class InviteLimitResponse {
-			public int? Remaining { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  remaining: {this.Remaining}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
-		}
-		public async Task<Response<InviteLimitResponse>> Limit()
+		public class LimitResponse {
+			public int Remaining { get; set; }
+		public override string ToString()
 		{
-			Response<InviteLimitResponse> result = await _app.Request<InviteLimitResponse>("invite/limit", useToken: true);
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  remaining: {this.Remaining}\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
+		}
+		public async Task<Response<LimitResponse>> Limit()
+		{
+			var result = await _app.Request<Model.EmptyResponse>("invite/limit", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

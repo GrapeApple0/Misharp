@@ -9,24 +9,24 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public class UsernameAvailableResponse {
+		public class AvailableResponse {
 			public bool Available { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append($"  available: {this.Available}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append($"  available: {this.Available}\n");
+			sb.Append("}");
+			return sb.ToString();
 		}
-		public async Task<Response<UsernameAvailableResponse>> Available(string username)
+		}
+		public async Task<Response<AvailableResponse>> Available(string username)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "username", username },
 			};
-			Response<UsernameAvailableResponse> result = await _app.Request<UsernameAvailableResponse>("username/available", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("username/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

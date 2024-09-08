@@ -10,30 +10,38 @@ namespace Misharp.Controls {
 			_app = app;
 		}
 		public class EndpointResponse {
-			public class ParamsItemsProperty {
-				public string Name { get; set; }
-				public string Type { get; set; }
-				public override string ToString()
-				{
-					var sb = new StringBuilder();
-					sb.Append("{\n");
-					sb.Append($"  name: {this.Name}\n");
-					sb.Append($"  type: {this.Type}\n");
-					sb.Append("}");
-					return sb.ToString();
-				}
-			}
-			public List<ParamsItemsProperty> Params { get; set; }
+		public class ParamsPropertyType {
+			public string Name { get; set; }
+			public string Type { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
-				sb.Append("{\n");
-				sb.Append("  params: {\n");
-				if (this.Params != null && this.Params.Count > 0) this.Params.ForEach(item => sb.Append("    ").Append(item).Append(",\n"));
-				sb.Append("  }\n");
+				sb.Append("class ParamsPropertyType: {\n");
+				sb.Append($"  name: {this.Name}\n");
+				sb.Append($"  type: {this.Type}\n");
 				sb.Append("}");
 				return sb.ToString();
 			}
+		}
+			public List<ParamsPropertyType> Params { get; set; }
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("{\n");
+			sb.Append("  params: [\n");
+			if (this.Params != null && this.Params.Count > 0)
+			{
+				var sbParams = new StringBuilder();
+				sbParams.Append("    ");
+				this.Params.ForEach(item => sbParams.Append(item).Append(",\n"));
+				sbParams.Replace("\n", "\n    ");
+				sbParams.Length -= 4;
+				sb.Append(sbParams);
+			}
+			sb.Append("  ]\n");
+			sb.Append("}");
+			return sb.ToString();
+		}
 		}
 		public async Task<Response<EndpointResponse>> Endpoint(string endpoint)
 		{
@@ -41,7 +49,7 @@ namespace Misharp.Controls {
 			{
 				{ "endpoint", endpoint },
 			};
-			Response<EndpointResponse> result = await _app.Request<EndpointResponse>("endpoint", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("endpoint", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text;
@@ -12,6 +11,7 @@ namespace Misharp.Model {
 		public string Title { get; set; }
 		public string Summary { get; set; }
 		public string Script { get; set; }
+		public string Visibility { get; set; }
 		public decimal? LikedCount { get; set; }
 		public bool IsLiked { get; set; }
 		public override string ToString()
@@ -35,6 +35,7 @@ namespace Misharp.Model {
 			sb.Append($"  title: {this.Title}\n");
 			sb.Append($"  summary: {this.Summary}\n");
 			sb.Append($"  script: {this.Script}\n");
+			sb.Append($"  visibility: {this.Visibility}\n");
 			sb.Append($"  likedCount: {this.LikedCount}\n");
 			sb.Append($"  isLiked: {this.IsLiked}\n");
 			sb.Append("}");

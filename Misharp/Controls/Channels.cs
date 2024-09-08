@@ -20,12 +20,12 @@ namespace Misharp.Controls {
 				{ "isSensitive", isSensitive },
 				{ "allowRenoteToExternal", allowRenoteToExternal },
 			};
-			Response<Model.Channel> result = await _app.Request<Model.Channel>("channels/create", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("channels/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Featured()
+		public async Task<Response<List<Channel>>> Featured()
 		{
-			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/featured", useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("channels/featured", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Follow(string channelId)
@@ -37,7 +37,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("channels/follow", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Followed(string? sinceId = null,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Channel>>> Followed(string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -45,10 +45,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/followed", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("channels/followed", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Owned(string? sinceId = null,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Channel>>> Owned(string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -56,7 +56,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/owned", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("channels/owned", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.Channel>> Show(string channelId)
@@ -65,10 +65,10 @@ namespace Misharp.Controls {
 			{
 				{ "channelId", channelId },
 			};
-			Response<Model.Channel> result = await _app.Request<Model.Channel>("channels/show", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("channels/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Model.Note>>> Timeline(string channelId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false)
+		public async Task<Response<List<Note>>> Timeline(string channelId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -80,7 +80,7 @@ namespace Misharp.Controls {
 				{ "untilDate", untilDate },
 				{ "allowPartial", allowPartial },
 			};
-			Response<List<Model.Note>> result = await _app.Request<List<Model.Note>>("channels/timeline", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("channels/timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Unfollow(string channelId)
@@ -106,7 +106,7 @@ namespace Misharp.Controls {
 				{ "isSensitive", isSensitive },
 				{ "allowRenoteToExternal", allowRenoteToExternal },
 			};
-			Response<Model.Channel> result = await _app.Request<Model.Channel>("channels/update", param, useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("channels/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Favorite(string channelId)
@@ -127,12 +127,12 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("channels/unfavorite", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> MyFavorites()
+		public async Task<Response<List<Channel>>> MyFavorites()
 		{
-			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/my-favorites", useToken: true);
+			var result = await _app.Request<Model.EmptyResponse>("channels/my-favorites", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Model.Channel>>> Search(string query,SearchTypeEnum type = SearchTypeEnum.NameAndDescription,string? sinceId = null,string? untilId = null,int limit = 5)
+		public async Task<Response<List<Channel>>> Search(string query,SearchTypeEnum type = SearchTypeEnum.NameAndDescription,string? sinceId = null,string? untilId = null,int limit = 5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -142,7 +142,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			Response<List<Model.Channel>> result = await _app.Request<List<Model.Channel>>("channels/search", param, useToken: false);
+			var result = await _app.Request<Model.EmptyResponse>("channels/search", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public enum SearchTypeEnum {
