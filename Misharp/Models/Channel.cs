@@ -19,7 +19,7 @@ namespace Misharp.Model {
 		public bool AllowRenoteToExternal { get; set; }
 		public bool IsFollowing { get; set; }
 		public bool IsFavorited { get; set; }
-		public List<Note> PinnedNotes { get; set; }
+		public List<Model.Note> PinnedNotes { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

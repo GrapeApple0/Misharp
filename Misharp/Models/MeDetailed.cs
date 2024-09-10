@@ -16,19 +16,19 @@ namespace Misharp.Model {
 			public string Url { get; set; }
 			public decimal OffsetX { get; set; }
 			public decimal OffsetY { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedAvatarDecorationsPropertyType: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  angle: {this.Angle}\n");
-				sb.Append($"  flipH: {this.FlipH}\n");
-				sb.Append($"  url: {this.Url}\n");
-				sb.Append($"  offsetX: {this.OffsetX}\n");
-				sb.Append($"  offsetY: {this.OffsetY}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedAvatarDecorationsPropertyType: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  angle: {this.Angle}\n");
+					sb.Append($"  flipH: {this.FlipH}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  offsetX: {this.OffsetX}\n");
+					sb.Append($"  offsetY: {this.OffsetY}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MeDetailedAvatarDecorationsPropertyType> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
@@ -40,19 +40,19 @@ namespace Misharp.Model {
 			public string? IconUrl { get; set; }
 			public string? FaviconUrl { get; set; }
 			public string? ThemeColor { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedInstanceObject: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  softwareName: {this.SoftwareName}\n");
-				sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
-				sb.Append($"  themeColor: {this.ThemeColor}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedInstanceObject: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  softwareName: {this.SoftwareName}\n");
+					sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
+					sb.Append($"  themeColor: {this.ThemeColor}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public MeDetailedInstanceObject Instance { get; set; }
 		public Dictionary<string, string> Emojis { get; set; }
@@ -61,16 +61,16 @@ namespace Misharp.Model {
 			public string Name { get; set; }
 			public string? IconUrl { get; set; }
 			public decimal DisplayOrder { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedBadgeRolesPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  displayOrder: {this.DisplayOrder}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedBadgeRolesPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  displayOrder: {this.DisplayOrder}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MeDetailedBadgeRolesPropertyType> BadgeRoles { get; set; }
 		public string? Url { get; set; }
@@ -92,15 +92,15 @@ namespace Misharp.Model {
 		public class MeDetailedFieldsPropertyType {
 			public string Name { get; set; }
 			public string Value { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedFieldsPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  value: {this.Value}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedFieldsPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  value: {this.Value}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MeDetailedFieldsPropertyType> Fields { get; set; }
 		public List<string> VerifiedLinks { get; set; }
@@ -108,7 +108,7 @@ namespace Misharp.Model {
 		public decimal FollowingCount { get; set; }
 		public decimal NotesCount { get; set; }
 		public List<string> PinnedNoteIds { get; set; }
-		public List<Note> PinnedNotes { get; set; }
+		public List<Model.Note> PinnedNotes { get; set; }
 		public string? PinnedPageId { get; set; }
 		public Page? PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
@@ -117,7 +117,7 @@ namespace Misharp.Model {
 		public bool TwoFactorEnabled { get; set; }
 		public bool UsePasswordLessLogin { get; set; }
 		public bool SecurityKeys { get; set; }
-		public List<RoleLite> Roles { get; set; }
+		public List<Model.RoleLite> Roles { get; set; }
 		public string? Memo { get; set; }
 		public string ModerationNote { get; set; }
 		public bool IsFollowing { get; set; }
@@ -149,7 +149,7 @@ namespace Misharp.Model {
 		public bool HasUnreadSpecifiedNotes { get; set; }
 		public bool HasUnreadMentions { get; set; }
 		public bool HasUnreadAnnouncement { get; set; }
-		public List<Announcement> UnreadAnnouncements { get; set; }
+		public List<Model.Announcement> UnreadAnnouncements { get; set; }
 		public bool HasUnreadAntenna { get; set; }
 		public bool HasUnreadChannel { get; set; }
 		public bool HasUnreadNotification { get; set; }
@@ -173,188 +173,188 @@ namespace Misharp.Model {
 			public JsonNode AchievementEarned { get; set; }
 			public JsonNode App { get; set; }
 			public JsonNode Test { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedNotificationRecieveConfigObject: {\n");
-				var sbNote = new StringBuilder();
-				sbNote.Append("  note: [\n");
-				if (this.Note != null)
+				public override string ToString()
 				{
-					sbNote.Append(this.Note);
-					sbNote.Replace("\n", "\n    ");
-					sbNote.Append("\n");
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedNotificationRecieveConfigObject: {\n");
+					var sbNote = new StringBuilder();
+					sbNote.Append("  note: [\n");
+					if (this.Note != null)
+					{
+						sbNote.Append(this.Note);
+						sbNote.Replace("\n", "\n    ");
+						sbNote.Append("\n");
+					}
+					sbNote.Append("  ]\n");
+					sb.Append(sbNote);
+					var sbFollow = new StringBuilder();
+					sbFollow.Append("  follow: [\n");
+					if (this.Follow != null)
+					{
+						sbFollow.Append(this.Follow);
+						sbFollow.Replace("\n", "\n    ");
+						sbFollow.Append("\n");
+					}
+					sbFollow.Append("  ]\n");
+					sb.Append(sbFollow);
+					var sbMention = new StringBuilder();
+					sbMention.Append("  mention: [\n");
+					if (this.Mention != null)
+					{
+						sbMention.Append(this.Mention);
+						sbMention.Replace("\n", "\n    ");
+						sbMention.Append("\n");
+					}
+					sbMention.Append("  ]\n");
+					sb.Append(sbMention);
+					var sbReply = new StringBuilder();
+					sbReply.Append("  reply: [\n");
+					if (this.Reply != null)
+					{
+						sbReply.Append(this.Reply);
+						sbReply.Replace("\n", "\n    ");
+						sbReply.Append("\n");
+					}
+					sbReply.Append("  ]\n");
+					sb.Append(sbReply);
+					var sbRenote = new StringBuilder();
+					sbRenote.Append("  renote: [\n");
+					if (this.Renote != null)
+					{
+						sbRenote.Append(this.Renote);
+						sbRenote.Replace("\n", "\n    ");
+						sbRenote.Append("\n");
+					}
+					sbRenote.Append("  ]\n");
+					sb.Append(sbRenote);
+					var sbQuote = new StringBuilder();
+					sbQuote.Append("  quote: [\n");
+					if (this.Quote != null)
+					{
+						sbQuote.Append(this.Quote);
+						sbQuote.Replace("\n", "\n    ");
+						sbQuote.Append("\n");
+					}
+					sbQuote.Append("  ]\n");
+					sb.Append(sbQuote);
+					var sbReaction = new StringBuilder();
+					sbReaction.Append("  reaction: [\n");
+					if (this.Reaction != null)
+					{
+						sbReaction.Append(this.Reaction);
+						sbReaction.Replace("\n", "\n    ");
+						sbReaction.Append("\n");
+					}
+					sbReaction.Append("  ]\n");
+					sb.Append(sbReaction);
+					var sbPollEnded = new StringBuilder();
+					sbPollEnded.Append("  pollEnded: [\n");
+					if (this.PollEnded != null)
+					{
+						sbPollEnded.Append(this.PollEnded);
+						sbPollEnded.Replace("\n", "\n    ");
+						sbPollEnded.Append("\n");
+					}
+					sbPollEnded.Append("  ]\n");
+					sb.Append(sbPollEnded);
+					var sbReceiveFollowRequest = new StringBuilder();
+					sbReceiveFollowRequest.Append("  receiveFollowRequest: [\n");
+					if (this.ReceiveFollowRequest != null)
+					{
+						sbReceiveFollowRequest.Append(this.ReceiveFollowRequest);
+						sbReceiveFollowRequest.Replace("\n", "\n    ");
+						sbReceiveFollowRequest.Append("\n");
+					}
+					sbReceiveFollowRequest.Append("  ]\n");
+					sb.Append(sbReceiveFollowRequest);
+					var sbFollowRequestAccepted = new StringBuilder();
+					sbFollowRequestAccepted.Append("  followRequestAccepted: [\n");
+					if (this.FollowRequestAccepted != null)
+					{
+						sbFollowRequestAccepted.Append(this.FollowRequestAccepted);
+						sbFollowRequestAccepted.Replace("\n", "\n    ");
+						sbFollowRequestAccepted.Append("\n");
+					}
+					sbFollowRequestAccepted.Append("  ]\n");
+					sb.Append(sbFollowRequestAccepted);
+					var sbRoleAssigned = new StringBuilder();
+					sbRoleAssigned.Append("  roleAssigned: [\n");
+					if (this.RoleAssigned != null)
+					{
+						sbRoleAssigned.Append(this.RoleAssigned);
+						sbRoleAssigned.Replace("\n", "\n    ");
+						sbRoleAssigned.Append("\n");
+					}
+					sbRoleAssigned.Append("  ]\n");
+					sb.Append(sbRoleAssigned);
+					var sbAchievementEarned = new StringBuilder();
+					sbAchievementEarned.Append("  achievementEarned: [\n");
+					if (this.AchievementEarned != null)
+					{
+						sbAchievementEarned.Append(this.AchievementEarned);
+						sbAchievementEarned.Replace("\n", "\n    ");
+						sbAchievementEarned.Append("\n");
+					}
+					sbAchievementEarned.Append("  ]\n");
+					sb.Append(sbAchievementEarned);
+					var sbApp = new StringBuilder();
+					sbApp.Append("  app: [\n");
+					if (this.App != null)
+					{
+						sbApp.Append(this.App);
+						sbApp.Replace("\n", "\n    ");
+						sbApp.Append("\n");
+					}
+					sbApp.Append("  ]\n");
+					sb.Append(sbApp);
+					var sbTest = new StringBuilder();
+					sbTest.Append("  test: [\n");
+					if (this.Test != null)
+					{
+						sbTest.Append(this.Test);
+						sbTest.Replace("\n", "\n    ");
+						sbTest.Append("\n");
+					}
+					sbTest.Append("  ]\n");
+					sb.Append(sbTest);
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sbNote.Append("  ]\n");
-				sb.Append(sbNote);
-				var sbFollow = new StringBuilder();
-				sbFollow.Append("  follow: [\n");
-				if (this.Follow != null)
-				{
-					sbFollow.Append(this.Follow);
-					sbFollow.Replace("\n", "\n    ");
-					sbFollow.Append("\n");
-				}
-				sbFollow.Append("  ]\n");
-				sb.Append(sbFollow);
-				var sbMention = new StringBuilder();
-				sbMention.Append("  mention: [\n");
-				if (this.Mention != null)
-				{
-					sbMention.Append(this.Mention);
-					sbMention.Replace("\n", "\n    ");
-					sbMention.Append("\n");
-				}
-				sbMention.Append("  ]\n");
-				sb.Append(sbMention);
-				var sbReply = new StringBuilder();
-				sbReply.Append("  reply: [\n");
-				if (this.Reply != null)
-				{
-					sbReply.Append(this.Reply);
-					sbReply.Replace("\n", "\n    ");
-					sbReply.Append("\n");
-				}
-				sbReply.Append("  ]\n");
-				sb.Append(sbReply);
-				var sbRenote = new StringBuilder();
-				sbRenote.Append("  renote: [\n");
-				if (this.Renote != null)
-				{
-					sbRenote.Append(this.Renote);
-					sbRenote.Replace("\n", "\n    ");
-					sbRenote.Append("\n");
-				}
-				sbRenote.Append("  ]\n");
-				sb.Append(sbRenote);
-				var sbQuote = new StringBuilder();
-				sbQuote.Append("  quote: [\n");
-				if (this.Quote != null)
-				{
-					sbQuote.Append(this.Quote);
-					sbQuote.Replace("\n", "\n    ");
-					sbQuote.Append("\n");
-				}
-				sbQuote.Append("  ]\n");
-				sb.Append(sbQuote);
-				var sbReaction = new StringBuilder();
-				sbReaction.Append("  reaction: [\n");
-				if (this.Reaction != null)
-				{
-					sbReaction.Append(this.Reaction);
-					sbReaction.Replace("\n", "\n    ");
-					sbReaction.Append("\n");
-				}
-				sbReaction.Append("  ]\n");
-				sb.Append(sbReaction);
-				var sbPollEnded = new StringBuilder();
-				sbPollEnded.Append("  pollEnded: [\n");
-				if (this.PollEnded != null)
-				{
-					sbPollEnded.Append(this.PollEnded);
-					sbPollEnded.Replace("\n", "\n    ");
-					sbPollEnded.Append("\n");
-				}
-				sbPollEnded.Append("  ]\n");
-				sb.Append(sbPollEnded);
-				var sbReceiveFollowRequest = new StringBuilder();
-				sbReceiveFollowRequest.Append("  receiveFollowRequest: [\n");
-				if (this.ReceiveFollowRequest != null)
-				{
-					sbReceiveFollowRequest.Append(this.ReceiveFollowRequest);
-					sbReceiveFollowRequest.Replace("\n", "\n    ");
-					sbReceiveFollowRequest.Append("\n");
-				}
-				sbReceiveFollowRequest.Append("  ]\n");
-				sb.Append(sbReceiveFollowRequest);
-				var sbFollowRequestAccepted = new StringBuilder();
-				sbFollowRequestAccepted.Append("  followRequestAccepted: [\n");
-				if (this.FollowRequestAccepted != null)
-				{
-					sbFollowRequestAccepted.Append(this.FollowRequestAccepted);
-					sbFollowRequestAccepted.Replace("\n", "\n    ");
-					sbFollowRequestAccepted.Append("\n");
-				}
-				sbFollowRequestAccepted.Append("  ]\n");
-				sb.Append(sbFollowRequestAccepted);
-				var sbRoleAssigned = new StringBuilder();
-				sbRoleAssigned.Append("  roleAssigned: [\n");
-				if (this.RoleAssigned != null)
-				{
-					sbRoleAssigned.Append(this.RoleAssigned);
-					sbRoleAssigned.Replace("\n", "\n    ");
-					sbRoleAssigned.Append("\n");
-				}
-				sbRoleAssigned.Append("  ]\n");
-				sb.Append(sbRoleAssigned);
-				var sbAchievementEarned = new StringBuilder();
-				sbAchievementEarned.Append("  achievementEarned: [\n");
-				if (this.AchievementEarned != null)
-				{
-					sbAchievementEarned.Append(this.AchievementEarned);
-					sbAchievementEarned.Replace("\n", "\n    ");
-					sbAchievementEarned.Append("\n");
-				}
-				sbAchievementEarned.Append("  ]\n");
-				sb.Append(sbAchievementEarned);
-				var sbApp = new StringBuilder();
-				sbApp.Append("  app: [\n");
-				if (this.App != null)
-				{
-					sbApp.Append(this.App);
-					sbApp.Replace("\n", "\n    ");
-					sbApp.Append("\n");
-				}
-				sbApp.Append("  ]\n");
-				sb.Append(sbApp);
-				var sbTest = new StringBuilder();
-				sbTest.Append("  test: [\n");
-				if (this.Test != null)
-				{
-					sbTest.Append(this.Test);
-					sbTest.Replace("\n", "\n    ");
-					sbTest.Append("\n");
-				}
-				sbTest.Append("  ]\n");
-				sb.Append(sbTest);
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public MeDetailedNotificationRecieveConfigObject NotificationRecieveConfig { get; set; }
 		public List<string> EmailNotificationTypes { get; set; }
 		public class MeDetailedAchievementsPropertyType {
 			public string Name { get; set; }
 			public decimal UnlockedAt { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedAchievementsPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  unlockedAt: {this.UnlockedAt}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedAchievementsPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  unlockedAt: {this.UnlockedAt}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MeDetailedAchievementsPropertyType> Achievements { get; set; }
 		public decimal LoggedInDays { get; set; }
-		public RolePolicies Policies { get; set; }
+		public Model.RolePolicies Policies { get; set; }
 		public string? Email { get; set; }
 		public bool? EmailVerified { get; set; }
 		public class MeDetailedSecurityKeysListPropertyType {
 			public string Id { get; set; }
 			public string Name { get; set; }
 			public DateTime LastUsed { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MeDetailedSecurityKeysListPropertyType: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  lastUsed: {this.LastUsed}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MeDetailedSecurityKeysListPropertyType: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  lastUsed: {this.LastUsed}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MeDetailedSecurityKeysListPropertyType> SecurityKeysList { get; set; }
 		public override string ToString()

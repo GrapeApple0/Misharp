@@ -9,7 +9,7 @@ namespace Misharp.Model {
 		public string? Text { get; set; }
 		public string? Cw { get; set; }
 		public string UserId { get; set; }
-		public UserLite User { get; set; }
+		public Model.UserLite User { get; set; }
 		public string? ReplyId { get; set; }
 		public string? RenoteId { get; set; }
 		public Note? Reply { get; set; }
@@ -19,7 +19,7 @@ namespace Misharp.Model {
 		public List<string> Mentions { get; set; }
 		public List<string> VisibleUserIds { get; set; }
 		public List<string> FileIds { get; set; }
-		public List<DriveFile> Files { get; set; }
+		public List<Model.DriveFile> Files { get; set; }
 		public List<string> Tags { get; set; }
 		public class NotePollObject {
 			public DateTime? ExpiresAt { get; set; }
@@ -28,41 +28,41 @@ namespace Misharp.Model {
 				public bool IsVoted { get; set; }
 				public string Text { get; set; }
 				public decimal Votes { get; set; }
+					public override string ToString()
+					{
+						var sb = new StringBuilder();
+						sb.Append("class NoteChoicesPropertyType: {\n");
+						sb.Append($"  isVoted: {this.IsVoted}\n");
+						sb.Append($"  text: {this.Text}\n");
+						sb.Append($"  votes: {this.Votes}\n");
+						sb.Append("}");
+						return sb.ToString();
+					}
+			}
+			public List<NoteChoicesPropertyType> Choices { get; set; }
 				public override string ToString()
 				{
 					var sb = new StringBuilder();
-					sb.Append("class NoteChoicesPropertyType: {\n");
-					sb.Append($"  isVoted: {this.IsVoted}\n");
-					sb.Append($"  text: {this.Text}\n");
-					sb.Append($"  votes: {this.Votes}\n");
+					sb.Append("class NotePollObject: {\n");
+					sb.Append($"  expiresAt: {this.ExpiresAt}\n");
+					sb.Append($"  multiple: {this.Multiple}\n");
+					sb.Append("  choices: [\n");
+					if (this.Choices != null && this.Choices.Count > 0)
+					{
+						var sbChoices = new StringBuilder();
+						sbChoices.Append("    ");
+						this.Choices.ForEach(item => sbChoices.Append(item).Append(",\n"));
+						sbChoices.Replace("\n", "\n    ");
+						sbChoices.Length -= 4;
+						sb.Append(sbChoices);
+					}
+					sb.Append("  ]\n");
 					sb.Append("}");
 					return sb.ToString();
 				}
-			}
-			public List<NoteChoicesPropertyType> Choices { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class NotePollObject: {\n");
-				sb.Append($"  expiresAt: {this.ExpiresAt}\n");
-				sb.Append($"  multiple: {this.Multiple}\n");
-				sb.Append("  choices: [\n");
-				if (this.Choices != null && this.Choices.Count > 0)
-				{
-					var sbChoices = new StringBuilder();
-					sbChoices.Append("    ");
-					this.Choices.ForEach(item => sbChoices.Append(item).Append(",\n"));
-					sbChoices.Replace("\n", "\n    ");
-					sbChoices.Length -= 4;
-					sb.Append(sbChoices);
-				}
-				sb.Append("  ]\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public NotePollObject? Poll { get; set; }
-		public Dictionary<string, > Emojis { get; set; }
+		public Dictionary<string, string> Emojis { get; set; }
 		public string? ChannelId { get; set; }
 		public class NoteChannelObject {
 			public string Id { get; set; }
@@ -71,25 +71,25 @@ namespace Misharp.Model {
 			public bool IsSensitive { get; set; }
 			public bool AllowRenoteToExternal { get; set; }
 			public string? UserId { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class NoteChannelObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  color: {this.Color}\n");
-				sb.Append($"  isSensitive: {this.IsSensitive}\n");
-				sb.Append($"  allowRenoteToExternal: {this.AllowRenoteToExternal}\n");
-				sb.Append($"  userId: {this.UserId}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class NoteChannelObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  color: {this.Color}\n");
+					sb.Append($"  isSensitive: {this.IsSensitive}\n");
+					sb.Append($"  allowRenoteToExternal: {this.AllowRenoteToExternal}\n");
+					sb.Append($"  userId: {this.UserId}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public NoteChannelObject? Channel { get; set; }
 		public bool LocalOnly { get; set; }
 		public string? ReactionAcceptance { get; set; }
-		public Dictionary<string, > ReactionEmojis { get; set; }
-		public Dictionary<string, > Reactions { get; set; }
+		public Dictionary<string, string> ReactionEmojis { get; set; }
+		public Dictionary<string, decimal> Reactions { get; set; }
 		public decimal ReactionCount { get; set; }
 		public decimal RenoteCount { get; set; }
 		public decimal RepliesCount { get; set; }

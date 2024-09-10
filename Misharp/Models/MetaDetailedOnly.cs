@@ -14,23 +14,23 @@ namespace Misharp.Model {
 			public bool ObjectStorage { get; set; }
 			public bool ServiceWorker { get; set; }
 			public bool Miauth { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MetaDetailedOnlyFeaturesObject: {\n");
-				sb.Append($"  registration: {this.Registration}\n");
-				sb.Append($"  emailRequiredForSignup: {this.EmailRequiredForSignup}\n");
-				sb.Append($"  localTimeline: {this.LocalTimeline}\n");
-				sb.Append($"  globalTimeline: {this.GlobalTimeline}\n");
-				sb.Append($"  hcaptcha: {this.Hcaptcha}\n");
-				sb.Append($"  turnstile: {this.Turnstile}\n");
-				sb.Append($"  recaptcha: {this.Recaptcha}\n");
-				sb.Append($"  objectStorage: {this.ObjectStorage}\n");
-				sb.Append($"  serviceWorker: {this.ServiceWorker}\n");
-				sb.Append($"  miauth: {this.Miauth}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MetaDetailedOnlyFeaturesObject: {\n");
+					sb.Append($"  registration: {this.Registration}\n");
+					sb.Append($"  emailRequiredForSignup: {this.EmailRequiredForSignup}\n");
+					sb.Append($"  localTimeline: {this.LocalTimeline}\n");
+					sb.Append($"  globalTimeline: {this.GlobalTimeline}\n");
+					sb.Append($"  hcaptcha: {this.Hcaptcha}\n");
+					sb.Append($"  turnstile: {this.Turnstile}\n");
+					sb.Append($"  recaptcha: {this.Recaptcha}\n");
+					sb.Append($"  objectStorage: {this.ObjectStorage}\n");
+					sb.Append($"  serviceWorker: {this.ServiceWorker}\n");
+					sb.Append($"  miauth: {this.Miauth}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public MetaDetailedOnlyFeaturesObject Features { get; set; }
 		public string? ProxyAccountName { get; set; }

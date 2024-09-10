@@ -16,19 +16,19 @@ namespace Misharp.Model {
 			public string Url { get; set; }
 			public decimal OffsetX { get; set; }
 			public decimal OffsetY { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserDetailedNotMeAvatarDecorationsPropertyType: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  angle: {this.Angle}\n");
-				sb.Append($"  flipH: {this.FlipH}\n");
-				sb.Append($"  url: {this.Url}\n");
-				sb.Append($"  offsetX: {this.OffsetX}\n");
-				sb.Append($"  offsetY: {this.OffsetY}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserDetailedNotMeAvatarDecorationsPropertyType: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  angle: {this.Angle}\n");
+					sb.Append($"  flipH: {this.FlipH}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  offsetX: {this.OffsetX}\n");
+					sb.Append($"  offsetY: {this.OffsetY}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserDetailedNotMeAvatarDecorationsPropertyType> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
@@ -40,19 +40,19 @@ namespace Misharp.Model {
 			public string? IconUrl { get; set; }
 			public string? FaviconUrl { get; set; }
 			public string? ThemeColor { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserDetailedNotMeInstanceObject: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  softwareName: {this.SoftwareName}\n");
-				sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
-				sb.Append($"  themeColor: {this.ThemeColor}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserDetailedNotMeInstanceObject: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  softwareName: {this.SoftwareName}\n");
+					sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
+					sb.Append($"  themeColor: {this.ThemeColor}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public UserDetailedNotMeInstanceObject Instance { get; set; }
 		public Dictionary<string, string> Emojis { get; set; }
@@ -61,16 +61,16 @@ namespace Misharp.Model {
 			public string Name { get; set; }
 			public string? IconUrl { get; set; }
 			public decimal DisplayOrder { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserDetailedNotMeBadgeRolesPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  displayOrder: {this.DisplayOrder}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserDetailedNotMeBadgeRolesPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  displayOrder: {this.DisplayOrder}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserDetailedNotMeBadgeRolesPropertyType> BadgeRoles { get; set; }
 		public string? Url { get; set; }
@@ -92,15 +92,15 @@ namespace Misharp.Model {
 		public class UserDetailedNotMeFieldsPropertyType {
 			public string Name { get; set; }
 			public string Value { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserDetailedNotMeFieldsPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  value: {this.Value}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserDetailedNotMeFieldsPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  value: {this.Value}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserDetailedNotMeFieldsPropertyType> Fields { get; set; }
 		public List<string> VerifiedLinks { get; set; }
@@ -108,7 +108,7 @@ namespace Misharp.Model {
 		public decimal FollowingCount { get; set; }
 		public decimal NotesCount { get; set; }
 		public List<string> PinnedNoteIds { get; set; }
-		public List<Note> PinnedNotes { get; set; }
+		public List<Model.Note> PinnedNotes { get; set; }
 		public string? PinnedPageId { get; set; }
 		public Page? PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
@@ -117,7 +117,7 @@ namespace Misharp.Model {
 		public bool TwoFactorEnabled { get; set; }
 		public bool UsePasswordLessLogin { get; set; }
 		public bool SecurityKeys { get; set; }
-		public List<RoleLite> Roles { get; set; }
+		public List<Model.RoleLite> Roles { get; set; }
 		public string? Memo { get; set; }
 		public string ModerationNote { get; set; }
 		public bool IsFollowing { get; set; }

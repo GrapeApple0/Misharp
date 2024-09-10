@@ -43,19 +43,19 @@ namespace Misharp.Model {
 			public decimal Ratio { get; set; }
 			public string ImageUrl { get; set; }
 			public int DayOfWeek { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class MetaLiteAdsPropertyType: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  url: {this.Url}\n");
-				sb.Append($"  place: {this.Place}\n");
-				sb.Append($"  ratio: {this.Ratio}\n");
-				sb.Append($"  imageUrl: {this.ImageUrl}\n");
-				sb.Append($"  dayOfWeek: {this.DayOfWeek}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class MetaLiteAdsPropertyType: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  place: {this.Place}\n");
+					sb.Append($"  ratio: {this.Ratio}\n");
+					sb.Append($"  imageUrl: {this.ImageUrl}\n");
+					sb.Append($"  dayOfWeek: {this.DayOfWeek}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<MetaLiteAdsPropertyType> Ads { get; set; }
 		public decimal NotesPerOneAd { get; set; }
@@ -71,7 +71,7 @@ namespace Misharp.Model {
 		public string? InquiryUrl { get; set; }
 		public List<string> ServerRules { get; set; }
 		public string? ThemeColor { get; set; }
-		public RolePolicies Policies { get; set; }
+		public Model.RolePolicies Policies { get; set; }
 		public string NoteSearchableScope { get; set; }
 		public override string ToString()
 		{

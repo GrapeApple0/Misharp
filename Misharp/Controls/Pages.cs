@@ -24,7 +24,7 @@ namespace Misharp.Controls {
 				{ "alignCenter", alignCenter },
 				{ "hideTitleWhenPinned", hideTitleWhenPinned },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("pages/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.Page>("pages/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum CreateFontEnum {
@@ -42,9 +42,9 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("pages/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Page>>> Featured()
+		public async Task<Response<List<Model.Page>>> Featured()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("pages/featured", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Page>>("pages/featured", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Like(string pageId)
@@ -64,7 +64,7 @@ namespace Misharp.Controls {
 				{ "name", name },
 				{ "username", username },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("pages/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.Page>("pages/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Unlike(string pageId)

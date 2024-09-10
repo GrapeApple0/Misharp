@@ -7,7 +7,7 @@ namespace Misharp.Model {
 		public DateTime CreatedAt { get; set; }
 		public DateTime? ExpiresAt { get; set; }
 		public string MuteeId { get; set; }
-		public UserDetailedNotMe Mutee { get; set; }
+		public Model.UserDetailedNotMe Mutee { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

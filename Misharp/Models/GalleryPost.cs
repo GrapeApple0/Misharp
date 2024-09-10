@@ -7,11 +7,11 @@ namespace Misharp.Model {
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
 		public string UserId { get; set; }
-		public UserLite User { get; set; }
+		public Model.UserLite User { get; set; }
 		public string Title { get; set; }
 		public string? Description { get; set; }
 		public List<string> FileIds { get; set; }
-		public List<DriveFile> Files { get; set; }
+		public List<Model.DriveFile> Files { get; set; }
 		public List<string> Tags { get; set; }
 		public bool IsSensitive { get; set; }
 		public decimal LikedCount { get; set; }

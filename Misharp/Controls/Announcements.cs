@@ -9,7 +9,7 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Announcement>>> Announcements(int limit = 10,string? sinceId = null,string? untilId = null,bool isActive = true)
+		public async Task<Response<List<Model.Announcement>>> Announcements(int limit = 10,string? sinceId = null,string? untilId = null,bool isActive = true)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -18,7 +18,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "isActive", isActive },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("announcements", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Announcement>>("announcements", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.Announcement>> Show(string announcementId)
@@ -27,7 +27,7 @@ namespace Misharp.Controls {
 			{
 				{ "announcementId", announcementId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("announcements/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.Announcement>("announcements/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

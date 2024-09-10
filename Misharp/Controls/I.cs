@@ -17,7 +17,7 @@ namespace Misharp.Controls {
 		}
 		public async Task<Response<Model.MeDetailed>> I()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("i", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.MeDetailed>("i", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class AppsItemResponseObject {
@@ -26,28 +26,28 @@ namespace Misharp.Controls {
 			public DateTime CreatedAt { get; set; }
 			public DateTime LastUsedAt { get; set; }
 			public UniqueList<string> Permission { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class AppsItemResponseObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  createdAt: {this.CreatedAt}\n");
-				sb.Append($"  lastUsedAt: {this.LastUsedAt}\n");
-				sb.Append("  permission: [\n");
-				if (this.Permission != null && this.Permission.Count > 0)
+				public override string ToString()
 				{
-					var sbPermission = new StringBuilder();
-					sbPermission.Append("    ");
-					this.Permission.ForEach(item => sbPermission.Append(item).Append(",\n"));
-					sbPermission.Replace("\n", "\n    ");
-					sbPermission.Length -= 4;
-					sb.Append(sbPermission);
+					var sb = new StringBuilder();
+					sb.Append("class AppsItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  createdAt: {this.CreatedAt}\n");
+					sb.Append($"  lastUsedAt: {this.LastUsedAt}\n");
+					sb.Append("  permission: [\n");
+					if (this.Permission != null && this.Permission.Count > 0)
+					{
+						var sbPermission = new StringBuilder();
+						sbPermission.Append("    ");
+						this.Permission.ForEach(item => sbPermission.Append(item).Append(",\n"));
+						sbPermission.Replace("\n", "\n    ");
+						sbPermission.Length -= 4;
+						sb.Append(sbPermission);
+					}
+					sb.Append("  ]\n");
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sb.Append("  ]\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<AppsItemResponseObject>>> Apps(AppsSortEnum sort)
 		{
@@ -55,7 +55,7 @@ namespace Misharp.Controls {
 			{
 				{ "sort", sort },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<AppsItemResponseObject>>("i/apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum AppsSortEnum {
@@ -74,28 +74,28 @@ namespace Misharp.Controls {
 			public string? CallbackUrl { get; set; }
 			public UniqueList<string> Permission { get; set; }
 			public bool IsAuthorized { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class AuthorizedAppsItemResponseObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  callbackUrl: {this.CallbackUrl}\n");
-				sb.Append("  permission: [\n");
-				if (this.Permission != null && this.Permission.Count > 0)
+				public override string ToString()
 				{
-					var sbPermission = new StringBuilder();
-					sbPermission.Append("    ");
-					this.Permission.ForEach(item => sbPermission.Append(item).Append(",\n"));
-					sbPermission.Replace("\n", "\n    ");
-					sbPermission.Length -= 4;
-					sb.Append(sbPermission);
+					var sb = new StringBuilder();
+					sb.Append("class AuthorizedAppsItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  callbackUrl: {this.CallbackUrl}\n");
+					sb.Append("  permission: [\n");
+					if (this.Permission != null && this.Permission.Count > 0)
+					{
+						var sbPermission = new StringBuilder();
+						sbPermission.Append("    ");
+						this.Permission.ForEach(item => sbPermission.Append(item).Append(",\n"));
+						sbPermission.Replace("\n", "\n    ");
+						sbPermission.Length -= 4;
+						sb.Append(sbPermission);
+					}
+					sb.Append("  ]\n");
+					sb.Append($"  isAuthorized: {this.IsAuthorized}\n");
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sb.Append("  ]\n");
-				sb.Append($"  isAuthorized: {this.IsAuthorized}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<AuthorizedAppsItemResponseObject>>> AuthorizedApps(int limit = 10,int offset = 0,AuthorizedAppsSortEnum sort = AuthorizedAppsSortEnum.Desc)
 		{
@@ -105,7 +105,7 @@ namespace Misharp.Controls {
 				{ "offset", offset },
 				{ "sort", sort },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/authorized-apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<AuthorizedAppsItemResponseObject>>("i/authorized-apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum AuthorizedAppsSortEnum {
@@ -347,7 +347,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("i/export-antennas", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<NoteFavorite>>> Favorites(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.NoteFavorite>>> Favorites(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -355,7 +355,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/favorites", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.NoteFavorite>>("i/favorites", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> ImportBlocking(string fileId)
@@ -404,7 +404,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("i/import-antennas", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Notification>>> Notifications(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
+		public async Task<Response<List<Model.Notification>>> Notifications(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -415,10 +415,10 @@ namespace Misharp.Controls {
 				{ "includeTypes", includeTypes },
 				{ "excludeTypes", excludeTypes },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/notifications", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Notification>>("i/notifications", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Notification>>> NotificationsGrouped(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
+		public async Task<Response<List<Model.Notification>>> NotificationsGrouped(int limit = 10,string? sinceId = null,string? untilId = null,bool markAsRead = true,List<string>? includeTypes = null,List<string>? excludeTypes = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -429,30 +429,30 @@ namespace Misharp.Controls {
 				{ "includeTypes", includeTypes },
 				{ "excludeTypes", excludeTypes },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/notifications-grouped", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Notification>>("i/notifications-grouped", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class PageLikesItemResponseObject {
 			public string Id { get; set; }
-			public Page Page { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class PageLikesItemResponseObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				var sbPage = new StringBuilder();
-				sbPage.Append("  page: [\n");
-				if (this.Page != null)
+			public Model.Page Page { get; set; }
+				public override string ToString()
 				{
-					sbPage.Append(this.Page);
-					sbPage.Replace("\n", "\n    ");
-					sbPage.Append("\n");
+					var sb = new StringBuilder();
+					sb.Append("class PageLikesItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					var sbPage = new StringBuilder();
+					sbPage.Append("  page: [\n");
+					if (this.Page != null)
+					{
+						sbPage.Append(this.Page);
+						sbPage.Replace("\n", "\n    ");
+						sbPage.Append("\n");
+					}
+					sbPage.Append("  ]\n");
+					sb.Append(sbPage);
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sbPage.Append("  ]\n");
-				sb.Append(sbPage);
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<PageLikesItemResponseObject>>> PageLikes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
@@ -462,10 +462,10 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/page-likes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<PageLikesItemResponseObject>>("i/page-likes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Page>>> Pages(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Page>>> Pages(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -473,7 +473,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/pages", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Page>>("i/pages", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.MeDetailed>> Pin(string noteId)
@@ -482,7 +482,7 @@ namespace Misharp.Controls {
 			{
 				{ "noteId", noteId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/pin", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.MeDetailed>("i/pin", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> ReadAllUnreadNotes()
@@ -518,7 +518,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("i/revoke-token", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Signin>>> SigninHistory(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Signin>>> SigninHistory(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -526,7 +526,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/signin-history", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Signin>>("i/signin-history", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.MeDetailed>> Unpin(string noteId)
@@ -535,7 +535,7 @@ namespace Misharp.Controls {
 			{
 				{ "noteId", noteId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/unpin", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.MeDetailed>("i/unpin", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.MeDetailed>> UpdateEmail(string password,string? email = null,string? token = null)
@@ -546,15 +546,15 @@ namespace Misharp.Controls {
 				{ "email", email },
 				{ "token", token },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/update-email", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.MeDetailed>("i/update-email", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-			public class AvatarDecorationsPropertyType {
-				public string Id { get; set; }
-				public decimal? Angle { get; set; }
-				public bool? FlipH { get; set; }
-				public decimal? OffsetX { get; set; }
-				public decimal? OffsetY { get; set; }
+		public class AvatarDecorationsPropertyType {
+			public string Id { get; set; }
+			public decimal? Angle { get; set; }
+			public bool? FlipH { get; set; }
+			public decimal? OffsetX { get; set; }
+			public decimal? OffsetY { get; set; }
 				public override string ToString()
 				{
 					var sb = new StringBuilder();
@@ -567,10 +567,10 @@ namespace Misharp.Controls {
 					sb.Append("}");
 					return sb.ToString();
 				}
-			}
-			public class FieldsPropertyType {
-				public string Name { get; set; }
-				public string Value { get; set; }
+		}
+		public class FieldsPropertyType {
+			public string Name { get; set; }
+			public string Value { get; set; }
 				public override string ToString()
 				{
 					var sb = new StringBuilder();
@@ -580,22 +580,22 @@ namespace Misharp.Controls {
 					sb.Append("}");
 					return sb.ToString();
 				}
-			}
-			public class NotificationRecieveConfigObject {
-				public JsonNode Note { get; set; }
-				public JsonNode Follow { get; set; }
-				public JsonNode Mention { get; set; }
-				public JsonNode Reply { get; set; }
-				public JsonNode Renote { get; set; }
-				public JsonNode Quote { get; set; }
-				public JsonNode Reaction { get; set; }
-				public JsonNode PollEnded { get; set; }
-				public JsonNode ReceiveFollowRequest { get; set; }
-				public JsonNode FollowRequestAccepted { get; set; }
-				public JsonNode RoleAssigned { get; set; }
-				public JsonNode AchievementEarned { get; set; }
-				public JsonNode App { get; set; }
-				public JsonNode Test { get; set; }
+		}
+		public class NotificationRecieveConfigObject {
+			public JsonNode Note { get; set; }
+			public JsonNode Follow { get; set; }
+			public JsonNode Mention { get; set; }
+			public JsonNode Reply { get; set; }
+			public JsonNode Renote { get; set; }
+			public JsonNode Quote { get; set; }
+			public JsonNode Reaction { get; set; }
+			public JsonNode PollEnded { get; set; }
+			public JsonNode ReceiveFollowRequest { get; set; }
+			public JsonNode FollowRequestAccepted { get; set; }
+			public JsonNode RoleAssigned { get; set; }
+			public JsonNode AchievementEarned { get; set; }
+			public JsonNode App { get; set; }
+			public JsonNode Test { get; set; }
 				public override string ToString()
 				{
 					var sb = new StringBuilder();
@@ -743,7 +743,7 @@ namespace Misharp.Controls {
 					sb.Append("}");
 					return sb.ToString();
 				}
-			}
+		}
 		public async Task<Response<Model.MeDetailed>> Update(bool isLocked,bool isExplorable,bool hideOnlineStatus,bool publicReactions,bool carefulBot,bool autoAcceptFollowed,bool noCrawle,bool preventAiLearning,bool isBot,bool isCat,bool injectFeaturedNote,bool receiveAnnouncementEmail,bool alwaysMarkNsfw,bool autoSensitive,UpdateFollowingVisibilityEnum followingVisibility,UpdateFollowersVisibilityEnum followersVisibility,UpdateNotificationRecieveConfigParamObject notificationRecieveConfig,string? name = null,string? description = null,string? location = null,string? birthday = null,UpdateLangEnum? lang = null,string? avatarId = null,List<object>? avatarDecorations = null,string? bannerId = null,List<object>? fields = null,string? pinnedPageId = null,List<JsonNode>? mutedWords = null,List<JsonNode>? hardMutedWords = null,List<string>? mutedInstances = null,List<string>? emailNotificationTypes = null,List<string>? alsoKnownAs = null)
 		{
 			var param = new Dictionary<string, object?>	
@@ -781,171 +781,171 @@ namespace Misharp.Controls {
 				{ "emailNotificationTypes", emailNotificationTypes },
 				{ "alsoKnownAs", alsoKnownAs },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.MeDetailed>("i/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class UpdateNotificationRecieveConfigParamObject {
-			public JsonNode Note { get; set; }
-			public JsonNode Follow { get; set; }
-			public JsonNode Mention { get; set; }
-			public JsonNode Reply { get; set; }
-			public JsonNode Renote { get; set; }
-			public JsonNode Quote { get; set; }
-			public JsonNode Reaction { get; set; }
-			public JsonNode PollEnded { get; set; }
-			public JsonNode ReceiveFollowRequest { get; set; }
-			public JsonNode FollowRequestAccepted { get; set; }
-			public JsonNode RoleAssigned { get; set; }
-			public JsonNode AchievementEarned { get; set; }
-			public JsonNode App { get; set; }
-			public JsonNode Test { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			var sbNote = new StringBuilder();
-			sbNote.Append("  note: [\n");
-			if (this.Note != null)
+		public JsonNode Note { get; set; }
+		public JsonNode Follow { get; set; }
+		public JsonNode Mention { get; set; }
+		public JsonNode Reply { get; set; }
+		public JsonNode Renote { get; set; }
+		public JsonNode Quote { get; set; }
+		public JsonNode Reaction { get; set; }
+		public JsonNode PollEnded { get; set; }
+		public JsonNode ReceiveFollowRequest { get; set; }
+		public JsonNode FollowRequestAccepted { get; set; }
+		public JsonNode RoleAssigned { get; set; }
+		public JsonNode AchievementEarned { get; set; }
+		public JsonNode App { get; set; }
+		public JsonNode Test { get; set; }
+			public override string ToString()
 			{
-				sbNote.Append(this.Note);
-				sbNote.Replace("\n", "\n    ");
-				sbNote.Append("\n");
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				var sbNote = new StringBuilder();
+				sbNote.Append("  note: [\n");
+				if (this.Note != null)
+				{
+					sbNote.Append(this.Note);
+					sbNote.Replace("\n", "\n    ");
+					sbNote.Append("\n");
+				}
+				sbNote.Append("  ]\n");
+				sb.Append(sbNote);
+				var sbFollow = new StringBuilder();
+				sbFollow.Append("  follow: [\n");
+				if (this.Follow != null)
+				{
+					sbFollow.Append(this.Follow);
+					sbFollow.Replace("\n", "\n    ");
+					sbFollow.Append("\n");
+				}
+				sbFollow.Append("  ]\n");
+				sb.Append(sbFollow);
+				var sbMention = new StringBuilder();
+				sbMention.Append("  mention: [\n");
+				if (this.Mention != null)
+				{
+					sbMention.Append(this.Mention);
+					sbMention.Replace("\n", "\n    ");
+					sbMention.Append("\n");
+				}
+				sbMention.Append("  ]\n");
+				sb.Append(sbMention);
+				var sbReply = new StringBuilder();
+				sbReply.Append("  reply: [\n");
+				if (this.Reply != null)
+				{
+					sbReply.Append(this.Reply);
+					sbReply.Replace("\n", "\n    ");
+					sbReply.Append("\n");
+				}
+				sbReply.Append("  ]\n");
+				sb.Append(sbReply);
+				var sbRenote = new StringBuilder();
+				sbRenote.Append("  renote: [\n");
+				if (this.Renote != null)
+				{
+					sbRenote.Append(this.Renote);
+					sbRenote.Replace("\n", "\n    ");
+					sbRenote.Append("\n");
+				}
+				sbRenote.Append("  ]\n");
+				sb.Append(sbRenote);
+				var sbQuote = new StringBuilder();
+				sbQuote.Append("  quote: [\n");
+				if (this.Quote != null)
+				{
+					sbQuote.Append(this.Quote);
+					sbQuote.Replace("\n", "\n    ");
+					sbQuote.Append("\n");
+				}
+				sbQuote.Append("  ]\n");
+				sb.Append(sbQuote);
+				var sbReaction = new StringBuilder();
+				sbReaction.Append("  reaction: [\n");
+				if (this.Reaction != null)
+				{
+					sbReaction.Append(this.Reaction);
+					sbReaction.Replace("\n", "\n    ");
+					sbReaction.Append("\n");
+				}
+				sbReaction.Append("  ]\n");
+				sb.Append(sbReaction);
+				var sbPollEnded = new StringBuilder();
+				sbPollEnded.Append("  pollEnded: [\n");
+				if (this.PollEnded != null)
+				{
+					sbPollEnded.Append(this.PollEnded);
+					sbPollEnded.Replace("\n", "\n    ");
+					sbPollEnded.Append("\n");
+				}
+				sbPollEnded.Append("  ]\n");
+				sb.Append(sbPollEnded);
+				var sbReceiveFollowRequest = new StringBuilder();
+				sbReceiveFollowRequest.Append("  receiveFollowRequest: [\n");
+				if (this.ReceiveFollowRequest != null)
+				{
+					sbReceiveFollowRequest.Append(this.ReceiveFollowRequest);
+					sbReceiveFollowRequest.Replace("\n", "\n    ");
+					sbReceiveFollowRequest.Append("\n");
+				}
+				sbReceiveFollowRequest.Append("  ]\n");
+				sb.Append(sbReceiveFollowRequest);
+				var sbFollowRequestAccepted = new StringBuilder();
+				sbFollowRequestAccepted.Append("  followRequestAccepted: [\n");
+				if (this.FollowRequestAccepted != null)
+				{
+					sbFollowRequestAccepted.Append(this.FollowRequestAccepted);
+					sbFollowRequestAccepted.Replace("\n", "\n    ");
+					sbFollowRequestAccepted.Append("\n");
+				}
+				sbFollowRequestAccepted.Append("  ]\n");
+				sb.Append(sbFollowRequestAccepted);
+				var sbRoleAssigned = new StringBuilder();
+				sbRoleAssigned.Append("  roleAssigned: [\n");
+				if (this.RoleAssigned != null)
+				{
+					sbRoleAssigned.Append(this.RoleAssigned);
+					sbRoleAssigned.Replace("\n", "\n    ");
+					sbRoleAssigned.Append("\n");
+				}
+				sbRoleAssigned.Append("  ]\n");
+				sb.Append(sbRoleAssigned);
+				var sbAchievementEarned = new StringBuilder();
+				sbAchievementEarned.Append("  achievementEarned: [\n");
+				if (this.AchievementEarned != null)
+				{
+					sbAchievementEarned.Append(this.AchievementEarned);
+					sbAchievementEarned.Replace("\n", "\n    ");
+					sbAchievementEarned.Append("\n");
+				}
+				sbAchievementEarned.Append("  ]\n");
+				sb.Append(sbAchievementEarned);
+				var sbApp = new StringBuilder();
+				sbApp.Append("  app: [\n");
+				if (this.App != null)
+				{
+					sbApp.Append(this.App);
+					sbApp.Replace("\n", "\n    ");
+					sbApp.Append("\n");
+				}
+				sbApp.Append("  ]\n");
+				sb.Append(sbApp);
+				var sbTest = new StringBuilder();
+				sbTest.Append("  test: [\n");
+				if (this.Test != null)
+				{
+					sbTest.Append(this.Test);
+					sbTest.Replace("\n", "\n    ");
+					sbTest.Append("\n");
+				}
+				sbTest.Append("  ]\n");
+				sb.Append(sbTest);
+				sb.Append("}");
+				return sb.ToString();
 			}
-			sbNote.Append("  ]\n");
-			sb.Append(sbNote);
-			var sbFollow = new StringBuilder();
-			sbFollow.Append("  follow: [\n");
-			if (this.Follow != null)
-			{
-				sbFollow.Append(this.Follow);
-				sbFollow.Replace("\n", "\n    ");
-				sbFollow.Append("\n");
-			}
-			sbFollow.Append("  ]\n");
-			sb.Append(sbFollow);
-			var sbMention = new StringBuilder();
-			sbMention.Append("  mention: [\n");
-			if (this.Mention != null)
-			{
-				sbMention.Append(this.Mention);
-				sbMention.Replace("\n", "\n    ");
-				sbMention.Append("\n");
-			}
-			sbMention.Append("  ]\n");
-			sb.Append(sbMention);
-			var sbReply = new StringBuilder();
-			sbReply.Append("  reply: [\n");
-			if (this.Reply != null)
-			{
-				sbReply.Append(this.Reply);
-				sbReply.Replace("\n", "\n    ");
-				sbReply.Append("\n");
-			}
-			sbReply.Append("  ]\n");
-			sb.Append(sbReply);
-			var sbRenote = new StringBuilder();
-			sbRenote.Append("  renote: [\n");
-			if (this.Renote != null)
-			{
-				sbRenote.Append(this.Renote);
-				sbRenote.Replace("\n", "\n    ");
-				sbRenote.Append("\n");
-			}
-			sbRenote.Append("  ]\n");
-			sb.Append(sbRenote);
-			var sbQuote = new StringBuilder();
-			sbQuote.Append("  quote: [\n");
-			if (this.Quote != null)
-			{
-				sbQuote.Append(this.Quote);
-				sbQuote.Replace("\n", "\n    ");
-				sbQuote.Append("\n");
-			}
-			sbQuote.Append("  ]\n");
-			sb.Append(sbQuote);
-			var sbReaction = new StringBuilder();
-			sbReaction.Append("  reaction: [\n");
-			if (this.Reaction != null)
-			{
-				sbReaction.Append(this.Reaction);
-				sbReaction.Replace("\n", "\n    ");
-				sbReaction.Append("\n");
-			}
-			sbReaction.Append("  ]\n");
-			sb.Append(sbReaction);
-			var sbPollEnded = new StringBuilder();
-			sbPollEnded.Append("  pollEnded: [\n");
-			if (this.PollEnded != null)
-			{
-				sbPollEnded.Append(this.PollEnded);
-				sbPollEnded.Replace("\n", "\n    ");
-				sbPollEnded.Append("\n");
-			}
-			sbPollEnded.Append("  ]\n");
-			sb.Append(sbPollEnded);
-			var sbReceiveFollowRequest = new StringBuilder();
-			sbReceiveFollowRequest.Append("  receiveFollowRequest: [\n");
-			if (this.ReceiveFollowRequest != null)
-			{
-				sbReceiveFollowRequest.Append(this.ReceiveFollowRequest);
-				sbReceiveFollowRequest.Replace("\n", "\n    ");
-				sbReceiveFollowRequest.Append("\n");
-			}
-			sbReceiveFollowRequest.Append("  ]\n");
-			sb.Append(sbReceiveFollowRequest);
-			var sbFollowRequestAccepted = new StringBuilder();
-			sbFollowRequestAccepted.Append("  followRequestAccepted: [\n");
-			if (this.FollowRequestAccepted != null)
-			{
-				sbFollowRequestAccepted.Append(this.FollowRequestAccepted);
-				sbFollowRequestAccepted.Replace("\n", "\n    ");
-				sbFollowRequestAccepted.Append("\n");
-			}
-			sbFollowRequestAccepted.Append("  ]\n");
-			sb.Append(sbFollowRequestAccepted);
-			var sbRoleAssigned = new StringBuilder();
-			sbRoleAssigned.Append("  roleAssigned: [\n");
-			if (this.RoleAssigned != null)
-			{
-				sbRoleAssigned.Append(this.RoleAssigned);
-				sbRoleAssigned.Replace("\n", "\n    ");
-				sbRoleAssigned.Append("\n");
-			}
-			sbRoleAssigned.Append("  ]\n");
-			sb.Append(sbRoleAssigned);
-			var sbAchievementEarned = new StringBuilder();
-			sbAchievementEarned.Append("  achievementEarned: [\n");
-			if (this.AchievementEarned != null)
-			{
-				sbAchievementEarned.Append(this.AchievementEarned);
-				sbAchievementEarned.Replace("\n", "\n    ");
-				sbAchievementEarned.Append("\n");
-			}
-			sbAchievementEarned.Append("  ]\n");
-			sb.Append(sbAchievementEarned);
-			var sbApp = new StringBuilder();
-			sbApp.Append("  app: [\n");
-			if (this.App != null)
-			{
-				sbApp.Append(this.App);
-				sbApp.Replace("\n", "\n    ");
-				sbApp.Append("\n");
-			}
-			sbApp.Append("  ]\n");
-			sb.Append(sbApp);
-			var sbTest = new StringBuilder();
-			sbTest.Append("  test: [\n");
-			if (this.Test != null)
-			{
-				sbTest.Append(this.Test);
-				sbTest.Replace("\n", "\n    ");
-				sbTest.Append("\n");
-			}
-			sbTest.Append("  ]\n");
-			sb.Append(sbTest);
-			sb.Append("}");
-			return sb.ToString();
-		}
 		}
 		public enum UpdateFollowingVisibilityEnum {
 			[StringValue("public")]
@@ -1413,7 +1413,7 @@ namespace Misharp.Controls {
 			{
 				{ "moveToAccount", moveToAccount },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/move", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<JsonNode>("i/move", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -1428,25 +1428,25 @@ namespace Misharp.Controls.I {
 		}
 		public class IGalleryLikesItemResponseObject {
 			public string Id { get; set; }
-			public GalleryPost Post { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class IGalleryLikesItemResponseObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				var sbPost = new StringBuilder();
-				sbPost.Append("  post: [\n");
-				if (this.Post != null)
+			public Model.GalleryPost Post { get; set; }
+				public override string ToString()
 				{
-					sbPost.Append(this.Post);
-					sbPost.Replace("\n", "\n    ");
-					sbPost.Append("\n");
+					var sb = new StringBuilder();
+					sb.Append("class IGalleryLikesItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					var sbPost = new StringBuilder();
+					sbPost.Append("  post: [\n");
+					if (this.Post != null)
+					{
+						sbPost.Append(this.Post);
+						sbPost.Replace("\n", "\n    ");
+						sbPost.Append("\n");
+					}
+					sbPost.Append("  ]\n");
+					sb.Append(sbPost);
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sbPost.Append("  ]\n");
-				sb.Append(sbPost);
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<IGalleryLikesItemResponseObject>>> Likes(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
@@ -1456,10 +1456,10 @@ namespace Misharp.Controls.I {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/gallery/likes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<IGalleryLikesItemResponseObject>>("i/gallery/likes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.GalleryPost>>> Posts(int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -1467,7 +1467,7 @@ namespace Misharp.Controls.I {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/gallery/posts", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.GalleryPost>>("i/gallery/posts", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -1485,21 +1485,21 @@ namespace Misharp.Controls.I {
 				{ "scope", scope },
 				{ "domain", domain },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/get-all", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<JsonNode>("i/registry/get-all", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class IRegistryGetDetailResponse {
 			public string UpdatedAt { get; set; }
-			public  Value { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  updatedAt: {this.UpdatedAt}\n");
-			sb.Append($"  value: {this.Value}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public JsonNode Value { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  updatedAt: {this.UpdatedAt}\n");
+				sb.Append($"  value: {this.Value}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<IRegistryGetDetailResponse>> GetDetail(string key,List<string>? scope = null,string? domain = null)
 		{
@@ -1509,7 +1509,7 @@ namespace Misharp.Controls.I {
 				{ "scope", scope },
 				{ "domain", domain },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/get-detail", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<IRegistryGetDetailResponse>("i/registry/get-detail", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<JsonNode>> Get(string key,List<string>? scope = null,string? domain = null)
@@ -1520,7 +1520,7 @@ namespace Misharp.Controls.I {
 				{ "scope", scope },
 				{ "domain", domain },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/get", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<JsonNode>("i/registry/get", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<JsonNode>> KeysWithType(List<string>? scope = null,string? domain = null)
@@ -1530,7 +1530,7 @@ namespace Misharp.Controls.I {
 				{ "scope", scope },
 				{ "domain", domain },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/keys-with-type", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<JsonNode>("i/registry/keys-with-type", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<List<string>>> Keys(List<string>? scope = null,string? domain = null)
@@ -1540,7 +1540,7 @@ namespace Misharp.Controls.I {
 				{ "scope", scope },
 				{ "domain", domain },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/keys", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<string>>("i/registry/keys", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Remove(string key,List<string>? scope = null,string? domain = null)
@@ -1557,29 +1557,29 @@ namespace Misharp.Controls.I {
 		public class IRegistryScopesWithDomainItemResponseObject {
 			public List<List<string>> Scopes { get; set; }
 			public string? Domain { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class IRegistryScopesWithDomainItemResponseObject: {\n");
-				sb.Append("  scopes: [\n");
-				if (this.Scopes != null && this.Scopes.Count > 0)
+				public override string ToString()
 				{
-					var sbScopes = new StringBuilder();
-					sbScopes.Append("    ");
-					this.Scopes.ForEach(item => sbScopes.Append(item).Append(",\n"));
-					sbScopes.Replace("\n", "\n    ");
-					sbScopes.Length -= 4;
-					sb.Append(sbScopes);
+					var sb = new StringBuilder();
+					sb.Append("class IRegistryScopesWithDomainItemResponseObject: {\n");
+					sb.Append("  scopes: [\n");
+					if (this.Scopes != null && this.Scopes.Count > 0)
+					{
+						var sbScopes = new StringBuilder();
+						sbScopes.Append("    ");
+						this.Scopes.ForEach(item => sbScopes.Append(item).Append(",\n"));
+						sbScopes.Replace("\n", "\n    ");
+						sbScopes.Length -= 4;
+						sb.Append(sbScopes);
+					}
+					sb.Append("  ]\n");
+					sb.Append($"  domain: {this.Domain}\n");
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sb.Append("  ]\n");
-				sb.Append($"  domain: {this.Domain}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<IRegistryScopesWithDomainItemResponseObject>>> ScopesWithDomain()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("i/registry/scopes-with-domain", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<IRegistryScopesWithDomainItemResponseObject>>("i/registry/scopes-with-domain", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Set(string key,JsonNode value,List<string>? scope = null,string? domain = null)
@@ -1612,59 +1612,10 @@ namespace Misharp.Controls.I {
 			public bool Active { get; set; }
 			public DateTime LatestSentAt { get; set; }
 			public int LatestStatus { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  id: {this.Id}\n");
-			sb.Append($"  userId: {this.UserId}\n");
-			sb.Append($"  name: {this.Name}\n");
-			sb.Append("  on: [\n");
-			if (this.On != null && this.On.Count > 0)
-			{
-				var sbOn = new StringBuilder();
-				sbOn.Append("    ");
-				this.On.ForEach(item => sbOn.Append(item).Append(",\n"));
-				sbOn.Replace("\n", "\n    ");
-				sbOn.Length -= 4;
-				sb.Append(sbOn);
-			}
-			sb.Append("  ]\n");
-			sb.Append($"  url: {this.Url}\n");
-			sb.Append($"  secret: {this.Secret}\n");
-			sb.Append($"  active: {this.Active}\n");
-			sb.Append($"  latestSentAt: {this.LatestSentAt}\n");
-			sb.Append($"  latestStatus: {this.LatestStatus}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
-		}
-		public async Task<Response<IWebhooksCreateResponse>> Create(string name,string url,string? secret = null,List<string>? on = null)
-		{
-			var param = new Dictionary<string, object?>	
-			{
-				{ "name", name },
-				{ "url", url },
-				{ "secret", secret },
-				{ "on", on },
-			};
-			var result = await _app.Request<Model.EmptyResponse>("i/webhooks/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-			return result;
-		}
-		public class IWebhooksListItemResponseObject {
-			public string Id { get; set; }
-			public string UserId { get; set; }
-			public string Name { get; set; }
-			public List<string> On { get; set; }
-			public string Url { get; set; }
-			public string Secret { get; set; }
-			public bool Active { get; set; }
-			public DateTime? LatestSentAt { get; set; }
-			public int? LatestStatus { get; set; }
 			public override string ToString()
 			{
 				var sb = new StringBuilder();
-				sb.Append("class IWebhooksListItemResponseObject: {\n");
+				sb.Append("{\n");
 				sb.Append($"  id: {this.Id}\n");
 				sb.Append($"  userId: {this.UserId}\n");
 				sb.Append($"  name: {this.Name}\n");
@@ -1688,9 +1639,58 @@ namespace Misharp.Controls.I {
 				return sb.ToString();
 			}
 		}
+		public async Task<Response<IWebhooksCreateResponse>> Create(string name,string url,string? secret = null,List<string>? on = null)
+		{
+			var param = new Dictionary<string, object?>	
+			{
+				{ "name", name },
+				{ "url", url },
+				{ "secret", secret },
+				{ "on", on },
+			};
+			var result = await _app.Request<IWebhooksCreateResponse>("i/webhooks/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			return result;
+		}
+		public class IWebhooksListItemResponseObject {
+			public string Id { get; set; }
+			public string UserId { get; set; }
+			public string Name { get; set; }
+			public List<string> On { get; set; }
+			public string Url { get; set; }
+			public string Secret { get; set; }
+			public bool Active { get; set; }
+			public DateTime? LatestSentAt { get; set; }
+			public int? LatestStatus { get; set; }
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class IWebhooksListItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  userId: {this.UserId}\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append("  on: [\n");
+					if (this.On != null && this.On.Count > 0)
+					{
+						var sbOn = new StringBuilder();
+						sbOn.Append("    ");
+						this.On.ForEach(item => sbOn.Append(item).Append(",\n"));
+						sbOn.Replace("\n", "\n    ");
+						sbOn.Length -= 4;
+						sb.Append(sbOn);
+					}
+					sb.Append("  ]\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  secret: {this.Secret}\n");
+					sb.Append($"  active: {this.Active}\n");
+					sb.Append($"  latestSentAt: {this.LatestSentAt}\n");
+					sb.Append($"  latestStatus: {this.LatestStatus}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
+		}
 		public async Task<Response<List<IWebhooksListItemResponseObject>>> List()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("i/webhooks/list", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<IWebhooksListItemResponseObject>>("i/webhooks/list", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class IWebhooksShowResponse {
@@ -1703,32 +1703,32 @@ namespace Misharp.Controls.I {
 			public bool Active { get; set; }
 			public DateTime LatestSentAt { get; set; }
 			public int LatestStatus { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  id: {this.Id}\n");
-			sb.Append($"  userId: {this.UserId}\n");
-			sb.Append($"  name: {this.Name}\n");
-			sb.Append("  on: [\n");
-			if (this.On != null && this.On.Count > 0)
+			public override string ToString()
 			{
-				var sbOn = new StringBuilder();
-				sbOn.Append("    ");
-				this.On.ForEach(item => sbOn.Append(item).Append(",\n"));
-				sbOn.Replace("\n", "\n    ");
-				sbOn.Length -= 4;
-				sb.Append(sbOn);
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  id: {this.Id}\n");
+				sb.Append($"  userId: {this.UserId}\n");
+				sb.Append($"  name: {this.Name}\n");
+				sb.Append("  on: [\n");
+				if (this.On != null && this.On.Count > 0)
+				{
+					var sbOn = new StringBuilder();
+					sbOn.Append("    ");
+					this.On.ForEach(item => sbOn.Append(item).Append(",\n"));
+					sbOn.Replace("\n", "\n    ");
+					sbOn.Length -= 4;
+					sb.Append(sbOn);
+				}
+				sb.Append("  ]\n");
+				sb.Append($"  url: {this.Url}\n");
+				sb.Append($"  secret: {this.Secret}\n");
+				sb.Append($"  active: {this.Active}\n");
+				sb.Append($"  latestSentAt: {this.LatestSentAt}\n");
+				sb.Append($"  latestStatus: {this.LatestStatus}\n");
+				sb.Append("}");
+				return sb.ToString();
 			}
-			sb.Append("  ]\n");
-			sb.Append($"  url: {this.Url}\n");
-			sb.Append($"  secret: {this.Secret}\n");
-			sb.Append($"  active: {this.Active}\n");
-			sb.Append($"  latestSentAt: {this.LatestSentAt}\n");
-			sb.Append($"  latestStatus: {this.LatestStatus}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
 		}
 		public async Task<Response<IWebhooksShowResponse>> Show(string webhookId)
 		{
@@ -1736,7 +1736,7 @@ namespace Misharp.Controls.I {
 			{
 				{ "webhookId", webhookId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("i/webhooks/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<IWebhooksShowResponse>("i/webhooks/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Update(string webhookId,string name,string url,bool active,string? secret = null,List<string>? on = null)

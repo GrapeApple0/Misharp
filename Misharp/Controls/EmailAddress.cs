@@ -12,15 +12,15 @@ namespace Misharp.Controls {
 		public class AvailableResponse {
 			public bool Available { get; set; }
 			public string Reason { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  available: {this.Available}\n");
-			sb.Append($"  reason: {this.Reason}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  available: {this.Available}\n");
+				sb.Append($"  reason: {this.Reason}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<AvailableResponse>> Available(string emailAddress)
 		{
@@ -28,7 +28,7 @@ namespace Misharp.Controls {
 			{
 				{ "emailAddress", emailAddress },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("email-address/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<AvailableResponse>("email-address/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

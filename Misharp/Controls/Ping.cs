@@ -11,18 +11,18 @@ namespace Misharp.Controls {
 		}
 		public class PingResponse {
 			public decimal Pong { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  pong: {this.Pong}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  pong: {this.Pong}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<PingResponse>> Ping()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("ping", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<PingResponse>("ping", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

@@ -16,22 +16,22 @@ namespace Misharp.Controls {
 		public class DriveResponse {
 			public decimal Capacity { get; set; }
 			public decimal Usage { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  capacity: {this.Capacity}\n");
-			sb.Append($"  usage: {this.Usage}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  capacity: {this.Capacity}\n");
+				sb.Append($"  usage: {this.Usage}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<DriveResponse>> Drive()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("drive", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<DriveResponse>("drive", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<DriveFile>>> Files(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
+		public async Task<Response<List<Model.DriveFile>>> Files(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null,string? type = null,FilesSortEnum? sort = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -42,7 +42,7 @@ namespace Misharp.Controls {
 				{ "type", type },
 				{ "sort", sort },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/files", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public enum FilesSortEnum {
@@ -59,7 +59,7 @@ namespace Misharp.Controls {
 			[StringValue("-size")]
 			Minussize,
 		}
-		public async Task<Response<List<DriveFolder>>> Folders(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null)
+		public async Task<Response<List<Model.DriveFolder>>> Folders(int limit = 10,string? sinceId = null,string? untilId = null,string? folderId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -68,10 +68,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/folders", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFolder>>("drive/folders", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<DriveFile>>> Stream(string type,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.DriveFile>>> Stream(string type,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -80,7 +80,7 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "type", type },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/stream", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/stream", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -93,7 +93,7 @@ namespace Misharp.Controls.Drive {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Note>>> AttachedNotes(string fileId,string? sinceId = null,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Note>>> AttachedNotes(string fileId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -102,16 +102,7 @@ namespace Misharp.Controls.Drive {
 				{ "limit", limit },
 				{ "fileId", fileId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/attached-notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
-			return result;
-		}
-		public async Task<Response<bool>> CheckExistence(string md5)
-		{
-			var param = new Dictionary<string, object?>	
-			{
-				{ "md5", md5 },
-			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/check-existence", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("drive/files/attached-notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.DriveFile>> Create(Stream file,string? folderId = null,string? name = null,string? comment = null,bool isSensitive = false,bool force = false)
@@ -125,7 +116,7 @@ namespace Misharp.Controls.Drive {
 				{ "force", force },
 				{ "file", file },
 			};
-			var result = await _app.RequestFormData<Model.EmptyResponse>("drive/files/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.RequestFormData<Model.DriveFile>("drive/files/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Delete(string fileId)
@@ -137,23 +128,23 @@ namespace Misharp.Controls.Drive {
 			var result = await _app.Request<Model.EmptyResponse>("drive/files/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<DriveFile>>> FindByHash(string md5)
+		public async Task<Response<List<Model.DriveFile>>> FindByHash(string md5)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "md5", md5 },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/find-by-hash", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/files/find-by-hash", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<DriveFile>>> Find(string name,string? folderId = null)
+		public async Task<Response<List<Model.DriveFile>>> Find(string name,string? folderId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/find", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFile>>("drive/files/find", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.DriveFile>> Show(string fileId,string url)
@@ -163,7 +154,7 @@ namespace Misharp.Controls.Drive {
 				{ "fileId", fileId },
 				{ "url", url },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.DriveFile>("drive/files/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.DriveFile>> Update(string fileId,string name,bool isSensitive,string? folderId = null,string? comment = null)
@@ -176,7 +167,7 @@ namespace Misharp.Controls.Drive {
 				{ "isSensitive", isSensitive },
 				{ "comment", comment },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/files/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.DriveFile>("drive/files/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> UploadFromUrl(string url,string? folderId = null,bool isSensitive = false,string? comment = null,string? marker = null,bool force = false)
@@ -208,7 +199,7 @@ namespace Misharp.Controls.Drive {
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/folders/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Delete(string folderId)
@@ -220,14 +211,14 @@ namespace Misharp.Controls.Drive {
 			var result = await _app.Request<Model.EmptyResponse>("drive/folders/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<DriveFolder>>> Find(string name,string? parentId = null)
+		public async Task<Response<List<Model.DriveFolder>>> Find(string name,string? parentId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/folders/find", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.DriveFolder>>("drive/folders/find", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.DriveFolder>> Show(string folderId)
@@ -236,7 +227,7 @@ namespace Misharp.Controls.Drive {
 			{
 				{ "folderId", folderId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/folders/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.DriveFolder>> Update(string folderId,string name,string? parentId = null)
@@ -247,7 +238,7 @@ namespace Misharp.Controls.Drive {
 				{ "name", name },
 				{ "parentId", parentId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("drive/folders/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<Model.DriveFolder>("drive/folders/update", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

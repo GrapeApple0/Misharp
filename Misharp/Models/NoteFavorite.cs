@@ -5,7 +5,7 @@ namespace Misharp.Model {
 	public class NoteFavorite {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public Note Note { get; set; }
+		public Model.Note Note { get; set; }
 		public string NoteId { get; set; }
 		public override string ToString()
 		{

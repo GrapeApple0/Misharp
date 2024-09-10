@@ -22,15 +22,15 @@ namespace Misharp.Model {
 		public class UserDetailedNotMeOnlyFieldsPropertyType {
 			public string Name { get; set; }
 			public string Value { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserDetailedNotMeOnlyFieldsPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  value: {this.Value}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserDetailedNotMeOnlyFieldsPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  value: {this.Value}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserDetailedNotMeOnlyFieldsPropertyType> Fields { get; set; }
 		public List<string> VerifiedLinks { get; set; }
@@ -38,7 +38,7 @@ namespace Misharp.Model {
 		public decimal FollowingCount { get; set; }
 		public decimal NotesCount { get; set; }
 		public List<string> PinnedNoteIds { get; set; }
-		public List<Note> PinnedNotes { get; set; }
+		public List<Model.Note> PinnedNotes { get; set; }
 		public string? PinnedPageId { get; set; }
 		public Page? PinnedPage { get; set; }
 		public bool PublicReactions { get; set; }
@@ -47,7 +47,7 @@ namespace Misharp.Model {
 		public bool TwoFactorEnabled { get; set; }
 		public bool UsePasswordLessLogin { get; set; }
 		public bool SecurityKeys { get; set; }
-		public List<RoleLite> Roles { get; set; }
+		public List<Model.RoleLite> Roles { get; set; }
 		public string? Memo { get; set; }
 		public string ModerationNote { get; set; }
 		public bool IsFollowing { get; set; }

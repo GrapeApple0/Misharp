@@ -17,7 +17,7 @@ namespace Misharp.Controls {
 			ReactionsApi = new Notes.ReactionsApi(_app);
 			ThreadMutingApi = new Notes.ThreadMutingApi(_app);
 		}
-		public async Task<Response<List<Note>>> Notes(bool reply,bool renote,bool withFiles,bool poll,bool local = false,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Notes(bool reply,bool renote,bool withFiles,bool poll,bool local = false,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -30,10 +30,10 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Children(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Children(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -42,19 +42,19 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/children", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/children", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Clip>>> Clips(string noteId)
+		public async Task<Response<List<Model.Clip>>> Clips(string noteId)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "noteId", noteId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/clips", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Clip>>("notes/clips", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Conversation(string noteId,int limit = 10,int offset = 0)
+		public async Task<Response<List<Model.Note>>> Conversation(string noteId,int limit = 10,int offset = 0)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -62,14 +62,14 @@ namespace Misharp.Controls {
 				{ "limit", limit },
 				{ "offset", offset },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/conversation", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/conversation", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-			public class PollObject {
-				public UniqueList<string> Choices { get; set; }
-				public bool Multiple { get; set; }
-				public int? ExpiresAt { get; set; }
-				public int? ExpiredAfter { get; set; }
+		public class PollObject {
+			public UniqueList<string> Choices { get; set; }
+			public bool Multiple { get; set; }
+			public int? ExpiresAt { get; set; }
+			public int? ExpiredAfter { get; set; }
 				public override string ToString()
 				{
 					var sb = new StringBuilder();
@@ -91,26 +91,26 @@ namespace Misharp.Controls {
 					sb.Append("}");
 					return sb.ToString();
 				}
-			}
-		public class CreateResponse {
-			public Note CreatedNote { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			var sbCreatedNote = new StringBuilder();
-			sbCreatedNote.Append("  createdNote: [\n");
-			if (this.CreatedNote != null)
-			{
-				sbCreatedNote.Append(this.CreatedNote);
-				sbCreatedNote.Replace("\n", "\n    ");
-				sbCreatedNote.Append("\n");
-			}
-			sbCreatedNote.Append("  ]\n");
-			sb.Append(sbCreatedNote);
-			sb.Append("}");
-			return sb.ToString();
 		}
+		public class CreateResponse {
+			public Model.Note CreatedNote { get; set; }
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				var sbCreatedNote = new StringBuilder();
+				sbCreatedNote.Append("  createdNote: [\n");
+				if (this.CreatedNote != null)
+				{
+					sbCreatedNote.Append(this.CreatedNote);
+					sbCreatedNote.Replace("\n", "\n    ");
+					sbCreatedNote.Append("\n");
+				}
+				sbCreatedNote.Append("  ]\n");
+				sb.Append(sbCreatedNote);
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<CreateResponse>> Create(CreateVisibilityEnum visibility = CreateVisibilityEnum.Public,List<string>? visibleUserIds = null,string? cw = null,bool localOnly = false,CreateReactionAcceptanceEnum? reactionAcceptance = null,bool noExtractMentions = false,bool noExtractHashtags = false,bool noExtractEmojis = false,string? replyId = null,string? renoteId = null,string? channelId = null,string? text = null,List<string>? fileIds = null,List<string>? mediaIds = null,object? poll = null)
 		{
@@ -132,35 +132,35 @@ namespace Misharp.Controls {
 				{ "mediaIds", mediaIds },
 				{ "poll", poll },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<CreateResponse>("notes/create", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class CreatePollParamObject {
-			public UniqueList<string> Choices { get; set; }
-			public bool Multiple { get; set; }
-			public int? ExpiresAt { get; set; }
-			public int? ExpiredAfter { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append("  choices: [\n");
-			if (this.Choices != null && this.Choices.Count > 0)
+		public UniqueList<string> Choices { get; set; }
+		public bool Multiple { get; set; }
+		public int? ExpiresAt { get; set; }
+		public int? ExpiredAfter { get; set; }
+			public override string ToString()
 			{
-				var sbChoices = new StringBuilder();
-				sbChoices.Append("    ");
-				this.Choices.ForEach(item => sbChoices.Append(item).Append(",\n"));
-				sbChoices.Replace("\n", "\n    ");
-				sbChoices.Length -= 4;
-				sb.Append(sbChoices);
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append("  choices: [\n");
+				if (this.Choices != null && this.Choices.Count > 0)
+				{
+					var sbChoices = new StringBuilder();
+					sbChoices.Append("    ");
+					this.Choices.ForEach(item => sbChoices.Append(item).Append(",\n"));
+					sbChoices.Replace("\n", "\n    ");
+					sbChoices.Length -= 4;
+					sb.Append(sbChoices);
+				}
+				sb.Append("  ]\n");
+				sb.Append($"  multiple: {this.Multiple}\n");
+				sb.Append($"  expiresAt: {this.ExpiresAt}\n");
+				sb.Append($"  expiredAfter: {this.ExpiredAfter}\n");
+				sb.Append("}");
+				return sb.ToString();
 			}
-			sb.Append("  ]\n");
-			sb.Append($"  multiple: {this.Multiple}\n");
-			sb.Append($"  expiresAt: {this.ExpiresAt}\n");
-			sb.Append($"  expiredAfter: {this.ExpiredAfter}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
 		}
 		public enum CreateVisibilityEnum {
 			[StringValue("public")]
@@ -191,7 +191,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("notes/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Featured(int limit = 10,string? untilId = null,string? channelId = null)
+		public async Task<Response<List<Model.Note>>> Featured(int limit = 10,string? untilId = null,string? channelId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -199,10 +199,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "channelId", channelId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/featured", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/featured", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> GlobalTimeline(bool withFiles = false,bool withRenotes = true,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> GlobalTimeline(bool withFiles = false,bool withRenotes = true,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -214,10 +214,10 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/global-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/global-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> HybridTimeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true,bool withReplies = false)
+		public async Task<Response<List<Model.Note>>> HybridTimeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true,bool withReplies = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -234,10 +234,10 @@ namespace Misharp.Controls {
 				{ "withRenotes", withRenotes },
 				{ "withReplies", withReplies },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/hybrid-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("notes/hybrid-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Note>>> LocalTimeline(bool withFiles = false,bool withRenotes = true,bool withReplies = false,int limit = 10,string? sinceId = null,string? untilId = null,bool allowPartial = false,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> LocalTimeline(bool withFiles = false,bool withRenotes = true,bool withReplies = false,int limit = 10,string? sinceId = null,string? untilId = null,bool allowPartial = false,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -251,10 +251,10 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/local-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/local-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Mentions(string visibility,bool following = false,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Mentions(string visibility,bool following = false,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -264,10 +264,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "visibility", visibility },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/mentions", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("notes/mentions", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<NoteReaction>>> Reactions(string noteId,string? type = null,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.NoteReaction>>> Reactions(string noteId,string? type = null,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -277,10 +277,10 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/reactions", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.NoteReaction>>("notes/reactions", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Renotes(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.Note>>> Renotes(string noteId,int limit = 10,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -289,10 +289,10 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/renotes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/renotes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Replies(string noteId,string? sinceId = null,string? untilId = null,int limit = 10)
+		public async Task<Response<List<Model.Note>>> Replies(string noteId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -301,10 +301,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/replies", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/replies", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> SearchByTag(string tag,bool? reply = null,bool? renote = null,bool withFiles = false,bool? poll = null,string? sinceId = null,string? untilId = null,int limit = 10,List<List<string>>? query = null)
+		public async Task<Response<List<Model.Note>>> SearchByTag(string tag,bool? reply = null,bool? renote = null,bool withFiles = false,bool? poll = null,string? sinceId = null,string? untilId = null,int limit = 10,List<List<string>>? query = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -318,10 +318,10 @@ namespace Misharp.Controls {
 				{ "tag", tag },
 				{ "query", query },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/search-by-tag", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/search-by-tag", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Search(string query,string host,string? sinceId = null,string? untilId = null,int limit = 10,int offset = 0,string? userId = null,string? channelId = null)
+		public async Task<Response<List<Model.Note>>> Search(string query,string host,string? sinceId = null,string? untilId = null,int limit = 10,int offset = 0,string? userId = null,string? channelId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -334,7 +334,7 @@ namespace Misharp.Controls {
 				{ "userId", userId },
 				{ "channelId", channelId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/search", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Note>>("notes/search", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.Note>> Show(string noteId)
@@ -343,21 +343,21 @@ namespace Misharp.Controls {
 			{
 				{ "noteId", noteId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.Note>("notes/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public class StateResponse {
 			public bool IsFavorited { get; set; }
 			public bool IsMutedThread { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  isFavorited: {this.IsFavorited}\n");
-			sb.Append($"  isMutedThread: {this.IsMutedThread}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  isFavorited: {this.IsFavorited}\n");
+				sb.Append($"  isMutedThread: {this.IsMutedThread}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<StateResponse>> State(string noteId)
 		{
@@ -365,10 +365,10 @@ namespace Misharp.Controls {
 			{
 				{ "noteId", noteId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/state", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<StateResponse>("notes/state", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Timeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true)
+		public async Task<Response<List<Model.Note>>> Timeline(int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withFiles = false,bool withRenotes = true)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -384,21 +384,21 @@ namespace Misharp.Controls {
 				{ "withFiles", withFiles },
 				{ "withRenotes", withRenotes },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("notes/timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class TranslateResponse {
 			public string SourceLang { get; set; }
 			public string Text { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  sourceLang: {this.SourceLang}\n");
-			sb.Append($"  text: {this.Text}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  sourceLang: {this.SourceLang}\n");
+				sb.Append($"  text: {this.Text}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<TranslateResponse>> Translate(string noteId,string targetLang)
 		{
@@ -407,7 +407,7 @@ namespace Misharp.Controls {
 				{ "noteId", noteId },
 				{ "targetLang", targetLang },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/translate", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<TranslateResponse>("notes/translate", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Unrenote(string noteId)
@@ -419,7 +419,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("notes/unrenote", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<Note>>> UserListTimeline(string listId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withRenotes = true,bool withFiles = false)
+		public async Task<Response<List<Model.Note>>> UserListTimeline(string listId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null,bool allowPartial = false,bool includeMyRenotes = true,bool includeRenotedMyNotes = true,bool includeLocalRenotes = true,bool withRenotes = true,bool withFiles = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -436,7 +436,7 @@ namespace Misharp.Controls {
 				{ "withRenotes", withRenotes },
 				{ "withFiles", withFiles },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/user-list-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("notes/user-list-timeline", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
@@ -475,7 +475,7 @@ namespace Misharp.Controls.Notes {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Note>>> Recommendation(int limit = 10,int offset = 0,bool excludeChannels = false)
+		public async Task<Response<List<Model.Note>>> Recommendation(int limit = 10,int offset = 0,bool excludeChannels = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -483,7 +483,7 @@ namespace Misharp.Controls.Notes {
 				{ "offset", offset },
 				{ "excludeChannels", excludeChannels },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("notes/polls/recommendation", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("notes/polls/recommendation", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Vote(string noteId,int choice)

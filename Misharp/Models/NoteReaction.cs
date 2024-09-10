@@ -5,7 +5,7 @@ namespace Misharp.Model {
 	public class NoteReaction {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
-		public UserLite User { get; set; }
+		public Model.UserLite User { get; set; }
 		public string Type { get; set; }
 		public override string ToString()
 		{

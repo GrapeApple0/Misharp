@@ -12,15 +12,15 @@ namespace Misharp.Controls {
 		public class FetchExternalResourcesResponse {
 			public string Type { get; set; }
 			public string Data { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  type: {this.Type}\n");
-			sb.Append($"  data: {this.Data}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  type: {this.Type}\n");
+				sb.Append($"  data: {this.Data}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<FetchExternalResourcesResponse>> FetchExternalResources(string url,string hash)
 		{
@@ -29,7 +29,7 @@ namespace Misharp.Controls {
 				{ "url", url },
 				{ "hash", hash },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("fetch-external-resources", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<FetchExternalResourcesResponse>("fetch-external-resources", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

@@ -15,17 +15,17 @@ namespace Misharp.Controls {
 			{
 				{ "uri", uri },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("ap/get", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<JsonNode>("ap/get", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class ShowResponse {
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<ShowResponse>> Show(string uri)
 		{
@@ -33,7 +33,7 @@ namespace Misharp.Controls {
 			{
 				{ "uri", uri },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("ap/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<ShowResponse>("ap/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

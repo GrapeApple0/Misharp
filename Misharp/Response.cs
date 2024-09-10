@@ -25,8 +25,5 @@ namespace Misharp.Model
         }
     }
 
-    public class EmptyResponse
-    {
-
-    }
+    public class EmptyResponse { }
 }

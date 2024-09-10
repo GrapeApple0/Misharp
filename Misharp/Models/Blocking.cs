@@ -6,7 +6,7 @@ namespace Misharp.Model {
 		public string Id { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public string BlockeeId { get; set; }
-		public UserDetailedNotMe Blockee { get; set; }
+		public Model.UserDetailedNotMe Blockee { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

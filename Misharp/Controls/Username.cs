@@ -11,14 +11,14 @@ namespace Misharp.Controls {
 		}
 		public class AvailableResponse {
 			public bool Available { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  available: {this.Available}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  available: {this.Available}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<AvailableResponse>> Available(string username)
 		{
@@ -26,7 +26,7 @@ namespace Misharp.Controls {
 			{
 				{ "username", username },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("username/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<AvailableResponse>("username/available", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

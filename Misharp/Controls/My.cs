@@ -9,14 +9,14 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<App>>> Apps(int limit = 10,int offset = 0)
+		public async Task<Response<List<Model.App>>> Apps(int limit = 10,int offset = 0)
 		{
 			var param = new Dictionary<string, object?>	
 			{
 				{ "limit", limit },
 				{ "offset", offset },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("my/apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.App>>("my/apps", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

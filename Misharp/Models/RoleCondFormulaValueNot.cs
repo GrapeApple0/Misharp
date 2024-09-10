@@ -5,7 +5,7 @@ namespace Misharp.Model {
 	public class RoleCondFormulaValueNot {
 		public string Id { get; set; }
 		public string Type { get; set; }
-		public RoleCondFormulaValue Value { get; set; }
+		public Model.RoleCondFormulaValue Value { get; set; }
 		public override string ToString()
 		{
 			var sb = new StringBuilder();

@@ -9,9 +9,9 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Role>>> List()
+		public async Task<Response<List<Model.Role>>> List()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("roles/list", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Role>>("roles/list", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.Role>> Show(string roleId)
@@ -20,30 +20,30 @@ namespace Misharp.Controls {
 			{
 				{ "roleId", roleId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("roles/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.Role>("roles/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public class UsersItemResponseObject {
 			public string Id { get; set; }
-			public UserDetailed User { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UsersItemResponseObject: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				var sbUser = new StringBuilder();
-				sbUser.Append("  user: [\n");
-				if (this.User != null)
+			public Model.UserDetailed User { get; set; }
+				public override string ToString()
 				{
-					sbUser.Append(this.User);
-					sbUser.Replace("\n", "\n    ");
-					sbUser.Append("\n");
+					var sb = new StringBuilder();
+					sb.Append("class UsersItemResponseObject: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					var sbUser = new StringBuilder();
+					sbUser.Append("  user: [\n");
+					if (this.User != null)
+					{
+						sbUser.Append(this.User);
+						sbUser.Replace("\n", "\n    ");
+						sbUser.Append("\n");
+					}
+					sbUser.Append("  ]\n");
+					sb.Append(sbUser);
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sbUser.Append("  ]\n");
-				sb.Append(sbUser);
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<UsersItemResponseObject>>> Users(string roleId,string? sinceId = null,string? untilId = null,int limit = 10)
 		{
@@ -54,10 +54,10 @@ namespace Misharp.Controls {
 				{ "untilId", untilId },
 				{ "limit", limit },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("roles/users", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<UsersItemResponseObject>>("roles/users", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<Note>>> Notes(string roleId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
+		public async Task<Response<List<Model.Note>>> Notes(string roleId,int limit = 10,string? sinceId = null,string? untilId = null,int? sinceDate = null,int? untilDate = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -68,7 +68,7 @@ namespace Misharp.Controls {
 				{ "sinceDate", sinceDate },
 				{ "untilDate", untilDate },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("roles/notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.Note>>("roles/notes", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}

@@ -9,7 +9,7 @@ namespace Misharp.Controls {
 		{
 			_app = app;
 		}
-		public async Task<Response<List<Hashtag>>> List(ListSortEnum sort,int limit = 10,bool attachedToUserOnly = false,bool attachedToLocalUserOnly = false,bool attachedToRemoteUserOnly = false)
+		public async Task<Response<List<Model.Hashtag>>> List(ListSortEnum sort,int limit = 10,bool attachedToUserOnly = false,bool attachedToLocalUserOnly = false,bool attachedToRemoteUserOnly = false)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -19,7 +19,7 @@ namespace Misharp.Controls {
 				{ "attachedToRemoteUserOnly", attachedToRemoteUserOnly },
 				{ "sort", sort },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("hashtags/list", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.Hashtag>>("hashtags/list", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public enum ListSortEnum {
@@ -56,7 +56,7 @@ namespace Misharp.Controls {
 				{ "query", query },
 				{ "offset", offset },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("hashtags/search", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<string>>("hashtags/search", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public async Task<Response<Model.Hashtag>> Show(string tag)
@@ -65,40 +65,40 @@ namespace Misharp.Controls {
 			{
 				{ "tag", tag },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("hashtags/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.Hashtag>("hashtags/show", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public class TrendItemResponseObject {
 			public string Tag { get; set; }
 			public List<number> Chart { get; set; }
 			public decimal UsersCount { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class TrendItemResponseObject: {\n");
-				sb.Append($"  tag: {this.Tag}\n");
-				sb.Append("  chart: [\n");
-				if (this.Chart != null && this.Chart.Count > 0)
+				public override string ToString()
 				{
-					var sbChart = new StringBuilder();
-					sbChart.Append("    ");
-					this.Chart.ForEach(item => sbChart.Append(item).Append(",\n"));
-					sbChart.Replace("\n", "\n    ");
-					sbChart.Length -= 4;
-					sb.Append(sbChart);
+					var sb = new StringBuilder();
+					sb.Append("class TrendItemResponseObject: {\n");
+					sb.Append($"  tag: {this.Tag}\n");
+					sb.Append("  chart: [\n");
+					if (this.Chart != null && this.Chart.Count > 0)
+					{
+						var sbChart = new StringBuilder();
+						sbChart.Append("    ");
+						this.Chart.ForEach(item => sbChart.Append(item).Append(",\n"));
+						sbChart.Replace("\n", "\n    ");
+						sbChart.Length -= 4;
+						sb.Append(sbChart);
+					}
+					sb.Append("  ]\n");
+					sb.Append($"  usersCount: {this.UsersCount}\n");
+					sb.Append("}");
+					return sb.ToString();
 				}
-				sb.Append("  ]\n");
-				sb.Append($"  usersCount: {this.UsersCount}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
 		}
 		public async Task<Response<List<TrendItemResponseObject>>> Trend()
 		{
-			var result = await _app.Request<Model.EmptyResponse>("hashtags/trend", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<TrendItemResponseObject>>("hashtags/trend", successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
-		public async Task<Response<List<UserDetailed>>> Users(string tag,UsersSortEnum sort,int limit = 10,UsersStateEnum state = UsersStateEnum.All,UsersOriginEnum origin = UsersOriginEnum.Local)
+		public async Task<Response<List<Model.UserDetailed>>> Users(string tag,UsersSortEnum sort,int limit = 10,UsersStateEnum state = UsersStateEnum.All,UsersOriginEnum origin = UsersOriginEnum.Local)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -108,7 +108,7 @@ namespace Misharp.Controls {
 				{ "state", state },
 				{ "origin", origin },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("hashtags/users", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<List<Model.UserDetailed>>("hashtags/users", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 		public enum UsersSortEnum {

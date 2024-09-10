@@ -15,7 +15,7 @@ namespace Misharp.Controls {
 			{
 				{ "name", name },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("emoji", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
+			var result = await _app.Request<Model.EmojiDetailed>("emoji", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: false);
 			return result;
 		}
 	}

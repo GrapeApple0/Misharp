@@ -13,16 +13,16 @@ namespace Misharp.Controls {
 			public string UserId { get; set; }
 			public string Endpoint { get; set; }
 			public bool SendReadMessage { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  userId: {this.UserId}\n");
-			sb.Append($"  endpoint: {this.Endpoint}\n");
-			sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  userId: {this.UserId}\n");
+				sb.Append($"  endpoint: {this.Endpoint}\n");
+				sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<ShowRegistrationResponse>> ShowRegistration(string endpoint)
 		{
@@ -30,23 +30,23 @@ namespace Misharp.Controls {
 			{
 				{ "endpoint", endpoint },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("sw/show-registration", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<ShowRegistrationResponse>("sw/show-registration", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class UpdateRegistrationResponse {
 			public string UserId { get; set; }
 			public string Endpoint { get; set; }
 			public bool SendReadMessage { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  userId: {this.UserId}\n");
-			sb.Append($"  endpoint: {this.Endpoint}\n");
-			sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  userId: {this.UserId}\n");
+				sb.Append($"  endpoint: {this.Endpoint}\n");
+				sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<UpdateRegistrationResponse>> UpdateRegistration(string endpoint,bool sendReadMessage)
 		{
@@ -55,7 +55,7 @@ namespace Misharp.Controls {
 				{ "endpoint", endpoint },
 				{ "sendReadMessage", sendReadMessage },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("sw/update-registration", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<UpdateRegistrationResponse>("sw/update-registration", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public class RegisterResponse {
@@ -64,18 +64,18 @@ namespace Misharp.Controls {
 			public string UserId { get; set; }
 			public string Endpoint { get; set; }
 			public bool SendReadMessage { get; set; }
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append("{\n");
-			sb.Append($"  state: {this.State}\n");
-			sb.Append($"  key: {this.Key}\n");
-			sb.Append($"  userId: {this.UserId}\n");
-			sb.Append($"  endpoint: {this.Endpoint}\n");
-			sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
-			sb.Append("}");
-			return sb.ToString();
-		}
+			public override string ToString()
+			{
+				var sb = new StringBuilder();
+				sb.Append("{\n");
+				sb.Append($"  state: {this.State}\n");
+				sb.Append($"  key: {this.Key}\n");
+				sb.Append($"  userId: {this.UserId}\n");
+				sb.Append($"  endpoint: {this.Endpoint}\n");
+				sb.Append($"  sendReadMessage: {this.SendReadMessage}\n");
+				sb.Append("}");
+				return sb.ToString();
+			}
 		}
 		public async Task<Response<RegisterResponse>> Register(string endpoint,string auth,string publickey,bool sendReadMessage = false)
 		{
@@ -86,7 +86,7 @@ namespace Misharp.Controls {
 				{ "publickey", publickey },
 				{ "sendReadMessage", sendReadMessage },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("sw/register", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<RegisterResponse>("sw/register", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 		public async Task<Response<Model.EmptyResponse>> Unregister(string endpoint)

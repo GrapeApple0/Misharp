@@ -16,19 +16,19 @@ namespace Misharp.Model {
 			public string Url { get; set; }
 			public decimal OffsetX { get; set; }
 			public decimal OffsetY { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserLiteAvatarDecorationsPropertyType: {\n");
-				sb.Append($"  id: {this.Id}\n");
-				sb.Append($"  angle: {this.Angle}\n");
-				sb.Append($"  flipH: {this.FlipH}\n");
-				sb.Append($"  url: {this.Url}\n");
-				sb.Append($"  offsetX: {this.OffsetX}\n");
-				sb.Append($"  offsetY: {this.OffsetY}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserLiteAvatarDecorationsPropertyType: {\n");
+					sb.Append($"  id: {this.Id}\n");
+					sb.Append($"  angle: {this.Angle}\n");
+					sb.Append($"  flipH: {this.FlipH}\n");
+					sb.Append($"  url: {this.Url}\n");
+					sb.Append($"  offsetX: {this.OffsetX}\n");
+					sb.Append($"  offsetY: {this.OffsetY}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserLiteAvatarDecorationsPropertyType> AvatarDecorations { get; set; }
 		public bool IsBot { get; set; }
@@ -40,19 +40,19 @@ namespace Misharp.Model {
 			public string? IconUrl { get; set; }
 			public string? FaviconUrl { get; set; }
 			public string? ThemeColor { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserLiteInstanceObject: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  softwareName: {this.SoftwareName}\n");
-				sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
-				sb.Append($"  themeColor: {this.ThemeColor}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserLiteInstanceObject: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  softwareName: {this.SoftwareName}\n");
+					sb.Append($"  softwareVersion: {this.SoftwareVersion}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  faviconUrl: {this.FaviconUrl}\n");
+					sb.Append($"  themeColor: {this.ThemeColor}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public UserLiteInstanceObject Instance { get; set; }
 		public Dictionary<string, string> Emojis { get; set; }
@@ -61,16 +61,16 @@ namespace Misharp.Model {
 			public string Name { get; set; }
 			public string? IconUrl { get; set; }
 			public decimal DisplayOrder { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class UserLiteBadgeRolesPropertyType: {\n");
-				sb.Append($"  name: {this.Name}\n");
-				sb.Append($"  iconUrl: {this.IconUrl}\n");
-				sb.Append($"  displayOrder: {this.DisplayOrder}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class UserLiteBadgeRolesPropertyType: {\n");
+					sb.Append($"  name: {this.Name}\n");
+					sb.Append($"  iconUrl: {this.IconUrl}\n");
+					sb.Append($"  displayOrder: {this.DisplayOrder}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public List<UserLiteBadgeRolesPropertyType> BadgeRoles { get; set; }
 		public override string ToString()

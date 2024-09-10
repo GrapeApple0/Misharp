@@ -16,17 +16,17 @@ namespace Misharp.Model {
 			public decimal Height { get; set; }
 			public decimal Orientation { get; set; }
 			public string AvgColor { get; set; }
-			public override string ToString()
-			{
-				var sb = new StringBuilder();
-				sb.Append("class DriveFilePropertiesObject: {\n");
-				sb.Append($"  width: {this.Width}\n");
-				sb.Append($"  height: {this.Height}\n");
-				sb.Append($"  orientation: {this.Orientation}\n");
-				sb.Append($"  avgColor: {this.AvgColor}\n");
-				sb.Append("}");
-				return sb.ToString();
-			}
+				public override string ToString()
+				{
+					var sb = new StringBuilder();
+					sb.Append("class DriveFilePropertiesObject: {\n");
+					sb.Append($"  width: {this.Width}\n");
+					sb.Append($"  height: {this.Height}\n");
+					sb.Append($"  orientation: {this.Orientation}\n");
+					sb.Append($"  avgColor: {this.AvgColor}\n");
+					sb.Append("}");
+					return sb.ToString();
+				}
 		}
 		public DriveFilePropertiesObject Properties { get; set; }
 		public string Url { get; set; }

@@ -27,7 +27,7 @@ namespace Misharp.Controls {
 			var result = await _app.Request<Model.EmptyResponse>("renote-mute/delete", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
-		public async Task<Response<List<RenoteMuting>>> List(int limit = 30,string? sinceId = null,string? untilId = null)
+		public async Task<Response<List<Model.RenoteMuting>>> List(int limit = 30,string? sinceId = null,string? untilId = null)
 		{
 			var param = new Dictionary<string, object?>	
 			{
@@ -35,7 +35,7 @@ namespace Misharp.Controls {
 				{ "sinceId", sinceId },
 				{ "untilId", untilId },
 			};
-			var result = await _app.Request<Model.EmptyResponse>("renote-mute/list", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
+			var result = await _app.Request<List<Model.RenoteMuting>>("renote-mute/list", param, successStatusCode: System.Net.HttpStatusCode.NoContent, useToken: true);
 			return result;
 		}
 	}
